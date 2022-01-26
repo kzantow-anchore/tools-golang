@@ -9,24 +9,33 @@ import (
 	"github.com/spdx/tools-golang/spdx"
 )
 
-func (spec JSONSpdxDocument) parseJsonAnnotations2_2(key string, value interface{}, doc *spdxDocument2_2, SPDXElementId spdx.DocElementID) error {
+func (spec JSONSpdxDocument) parseJsonAnnotations2_2(key string, value interface{}, doc *spdxDocument2_2, SPDXElementId spdx.DocElementID) (err error) {
 	//FIXME: SPDXID property not defined in spec but it is needed
 	if reflect.TypeOf(value).Kind() == reflect.Slice {
 		annotations := reflect.ValueOf(value)
 		for i := 0; i < annotations.Len(); i++ {
-			annotation := annotations.Index(i).Interface().(map[string]interface{})
+			annotation, err := requireMap(annotations.Index(i).Interface())
 			ann := spdx.Annotation2_2{AnnotationSPDXIdentifier: SPDXElementId}
 			// Remove loop all properties are mandatory in annotations
 			for k, v := range annotation {
 				switch k {
 				case "annotationDate":
-					ann.AnnotationDate = v.(string)
+					ann.AnnotationDate, err = requireString(v)
+					if err != nil {
+						return fmt.Errorf("invalid value for Annotation annotationDate: %+v", v)
+					}
 				case "annotationType":
-					ann.AnnotationType = v.(string)
+					ann.AnnotationType, err = requireString(v)
+					if err != nil {
+						return fmt.Errorf("invalid value for annotationType: %+v", v)
+					}
 				case "comment":
-					ann.AnnotationComment = v.(string)
+					ann.AnnotationComment, err = requireString(v)
+					if err != nil {
+						return fmt.Errorf("invalid value for comment: %+v", v)
+					}
 				case "annotator":
-					subkey, subvalue, err := extractSubs(v.(string))
+					subkey, subvalue, err := extractSubs(v)
 					if err != nil {
 						return err
 					}
@@ -37,7 +46,7 @@ func (spec JSONSpdxDocument) parseJsonAnnotations2_2(key string, value interface
 					ann.Annotator = subvalue
 
 				default:
-					return fmt.Errorf("received unknown tag %v in Annotation section", k)
+					return fmt.Errorf("received unknown property %v in Annotation section", k)
 				}
 			}
 			doc.Annotations = append(doc.Annotations, &ann)

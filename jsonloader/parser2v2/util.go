@@ -11,11 +11,15 @@ import (
 
 // used to extract key / value from embedded substrings
 // returns subkey, subvalue, nil if no error, or "", "", error otherwise
-func extractSubs(value string) (string, string, error) {
+func extractSubs(value interface{}) (string, string, error) {
+	str, ok := value.(string)
+	if !ok {
+		return "", "", fmt.Errorf("invalid value for extractSubs, expected string but got: %+v", value)
+	}
 	// parse the value to see if it's a valid subvalue format
-	sp := strings.SplitN(value, ":", 2)
+	sp := strings.SplitN(str, ":", 2)
 	if len(sp) == 1 {
-		return "", "", fmt.Errorf("invalid subvalue format for %s (no colon found)", value)
+		return "", "", fmt.Errorf("invalid subvalue format for: %s (no colon found)", value)
 	}
 
 	subkey := strings.TrimSpace(sp[0])
@@ -26,9 +30,13 @@ func extractSubs(value string) (string, string, error) {
 
 // used to extract DocumentRef and SPDXRef values from an SPDX Identifier
 // which can point either to this document or to a different one
-func extractDocElementID(value string) (spdx.DocElementID, error) {
+func extractDocElementID(value interface{}) (spdx.DocElementID, error) {
+
 	docRefID := ""
-	idStr := value
+	idStr, ok := value.(string)
+	if !ok {
+		return spdx.DocElementID{}, fmt.Errorf("invalid document element ID, expected string but got: %+v", value)
+	}
 
 	// check prefix to see if it's a DocumentRef ID
 	if strings.HasPrefix(idStr, "DocumentRef-") {
@@ -93,23 +101,84 @@ func extractDocElementSpecial(value string, permittedSpecial []string) (spdx.Doc
 // used to extract SPDXRef values only from an SPDX Identifier which can point
 // to this document only. Use extractDocElementID for parsing IDs that can
 // refer either to this document or a different one.
-func extractElementID(value string) (spdx.ElementID, error) {
+func extractElementID(value interface{}) (spdx.ElementID, error) {
+	str, ok := value.(string)
+	if !ok {
+		return "", fmt.Errorf("invalid data type for SPDX Element ID, required string but got: %+v", value)
+	}
 	// check prefix to confirm it's got the right prefix for element IDs
-	if !strings.HasPrefix(value, "SPDXRef-") {
+	if !strings.HasPrefix(str, "SPDXRef-") {
 		return spdx.ElementID(""), fmt.Errorf("missing SPDXRef- prefix for element identifier")
 	}
 
 	// make sure no colons are present
-	if strings.Contains(value, ":") {
+	if strings.Contains(str, ":") {
 		return spdx.ElementID(""), fmt.Errorf("invalid colon in element identifier")
 	}
 
 	// trim the prefix and confirm non-empty
-	eltRefID := strings.TrimPrefix(value, "SPDXRef-")
+	eltRefID := strings.TrimPrefix(str, "SPDXRef-")
 	if eltRefID == "" {
 		return spdx.ElementID(""), fmt.Errorf("element identifier has nothing after prefix")
 	}
 
 	// we're good
 	return spdx.ElementID(eltRefID), nil
+}
+
+// Requires the provided interface be a string value and returns it or an error if the cast fails
+func requireString(v interface{}) (string, error) {
+	s, ok := v.(string)
+	if !ok {
+		return "", fmt.Errorf("string required but got invalid value: %+v", v)
+	}
+	return s, nil
+}
+
+// Requires the provided interface be a map[string]interface{} value and returns it or an error if the cast fails
+func requireMap(v interface{}) (map[string]interface{}, error) {
+	s, ok := v.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("map[string]interface{} required but got invalid value: %+v", v)
+	}
+	return s, nil
+}
+
+// Extracts a named string value from the provided map using the provided key
+func requireMapString(v map[string]interface{}, key string) (string, error) {
+	val, ok := v[key]
+	if !ok {
+		return "", fmt.Errorf("key not found in map: %s", key)
+	}
+	s, ok := val.(string)
+	if !ok {
+		return "", fmt.Errorf("expected string value from map but got: %+v", val)
+	}
+	return s, nil
+}
+
+// Extracts a named map[string] value from the provided map using the provided key
+func requireMapMap(v map[string]interface{}, key string) (map[string]interface{}, error) {
+	val, ok := v[key]
+	if !ok {
+		return nil, fmt.Errorf("key not found in map: %s", key)
+	}
+	s, ok := val.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("expected map[string]interface{} value from map but got: %+v", val)
+	}
+	return s, nil
+}
+
+// Requires the map key with the given name of a float64 type to be present and casts it to an int
+func requireMapFloatInt(v map[string]interface{}, key string) (int, error) {
+	val, ok := v[key]
+	if !ok {
+		return 0, fmt.Errorf("key not found in map: %s", key)
+	}
+	f, ok := val.(float64)
+	if !ok {
+		return 0, fmt.Errorf("expected float64 value from map but got: %+v", val)
+	}
+	return int(f), nil
 }

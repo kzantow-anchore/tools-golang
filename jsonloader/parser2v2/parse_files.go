@@ -10,7 +10,7 @@ import (
 )
 
 //TODO: check whether file can contain annotations or not
-func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, doc *spdxDocument2_2) error {
+func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, doc *spdxDocument2_2) (err error) {
 
 	if doc.UnpackagedFiles == nil {
 		doc.UnpackagedFiles = map[spdx.ElementID]*spdx.File2_2{}
@@ -19,11 +19,18 @@ func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, do
 	if reflect.TypeOf(value).Kind() == reflect.Slice {
 		files := reflect.ValueOf(value)
 		for i := 0; i < files.Len(); i++ {
-			filemap := files.Index(i).Interface().(map[string]interface{})
+			filemap, err := requireMap(files.Index(i).Interface())
+			if err != nil {
+				return err
+			}
 			// create a new package
 			file := &spdx.File2_2{}
 			//extract the SPDXID of the package
-			eID, err := extractElementID(filemap["SPDXID"].(string))
+			s, err := requireMapString(filemap, "SPDXID")
+			if err != nil {
+				return err
+			}
+			eID, err := extractElementID(s)
 			if err != nil {
 				return fmt.Errorf("%s", err)
 			}
@@ -34,12 +41,19 @@ func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, do
 				case "SPDXID":
 					//redundant case
 				case "fileName":
-					file.FileName = v.(string)
+					file.FileName, err = requireString(v)
+					if err != nil {
+						return err
+					}
 				case "fileTypes":
 					if reflect.TypeOf(v).Kind() == reflect.Slice {
 						texts := reflect.ValueOf(v)
 						for i := 0; i < texts.Len(); i++ {
-							file.FileType = append(file.FileType, texts.Index(i).Interface().(string))
+							s, err = requireString(texts.Index(i).Interface())
+							if err != nil {
+								return err
+							}
+							file.FileType = append(file.FileType, s)
 						}
 					}
 				case "checksums":
@@ -50,18 +64,29 @@ func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, do
 							file.FileChecksums = make(map[spdx.ChecksumAlgorithm]spdx.Checksum)
 						}
 						for i := 0; i < checksums.Len(); i++ {
-							checksum := checksums.Index(i).Interface().(map[string]interface{})
-							switch checksum["algorithm"].(string) {
+							checksum, err := requireMap(checksums.Index(i).Interface())
+							if err != nil {
+								return err
+							}
+							s, err := requireMapString(checksum, "algorithm")
+							if err != nil {
+								return err
+							}
+							switch s {
 							case spdx.SHA1, spdx.SHA256, spdx.MD5:
-								algorithm := spdx.ChecksumAlgorithm(checksum["algorithm"].(string))
-								file.FileChecksums[algorithm] = spdx.Checksum{Algorithm: algorithm, Value: checksum["checksumValue"].(string)}
+								algorithm := spdx.ChecksumAlgorithm(s)
+								v, err := requireMapString(checksum, "checksumValue")
+								if err != nil {
+									return err
+								}
+								file.FileChecksums[algorithm] = spdx.Checksum{Algorithm: algorithm, Value: v}
 							default:
 								return fmt.Errorf("got unknown checksum type %s", checksum["algorithm"])
 							}
 						}
 					}
 				case "annotations":
-					id, err := extractDocElementID(filemap["SPDXID"].(string))
+					id, err := extractDocElementID(filemap["SPDXID"])
 					if err != nil {
 						return fmt.Errorf("%s", err)
 					}
@@ -109,7 +134,7 @@ func (spec JSONSpdxDocument) parseJsonFiles2_2(key string, value interface{}, do
 					file.FileComment = v.(string)
 
 				default:
-					return fmt.Errorf("received unknown tag %v in files section", k)
+					return fmt.Errorf("received unknown property in files section: %v", k)
 				}
 			}
 			doc.UnpackagedFiles[eID] = file

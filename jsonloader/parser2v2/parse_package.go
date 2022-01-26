@@ -10,8 +10,7 @@ import (
 	"github.com/spdx/tools-golang/spdx"
 )
 
-func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{}, doc *spdxDocument2_2) error {
-
+func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{}, doc *spdxDocument2_2) (err error) {
 	if doc.Packages == nil {
 		doc.Packages = map[spdx.ElementID]*spdx.Package2_2{}
 	}
@@ -26,7 +25,7 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 				IsFilesAnalyzedTagPresent: false,
 			}
 			//extract the SPDXID of the package
-			eID, err := extractElementID(pack["SPDXID"].(string))
+			var eID, err = extractElementID(pack["SPDXID"].(string))
 			if err != nil {
 				return fmt.Errorf("%s", err)
 			}
@@ -37,7 +36,7 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 				case "SPDXID":
 					//redundant case
 				case "name":
-					pkg.PackageName = v.(string)
+					pkg.PackageName, err = requireString(v)
 				case "annotations":
 					packageId, err := extractDocElementID(pack["SPDXID"].(string))
 					if err != nil {
@@ -74,43 +73,50 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 						}
 					}
 				case "copyrightText":
-					pkg.PackageCopyrightText = v.(string)
+					pkg.PackageCopyrightText, err = requireString(v)
 				case "description":
-					pkg.PackageDescription = v.(string)
+					pkg.PackageDescription, err = requireString(v)
 				case "downloadLocation":
-					pkg.PackageDownloadLocation = v.(string)
+					pkg.PackageDownloadLocation, err = requireString(v)
 				case "externalRefs":
 					//make a function to parse these
 					if reflect.TypeOf(v).Kind() == reflect.Slice {
 						extrefs := reflect.ValueOf(v)
 						for i := 0; i < extrefs.Len(); i++ {
-							ref := extrefs.Index(i).Interface().(map[string]interface{})
-							newref := &spdx.PackageExternalReference2_2{}
-							//TODO: if either of these 3 missing then error
-							newref.RefType = ref["referenceType"].(string)
-							newref.Locator = ref["referenceLocator"].(string)
-							newref.Category = ref["referenceCategory"].(string)
-							if ref["comment"] != nil {
-								newref.ExternalRefComment = ref["comment"].(string)
+							ifc := extrefs.Index(i).Interface()
+							if ref, ok := ifc.(map[string]interface{}); ok {
+								newref := &spdx.PackageExternalReference2_2{}
+								// if either of these 3 missing then error
+								if newref.RefType, ok = ref["referenceType"].(string); ok {
+									if newref.Locator, ok = ref["referenceLocator"].(string); ok {
+										if newref.Category, ok = ref["referenceCategory"].(string); ok {
+											if ref["comment"] != nil {
+												newref.ExternalRefComment, _ = ref["comment"].(string)
+											}
+											pkg.PackageExternalReferences = append(pkg.PackageExternalReferences, newref)
+											continue
+										}
+									}
+								}
+								return fmt.Errorf("Invalid external reference %v", ifc)
 							}
-							pkg.PackageExternalReferences = append(pkg.PackageExternalReferences, newref)
 						}
 					}
 				case "filesAnalyzed":
 					pkg.IsFilesAnalyzedTagPresent = true
-					if !v.(bool) {
-						pkg.FilesAnalyzed = false
+					if a, ok := v.(bool); ok {
+						pkg.FilesAnalyzed = a
 					} else {
-						pkg.FilesAnalyzed = true
+						return fmt.Errorf("Invalid filesAnalyzed value, boolean required: %v", v)
 					}
 				case "homepage":
-					pkg.PackageHomePage = v.(string)
+					pkg.PackageHomePage, err = requireString(v)
 				case "licenseComments":
-					pkg.PackageLicenseComments = v.(string)
+					pkg.PackageLicenseComments, err = requireString(v)
 				case "licenseConcluded":
-					pkg.PackageLicenseConcluded = v.(string)
+					pkg.PackageLicenseConcluded, err = requireString(v)
 				case "licenseDeclared":
-					pkg.PackageLicenseDeclared = v.(string)
+					pkg.PackageLicenseDeclared, err = requireString(v)
 				case "licenseInfoFromFiles":
 					if reflect.TypeOf(v).Kind() == reflect.Slice {
 						info := reflect.ValueOf(v)
@@ -119,14 +125,15 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 						}
 					}
 				case "originator":
-					if v.(string) == "NOASSERTION" {
+					originator, err := requireString(v)
+					if err != nil {
+						return fmt.Errorf("invalid package originator value: %+v", v)
+					}
+					if originator == "NOASSERTION" {
 						pkg.PackageOriginatorNOASSERTION = true
 						break
 					}
-					subkey, subvalue, err := extractSubs(v.(string))
-					if err != nil {
-						return err
-					}
+					subkey, subvalue, err := extractSubs(originator)
 					switch subkey {
 					case "Person":
 						pkg.PackageOriginatorPerson = subvalue
@@ -136,7 +143,7 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 						return fmt.Errorf("unrecognized PackageOriginator type %v", subkey)
 					}
 				case "packageFileName":
-					pkg.PackageFileName = v.(string)
+					pkg.PackageFileName, err = requireString(v)
 				case "packageVerificationCode":
 					code := v.(map[string]interface{})
 					for codekey, codeval := range code {
@@ -146,7 +153,7 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 								efiles := reflect.ValueOf(codeval)
 								filename := efiles.Index(0).Interface().(string)
 								if strings.HasPrefix(filename, "excludes:") {
-									_, filename, err = extractSubs(efiles.Index(0).Interface().(string))
+									_, filename, err = extractSubs(efiles.Index(0).Interface())
 									if err != nil {
 										return fmt.Errorf("%s", err)
 									}
@@ -158,15 +165,16 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 						}
 					}
 				case "sourceInfo":
-					pkg.PackageSourceInfo = v.(string)
+					pkg.PackageSourceInfo, err = requireString(v)
 				case "summary":
-					pkg.PackageSummary = v.(string)
+					pkg.PackageSummary, err = requireString(v)
 				case "supplier":
-					if v.(string) == "NOASSERTION" {
+					supplier, err := requireString(v)
+					if supplier == "NOASSERTION" {
 						pkg.PackageSupplierNOASSERTION = true
 						break
 					}
-					subkey, subvalue, err := extractSubs(v.(string))
+					subkey, subvalue, err := extractSubs(supplier)
 					if err != nil {
 						return err
 					}
@@ -180,9 +188,9 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 					}
 
 				case "versionInfo":
-					pkg.PackageVersion = v.(string)
+					pkg.PackageVersion, err = requireString(v)
 				case "comment":
-					pkg.PackageComment = v.(string)
+					pkg.PackageComment, err = requireString(v)
 				case "hasFiles":
 					if pkg.Files == nil {
 						pkg.Files = make(map[spdx.ElementID]*spdx.File2_2)
@@ -200,12 +208,13 @@ func (spec JSONSpdxDocument) parseJsonPackages2_2(key string, value interface{},
 					}
 
 				default:
-					return fmt.Errorf("received unknown tag %v in Annotation section", k)
+					return fmt.Errorf("received unknown property %v in Package section", k)
 				}
 			}
 			doc.Packages[eID] = pkg
 		}
 
 	}
-	return nil
+
+	return err
 }

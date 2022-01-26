@@ -10,7 +10,7 @@ import (
 	"github.com/spdx/tools-golang/spdx"
 )
 
-func (spec JSONSpdxDocument) parseJsonCreationInfo2_2(key string, value interface{}, doc *spdxDocument2_2) error {
+func (spec JSONSpdxDocument) parseJsonCreationInfo2_2(key string, value interface{}, doc *spdxDocument2_2) (err error) {
 	// create an SPDX Creation Info data struct if we don't have one already
 
 	if doc.CreationInfo == nil {
@@ -21,31 +21,58 @@ func (spec JSONSpdxDocument) parseJsonCreationInfo2_2(key string, value interfac
 	ci := doc.CreationInfo
 	switch key {
 	case "dataLicense":
-		ci.DataLicense = value.(string)
+		ci.DataLicense, err = requireString(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for dataLicense, expected string but got: %+v", value)
+		}
 	case "spdxVersion":
-		ci.SPDXVersion = value.(string)
+		ci.SPDXVersion, err = requireString(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for spdxVersion, expected string but got: %+v", value)
+		}
 	case "SPDXID":
-		id, err := extractElementID(value.(string))
+		id, err := extractElementID(value)
 		if err != nil {
 			return fmt.Errorf("%s", err)
 		}
 		ci.SPDXIdentifier = id
 	case "documentNamespace":
-		ci.DocumentNamespace = value.(string)
+		ci.DocumentNamespace, err = requireString(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for documentNamespace, expected string but got: %+v", value)
+		}
 	case "name":
-		ci.DocumentName = value.(string)
+		ci.DocumentName, err = requireString(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for document name, expected string but got: %+v", value)
+		}
 	case "comment":
-		ci.DocumentComment = value.(string)
+		ci.DocumentComment, err = requireString(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for document comment, expected string but got: %+v", value)
+		}
 	case "creationInfo":
-		creationInfo := value.(map[string]interface{})
+		creationInfo, err := requireMap(value)
+		if err != nil {
+			return fmt.Errorf("invalid value for document creationInfo, expected map[string] but got: %+v", value)
+		}
 		for key, val := range creationInfo {
 			switch key {
 			case "comment":
-				ci.CreatorComment = val.(string)
+				ci.CreatorComment, err = requireString(val)
+				if err != nil {
+					return fmt.Errorf("invalid value for creationInfo.comment, expected string but got: %+v", val)
+				}
 			case "created":
-				ci.Created = val.(string)
+				ci.Created, err = requireString(val)
+				if err != nil {
+					return fmt.Errorf("invalid value for creationInfo.created, expected string but got: %+v", val)
+				}
 			case "licenseListVersion":
-				ci.LicenseListVersion = val.(string)
+				ci.LicenseListVersion, err = requireString(val)
+				if err != nil {
+					return fmt.Errorf("invalid value for creationInfo.licenseListVersion, expected string but got: %+v", val)
+				}
 			case "creators":
 				err := parseCreators(creationInfo["creators"], ci)
 				if err != nil {
@@ -63,7 +90,7 @@ func (spec JSONSpdxDocument) parseJsonCreationInfo2_2(key string, value interfac
 
 	}
 
-	return nil
+	return err
 }
 
 // ===== Helper functions =====
@@ -73,7 +100,7 @@ func parseCreators(creators interface{}, ci *spdx.CreationInfo2_2) error {
 		s := reflect.ValueOf(creators)
 
 		for i := 0; i < s.Len(); i++ {
-			subkey, subvalue, err := extractSubs(s.Index(i).Interface().(string))
+			subkey, subvalue, err := extractSubs(s.Index(i).Interface())
 			if err != nil {
 				return err
 			}
@@ -85,21 +112,27 @@ func parseCreators(creators interface{}, ci *spdx.CreationInfo2_2) error {
 			case "Tool":
 				ci.CreatorTools = append(ci.CreatorTools, subvalue)
 			default:
-				return fmt.Errorf("unrecognized Creator type %v", subkey)
+				return fmt.Errorf("unrecognized Creator type: %s", subkey)
 			}
-
 		}
 	}
 	return nil
 }
 
-func parseExternalDocumentRefs(references interface{}, ci *spdx.CreationInfo2_2) error {
+func parseExternalDocumentRefs(references interface{}, ci *spdx.CreationInfo2_2) (err error) {
 	if reflect.TypeOf(references).Kind() == reflect.Slice {
 		s := reflect.ValueOf(references)
 
 		for i := 0; i < s.Len(); i++ {
-			ref := s.Index(i).Interface().(map[string]interface{})
-			documentRefID := ref["externalDocumentId"].(string)
+			ifc := s.Index(i).Interface()
+			ref, err := requireMap(ifc)
+			if err != nil {
+				return fmt.Errorf("invalid value for external document ref, expected map[string] but got: %+v", ifc)
+			}
+			documentRefID, err := requireMapString(ref, "externalDocumentId")
+			if err != nil {
+				return fmt.Errorf("error extracting externalDocumentId: %w", err)
+			}
 			if !strings.HasPrefix(documentRefID, "DocumentRef-") {
 				return fmt.Errorf("expected first element to have DocumentRef- prefix")
 			}
@@ -107,12 +140,27 @@ func parseExternalDocumentRefs(references interface{}, ci *spdx.CreationInfo2_2)
 			if documentRefID == "" {
 				return fmt.Errorf("document identifier has nothing after prefix")
 			}
-			checksum := ref["checksum"].(map[string]interface{})
+			checksum, err := requireMapMap(ref, "checksum")
+			if err != nil {
+				return fmt.Errorf("error extracting checksum: %w", err)
+			}
+			spdxDocument, err := requireMapString(ref, "spdxDocument")
+			if err != nil {
+				return fmt.Errorf("error extracting spdxDocument: %w", err)
+			}
+			algorithm, err := requireMapString(checksum, "algorithm")
+			if err != nil {
+				return fmt.Errorf("error extracting algorithm: %w", err)
+			}
+			checksumValue, err := requireMapString(checksum, "checksumValue")
+			if err != nil {
+				return fmt.Errorf("error extracting checksumValue: %w", err)
+			}
 			edr := spdx.ExternalDocumentRef2_2{
 				DocumentRefID: documentRefID,
-				URI:           ref["spdxDocument"].(string),
-				Alg:           checksum["algorithm"].(string),
-				Checksum:      checksum["checksumValue"].(string),
+				URI:           spdxDocument,
+				Alg:           algorithm,
+				Checksum:      checksumValue,
 			}
 
 			ci.ExternalDocumentReferences[documentRefID] = edr
