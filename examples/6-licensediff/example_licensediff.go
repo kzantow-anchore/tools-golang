@@ -15,11 +15,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/v2/v2_2"
-	"github.com/spdx/tools-golang/v2/v2_2/tv"
-
 	"github.com/spdx/tools-golang/licensediff"
 	"github.com/spdx/tools-golang/spdxlib"
+	"github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_2/tv"
 )
 
 func main() {

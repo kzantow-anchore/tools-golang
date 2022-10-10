@@ -7,9 +7,8 @@ import (
 	"path/filepath"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	"github.com/spdx/tools-golang/v2/v2_3"
-
 	"github.com/spdx/tools-golang/utils"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // BuildFileSection2_3 creates an SPDX File (version 2.3), returning that

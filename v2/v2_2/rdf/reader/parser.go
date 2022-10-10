@@ -6,11 +6,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/spdx/tools-golang/common/spdx"
-	"github.com/spdx/tools-golang/v2/v2_2"
-
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // returns a new instance of rdfParser2_2 given the gordf object and nodeToTriples mapping

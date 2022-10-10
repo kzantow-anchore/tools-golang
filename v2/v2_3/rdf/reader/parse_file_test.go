@@ -7,12 +7,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/spdx/tools-golang/common/spdx"
-	"github.com/spdx/tools-golang/v2/v2_3"
-
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	rdfloader2 "github.com/spdx/gordf/rdfloader/xmlreader"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // content is the tags within the rdf:RDF tag

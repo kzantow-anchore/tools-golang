@@ -5,9 +5,8 @@ package reader
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/v2/v2_2"
-
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 func (parser *rdfParser2_2) setReviewFromNode(reviewedNode *gordfParser.Node) error {

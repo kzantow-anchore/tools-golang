@@ -5,10 +5,9 @@ package reader
 import (
 	"testing"
 
+	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/common/spdx"
 	"github.com/spdx/tools-golang/v2/v2_3"
-
-	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 )
 
 func Test_rdfParser2_3_getSnippetInformationFromTriple2_3(t *testing.T) {

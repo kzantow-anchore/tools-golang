@@ -5,9 +5,9 @@ package spdx_yaml
 import (
 	"io"
 
-	"github.com/spdx/tools-golang/v2/v2_3"
-
 	"sigs.k8s.io/yaml"
+
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // Write takes an SPDX Document (version 2.3) and an io.Writer, and writes the document to the writer in YAML format.

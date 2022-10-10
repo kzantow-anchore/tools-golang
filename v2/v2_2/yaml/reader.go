@@ -6,9 +6,9 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/spdx/tools-golang/v2/v2_2"
-
 	"sigs.k8s.io/yaml"
+
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // Read takes in an io.Reader and returns an SPDX document.

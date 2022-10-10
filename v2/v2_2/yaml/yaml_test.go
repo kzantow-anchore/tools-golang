@@ -8,10 +8,10 @@ import (
 	"os"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+
 	"github.com/spdx/tools-golang/common/spdx"
 	"github.com/spdx/tools-golang/v2/v2_2"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestRead(t *testing.T) {

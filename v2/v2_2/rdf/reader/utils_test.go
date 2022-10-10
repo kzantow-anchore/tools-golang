@@ -6,9 +6,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/spdx/tools-golang/common/spdx"
-
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/common/spdx"
 )
 
 func Test_getLastPartOfURI(t *testing.T) {

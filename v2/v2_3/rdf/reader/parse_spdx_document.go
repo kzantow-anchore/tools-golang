@@ -5,10 +5,9 @@ package reader
 import (
 	"fmt"
 
+	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/common/spdx"
 	"github.com/spdx/tools-golang/v2/v2_3"
-
-	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 )
 
 func (parser *rdfParser2_3) parseSpdxDocumentNode(spdxDocNode *gordfParser.Node) (err error) {

@@ -9,9 +9,8 @@ import (
 	"runtime"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	"github.com/spdx/tools-golang/v2/v2_2"
-
 	"github.com/spdx/tools-golang/utils"
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // BuildPackageSection2_2 creates an SPDX Package (version 2.2), returning

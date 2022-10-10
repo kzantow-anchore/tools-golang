@@ -6,9 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spdx/tools-golang/common/spdx"
-
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/common/spdx"
 )
 
 /* util methods for licenses and checksums below:*/

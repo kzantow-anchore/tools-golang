@@ -12,9 +12,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/v2/v2_1/tv"
-
 	"github.com/spdx/tools-golang/spdxlib"
+	"github.com/spdx/tools-golang/v2/v2_1/tv"
 )
 
 func main() {

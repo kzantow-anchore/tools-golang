@@ -12,7 +12,6 @@ import (
 	"os"
 
 	"github.com/spdx/tools-golang/v2/v2_3/tv"
-
 	spdx_yaml "github.com/spdx/tools-golang/v2/v2_3/yaml"
 )
 

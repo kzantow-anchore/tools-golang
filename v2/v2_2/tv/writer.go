@@ -7,7 +7,6 @@ import (
 	"io"
 
 	"github.com/spdx/tools-golang/v2/v2_2"
-
 	"github.com/spdx/tools-golang/v2/v2_2/tv/writer"
 )
 

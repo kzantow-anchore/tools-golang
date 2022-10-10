@@ -5,11 +5,9 @@ package rdf
 import (
 	"io"
 
-	"github.com/spdx/tools-golang/v2/v2_3/rdf/reader"
-
-	"github.com/spdx/tools-golang/v2/v2_3"
-
 	"github.com/spdx/gordf/rdfloader"
+	"github.com/spdx/tools-golang/v2/v2_3"
+	"github.com/spdx/tools-golang/v2/v2_3/rdf/reader"
 )
 
 // Takes in a file Reader and returns the pertaining spdx document

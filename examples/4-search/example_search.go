@@ -15,9 +15,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/v2/v2_2/tv"
-
 	"github.com/spdx/tools-golang/idsearcher"
+	"github.com/spdx/tools-golang/v2/v2_2/tv"
 )
 
 func main() {

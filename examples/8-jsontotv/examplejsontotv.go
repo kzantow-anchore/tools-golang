@@ -12,7 +12,6 @@ import (
 	"os"
 
 	spdx_json "github.com/spdx/tools-golang/v2/v2_2/json"
-
 	"github.com/spdx/tools-golang/v2/v2_2/tv"
 )
 
