@@ -6,14 +6,14 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/common/spdx"
 )
 
 func TestSortElementIDs(t *testing.T) {
-	eIDs := []common.ElementID{"def", "abc", "123"}
+	eIDs := []spdx.ElementID{"def", "abc", "123"}
 	eIDs = SortElementIDs(eIDs)
 
-	if !reflect.DeepEqual(eIDs, []common.ElementID{"123", "abc", "def"}) {
+	if !reflect.DeepEqual(eIDs, []spdx.ElementID{"123", "abc", "def"}) {
 		t.Fatalf("expected sorted ElementIDs, got: %v", eIDs)
 	}
 }

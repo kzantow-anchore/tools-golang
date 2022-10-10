@@ -12,9 +12,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/spdx/tools-golang/v2/v2_2/tv"
+
 	"github.com/spdx/tools-golang/reporter"
 	"github.com/spdx/tools-golang/spdxlib"
-	"github.com/spdx/tools-golang/tvloader"
 )
 
 func main() {
@@ -38,7 +39,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := tvloader.Load2_2(r)
+	doc, err := tv.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filename, err)
 		return

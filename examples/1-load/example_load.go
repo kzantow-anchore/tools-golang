@@ -12,8 +12,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/spdx/tools-golang/v2/v2_1/tv"
+
 	"github.com/spdx/tools-golang/spdxlib"
-	"github.com/spdx/tools-golang/tvloader"
 )
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := tvloader.Load2_2(r)
+	doc, err := tv.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filename, err)
 		return
@@ -56,7 +57,7 @@ func main() {
 	fmt.Printf("%#v\n\n", doc.CreationInfo)
 
 	// check whether the SPDX file has at least one package that it describes
-	pkgIDs, err := spdxlib.GetDescribedPackageIDs2_2(doc)
+	pkgIDs, err := spdxlib.GetDescribedPackageIDs2_1(doc)
 	if err != nil {
 		fmt.Printf("Unable to get describe packages from SPDX document: %v\n", err)
 		return

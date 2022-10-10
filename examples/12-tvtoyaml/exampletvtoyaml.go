@@ -11,8 +11,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/tvloader"
-	spdx_yaml "github.com/spdx/tools-golang/yaml"
+	"github.com/spdx/tools-golang/v2/v2_3/tv"
+
+	spdx_yaml "github.com/spdx/tools-golang/v2/v2_3/yaml"
 )
 
 func main() {
@@ -36,7 +37,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := tvloader.Load2_2(r)
+	doc, err := tv.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", args[1], err)
 		return
@@ -57,7 +58,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as an YAML file
-	err = spdx_yaml.Save2_2(doc, w)
+	err = spdx_yaml.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

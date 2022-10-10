@@ -5,7 +5,7 @@ package builder2v1
 import (
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/common/spdx"
 )
 
 // ===== Relationship section builder tests =====
@@ -20,10 +20,10 @@ func TestBuilder2_1CanBuildRelationshipSection(t *testing.T) {
 	if rln == nil {
 		t.Fatalf("expected non-nil relationship, got nil")
 	}
-	if rln.RefA != common.MakeDocElementID("", "DOCUMENT") {
+	if rln.RefA != spdx.MakeDocElementID("", "DOCUMENT") {
 		t.Errorf("expected %v, got %v", "DOCUMENT", rln.RefA)
 	}
-	if rln.RefB != common.MakeDocElementID("", "Package-project17") {
+	if rln.RefB != spdx.MakeDocElementID("", "Package-project17") {
 		t.Errorf("expected %v, got %v", "Package-project17", rln.RefB)
 	}
 	if rln.Relationship != "DESCRIBES" {

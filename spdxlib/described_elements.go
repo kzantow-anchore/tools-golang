@@ -6,9 +6,9 @@ package spdxlib
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/common/spdx"
+	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
+	v2_22 "github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // GetDescribedPackageIDs2_1 returns a slice of ElementIDs for all Packages
@@ -16,7 +16,7 @@ import (
 // - If the document has only one Package, its ID is returned.
 // - If the document has 2+ Packages, it returns the IDs of those that have
 //   a DESCRIBES (or DESCRIBED_BY) relationship to this DOCUMENT.
-func GetDescribedPackageIDs2_1(doc *v2_1.Document) ([]common.ElementID, error) {
+func GetDescribedPackageIDs2_1(doc *v2_12.Document) ([]spdx.ElementID, error) {
 	// if nil Packages map or zero packages in it, return empty slice
 	if doc.Packages == nil {
 		return nil, fmt.Errorf("Packages map is nil")
@@ -27,7 +27,7 @@ func GetDescribedPackageIDs2_1(doc *v2_1.Document) ([]common.ElementID, error) {
 	if len(doc.Packages) == 1 {
 		// get first (only) one and return its ID
 		for _, pkg := range doc.Packages {
-			return []common.ElementID{pkg.PackageSPDXIdentifier}, nil
+			return []spdx.ElementID{pkg.PackageSPDXIdentifier}, nil
 		}
 	}
 
@@ -38,8 +38,8 @@ func GetDescribedPackageIDs2_1(doc *v2_1.Document) ([]common.ElementID, error) {
 		return nil, fmt.Errorf("multiple Packages in Document but Relationships slice is nil")
 	}
 
-	eIDs, err := FilterRelationships2_1(doc, func(relationship *v2_1.Relationship) *common.ElementID {
-		refDocument := common.MakeDocElementID("", "DOCUMENT")
+	eIDs, err := FilterRelationships2_1(doc, func(relationship *v2_12.Relationship) *spdx.ElementID {
+		refDocument := spdx.MakeDocElementID("", "DOCUMENT")
 
 		if relationship.Relationship == "DESCRIBES" && relationship.RefA == refDocument {
 			return &relationship.RefB.ElementRefID
@@ -67,7 +67,7 @@ func GetDescribedPackageIDs2_1(doc *v2_1.Document) ([]common.ElementID, error) {
 // - If the document has only one Package, its ID is returned.
 // - If the document has 2+ Packages, it returns the IDs of those that have
 //   a DESCRIBES (or DESCRIBED_BY) relationship to this DOCUMENT.
-func GetDescribedPackageIDs2_2(doc *v2_2.Document) ([]common.ElementID, error) {
+func GetDescribedPackageIDs2_2(doc *v2_22.Document) ([]spdx.ElementID, error) {
 	// if nil Packages map or zero packages in it, return empty slice
 	if doc.Packages == nil {
 		return nil, fmt.Errorf("Packages map is nil")
@@ -78,7 +78,7 @@ func GetDescribedPackageIDs2_2(doc *v2_2.Document) ([]common.ElementID, error) {
 	if len(doc.Packages) == 1 {
 		// get first (only) one and return its ID
 		for _, pkg := range doc.Packages {
-			return []common.ElementID{pkg.PackageSPDXIdentifier}, nil
+			return []spdx.ElementID{pkg.PackageSPDXIdentifier}, nil
 		}
 	}
 
@@ -89,8 +89,8 @@ func GetDescribedPackageIDs2_2(doc *v2_2.Document) ([]common.ElementID, error) {
 		return nil, fmt.Errorf("multiple Packages in Document but Relationships slice is nil")
 	}
 
-	eIDs, err := FilterRelationships2_2(doc, func(relationship *v2_2.Relationship) *common.ElementID {
-		refDocument := common.MakeDocElementID("", "DOCUMENT")
+	eIDs, err := FilterRelationships2_2(doc, func(relationship *v2_22.Relationship) *spdx.ElementID {
+		refDocument := spdx.MakeDocElementID("", "DOCUMENT")
 
 		if relationship.Relationship == "DESCRIBES" && relationship.RefA == refDocument {
 			return &relationship.RefB.ElementRefID

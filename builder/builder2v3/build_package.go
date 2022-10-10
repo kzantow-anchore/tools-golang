@@ -8,8 +8,9 @@ import (
 	"regexp"
 	"runtime"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_3"
+
 	"github.com/spdx/tools-golang/utils"
 )
 
@@ -63,7 +64,7 @@ func BuildPackageSection2_3(packageName string, dirRoot string, pathsIgnore []st
 	// now build the package section
 	pkg := &v2_3.Package{
 		PackageName:                 packageName,
-		PackageSPDXIdentifier:       common.ElementID(fmt.Sprintf("Package-%s", packageName)),
+		PackageSPDXIdentifier:       spdx.ElementID(fmt.Sprintf("Package-%s", packageName)),
 		PackageDownloadLocation:     "NOASSERTION",
 		FilesAnalyzed:               true,
 		IsFilesAnalyzedTagPresent:   true,

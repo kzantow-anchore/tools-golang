@@ -4,9 +4,9 @@ package spdxlib
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // ValidateDocument2_1 returns an error if the Document is found to be invalid, or nil if the Document is valid.
@@ -14,7 +14,7 @@ import (
 // Package or an UnpackagedFile.
 func ValidateDocument2_1(doc *v2_1.Document) error {
 	// cache a map of valid package IDs for quick lookups
-	validElementIDs := make(map[common.ElementID]bool)
+	validElementIDs := make(map[spdx.ElementID]bool)
 	for _, docPackage := range doc.Packages {
 		validElementIDs[docPackage.PackageSPDXIdentifier] = true
 	}
@@ -24,7 +24,7 @@ func ValidateDocument2_1(doc *v2_1.Document) error {
 	}
 
 	// add the Document element ID
-	validElementIDs[common.MakeDocElementID("", "DOCUMENT").ElementRefID] = true
+	validElementIDs[spdx.MakeDocElementID("", "DOCUMENT").ElementRefID] = true
 
 	for _, relationship := range doc.Relationships {
 		if !validElementIDs[relationship.RefA.ElementRefID] {
@@ -44,7 +44,7 @@ func ValidateDocument2_1(doc *v2_1.Document) error {
 // Package or an UnpackagedFile.
 func ValidateDocument2_2(doc *v2_2.Document) error {
 	// cache a map of package IDs for quick lookups
-	validElementIDs := make(map[common.ElementID]bool)
+	validElementIDs := make(map[spdx.ElementID]bool)
 	for _, docPackage := range doc.Packages {
 		validElementIDs[docPackage.PackageSPDXIdentifier] = true
 	}
@@ -54,7 +54,7 @@ func ValidateDocument2_2(doc *v2_2.Document) error {
 	}
 
 	// add the Document element ID
-	validElementIDs[common.MakeDocElementID("", "DOCUMENT").ElementRefID] = true
+	validElementIDs[spdx.MakeDocElementID("", "DOCUMENT").ElementRefID] = true
 
 	for _, relationship := range doc.Relationships {
 		if !validElementIDs[relationship.RefA.ElementRefID] {

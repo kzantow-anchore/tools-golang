@@ -15,9 +15,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/idsearcher"
+	"github.com/spdx/tools-golang/v2/v2_2/tv"
 
-	"github.com/spdx/tools-golang/tvsaver"
+	"github.com/spdx/tools-golang/idsearcher"
 )
 
 func main() {
@@ -139,7 +139,7 @@ func main() {
 	}
 	defer w.Close()
 
-	err = tvsaver.Save2_2(doc, w)
+	err = tv.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

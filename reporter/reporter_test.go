@@ -6,16 +6,16 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
+	v2_22 "github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // ===== 2.1 Reporter top-level function tests =====
 func Test2_1ReporterCanMakeReportFromPackage(t *testing.T) {
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		FilesAnalyzed: true,
-		Files: []*v2_1.File{
+		Files: []*v2_12.File{
 			{FileSPDXIdentifier: "File0", LicenseConcluded: "MIT"},
 			{FileSPDXIdentifier: "File1", LicenseConcluded: "NOASSERTION"},
 			{FileSPDXIdentifier: "File2", LicenseConcluded: "MIT"},
@@ -56,7 +56,7 @@ func Test2_1ReporterCanMakeReportFromPackage(t *testing.T) {
 }
 
 func Test2_1ReporterReturnsErrorIfPackageFilesNotAnalyzed(t *testing.T) {
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		FilesAnalyzed: false,
 	}
 
@@ -71,9 +71,9 @@ func Test2_1ReporterReturnsErrorIfPackageFilesNotAnalyzed(t *testing.T) {
 // ===== 2.1 Utility functions =====
 
 func Test2_1CanGetCountsOfLicenses(t *testing.T) {
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		FilesAnalyzed: true,
-		Files: []*v2_1.File{
+		Files: []*v2_12.File{
 			{FileSPDXIdentifier: "File0", LicenseConcluded: "MIT"},
 			{FileSPDXIdentifier: "File1", LicenseConcluded: "NOASSERTION"},
 			{FileSPDXIdentifier: "File2", LicenseConcluded: "MIT"},
@@ -122,7 +122,7 @@ func Test2_1NilPackageReturnsZeroCountsOfLicenses(t *testing.T) {
 		t.Fatalf("expected %v, got %v", 0, len(foundCounts))
 	}
 
-	pkg := &v2_1.Package{}
+	pkg := &v2_12.Package{}
 	totalFound, totalNotFound, foundCounts = countLicenses2_1(pkg)
 	if totalFound != 0 {
 		t.Errorf("expected %v, got %v", 0, totalFound)
@@ -137,9 +137,9 @@ func Test2_1NilPackageReturnsZeroCountsOfLicenses(t *testing.T) {
 
 // ===== 2.2 Reporter top-level function tests =====
 func Test2_2ReporterCanMakeReportFromPackage(t *testing.T) {
-	pkg := &v2_2.Package{
+	pkg := &v2_22.Package{
 		FilesAnalyzed: true,
-		Files: []*v2_2.File{
+		Files: []*v2_22.File{
 			{FileSPDXIdentifier: "File0", LicenseConcluded: "MIT"},
 			{FileSPDXIdentifier: "File1", LicenseConcluded: "NOASSERTION"},
 			{FileSPDXIdentifier: "File2", LicenseConcluded: "MIT"},
@@ -180,7 +180,7 @@ func Test2_2ReporterCanMakeReportFromPackage(t *testing.T) {
 }
 
 func Test2_2ReporterReturnsErrorIfPackageFilesNotAnalyzed(t *testing.T) {
-	pkg := &v2_2.Package{
+	pkg := &v2_22.Package{
 		FilesAnalyzed: false,
 	}
 
@@ -195,9 +195,9 @@ func Test2_2ReporterReturnsErrorIfPackageFilesNotAnalyzed(t *testing.T) {
 // ===== 2.2 Utility functions =====
 
 func Test2_2CanGetCountsOfLicenses(t *testing.T) {
-	pkg := &v2_2.Package{
+	pkg := &v2_22.Package{
 		FilesAnalyzed: true,
-		Files: []*v2_2.File{
+		Files: []*v2_22.File{
 			{FileSPDXIdentifier: "File0", LicenseConcluded: "MIT"},
 			{FileSPDXIdentifier: "File1", LicenseConcluded: "NOASSERTION"},
 			{FileSPDXIdentifier: "File2", LicenseConcluded: "MIT"},
@@ -246,7 +246,7 @@ func Test2_2NilPackageReturnsZeroCountsOfLicenses(t *testing.T) {
 		t.Fatalf("expected %v, got %v", 0, len(foundCounts))
 	}
 
-	pkg := &v2_2.Package{}
+	pkg := &v2_22.Package{}
 	totalFound, totalNotFound, foundCounts = countLicenses2_2(pkg)
 	if totalFound != 0 {
 		t.Errorf("expected %v, got %v", 0, totalFound)

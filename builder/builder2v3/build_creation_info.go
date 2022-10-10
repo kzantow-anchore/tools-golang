@@ -5,8 +5,8 @@ package builder2v3
 import (
 	"time"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // BuildCreationInfoSection2_3 creates an SPDX Package (version 2.3), returning that
@@ -19,7 +19,7 @@ import (
 //   - testValues: for testing only; call with nil when using in production
 func BuildCreationInfoSection2_3(creatorType string, creator string, testValues map[string]string) (*v2_3.CreationInfo, error) {
 	// build creator slices
-	creators := []common.Creator{
+	creators := []spdx.Creator{
 		// add builder as a tool
 		{
 			Creator:     "github.com/spdx/tools-golang/builder",

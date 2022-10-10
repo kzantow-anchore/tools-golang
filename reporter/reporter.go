@@ -10,9 +10,9 @@ import (
 	"sort"
 	"text/tabwriter"
 
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // ===== 2.1 Reporter functions =====

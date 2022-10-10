@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_3"
+
 	"github.com/spdx/tools-golang/utils"
 )
 
@@ -32,18 +33,18 @@ func BuildFileSection2_3(filePath string, prefix string, fileNumber int) (*v2_3.
 	// now build the File section
 	f := &v2_3.File{
 		FileName:           filePath,
-		FileSPDXIdentifier: common.ElementID(i),
-		Checksums: []common.Checksum{
+		FileSPDXIdentifier: spdx.ElementID(i),
+		Checksums: []spdx.Checksum{
 			{
-				Algorithm: common.SHA1,
+				Algorithm: spdx.SHA1,
 				Value:     ssha1,
 			},
 			{
-				Algorithm: common.SHA256,
+				Algorithm: spdx.SHA256,
 				Value:     ssha256,
 			},
 			{
-				Algorithm: common.MD5,
+				Algorithm: spdx.MD5,
 				Value:     smd5,
 			},
 		},

@@ -9,26 +9,26 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/common/spdx"
+	"github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_3"
 )
 
 // GetVerificationCode2_1 takes a slice of files and an optional filename
 // for an "excludes" file, and returns a Package Verification Code calculated
 // according to SPDX spec version 2.1, section 3.9.4.
-func GetVerificationCode2_1(files []*v2_1.File, excludeFile string) (common.PackageVerificationCode, error) {
+func GetVerificationCode2_1(files []*v2_1.File, excludeFile string) (spdx.PackageVerificationCode, error) {
 	// create slice of strings - unsorted SHA1s for all files
 	shas := []string{}
 	for i, f := range files {
 		if f == nil {
-			return common.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
+			return spdx.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
 		}
 		if f.FileName != excludeFile {
 			// find the SHA1 hash, if present
 			for _, checksum := range f.Checksums {
-				if checksum.Algorithm == common.SHA1 {
+				if checksum.Algorithm == spdx.SHA1 {
 					shas = append(shas, checksum.Value)
 				}
 			}
@@ -46,7 +46,7 @@ func GetVerificationCode2_1(files []*v2_1.File, excludeFile string) (common.Pack
 	hsha1.Write([]byte(shasConcat))
 	bs := hsha1.Sum(nil)
 
-	code := common.PackageVerificationCode{
+	code := spdx.PackageVerificationCode{
 		Value:         fmt.Sprintf("%x", bs),
 		ExcludedFiles: []string{excludeFile},
 	}
@@ -57,17 +57,17 @@ func GetVerificationCode2_1(files []*v2_1.File, excludeFile string) (common.Pack
 // GetVerificationCode2_2 takes a slice of files and an optional filename
 // for an "excludes" file, and returns a Package Verification Code calculated
 // according to SPDX spec version 2.2, section 3.9.4.
-func GetVerificationCode2_2(files []*v2_2.File, excludeFile string) (common.PackageVerificationCode, error) {
+func GetVerificationCode2_2(files []*v2_2.File, excludeFile string) (spdx.PackageVerificationCode, error) {
 	// create slice of strings - unsorted SHA1s for all files
 	shas := []string{}
 	for i, f := range files {
 		if f == nil {
-			return common.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
+			return spdx.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
 		}
 		if f.FileName != excludeFile {
 			// find the SHA1 hash, if present
 			for _, checksum := range f.Checksums {
-				if checksum.Algorithm == common.SHA1 {
+				if checksum.Algorithm == spdx.SHA1 {
 					shas = append(shas, checksum.Value)
 				}
 			}
@@ -85,7 +85,7 @@ func GetVerificationCode2_2(files []*v2_2.File, excludeFile string) (common.Pack
 	hsha1.Write([]byte(shasConcat))
 	bs := hsha1.Sum(nil)
 
-	code := common.PackageVerificationCode{
+	code := spdx.PackageVerificationCode{
 		Value:         fmt.Sprintf("%x", bs),
 		ExcludedFiles: []string{excludeFile},
 	}
@@ -96,17 +96,17 @@ func GetVerificationCode2_2(files []*v2_2.File, excludeFile string) (common.Pack
 // GetVerificationCode2_3 takes a slice of files and an optional filename
 // for an "excludes" file, and returns a Package Verification Code calculated
 // according to SPDX spec version 2.3, section 3.9.4.
-func GetVerificationCode2_3(files []*v2_3.File, excludeFile string) (common.PackageVerificationCode, error) {
+func GetVerificationCode2_3(files []*v2_3.File, excludeFile string) (spdx.PackageVerificationCode, error) {
 	// create slice of strings - unsorted SHA1s for all files
 	shas := []string{}
 	for i, f := range files {
 		if f == nil {
-			return common.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
+			return spdx.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
 		}
 		if f.FileName != excludeFile {
 			// find the SHA1 hash, if present
 			for _, checksum := range f.Checksums {
-				if checksum.Algorithm == common.SHA1 {
+				if checksum.Algorithm == spdx.SHA1 {
 					shas = append(shas, checksum.Value)
 				}
 			}
@@ -124,7 +124,7 @@ func GetVerificationCode2_3(files []*v2_3.File, excludeFile string) (common.Pack
 	hsha1.Write([]byte(shasConcat))
 	bs := hsha1.Sum(nil)
 
-	code := common.PackageVerificationCode{
+	code := spdx.PackageVerificationCode{
 		Value:         fmt.Sprintf("%x", bs),
 		ExcludedFiles: []string{excludeFile},
 	}
