@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_1"
 )
 
 func (parser *tvParser2_1) parsePairFromCreationInfo(tag string, value string) error {
@@ -18,7 +18,7 @@ func (parser *tvParser2_1) parsePairFromCreationInfo(tag string, value string) e
 
 	// create an SPDX Creation Info data struct if we don't have one already
 	if parser.doc.CreationInfo == nil {
-		parser.doc.CreationInfo = &v2_12.CreationInfo{}
+		parser.doc.CreationInfo = &v2_1.CreationInfo{}
 	}
 
 	ci := parser.doc.CreationInfo
@@ -55,7 +55,7 @@ func (parser *tvParser2_1) parsePairFromCreationInfo(tag string, value string) e
 			return fmt.Errorf("file with FileName %s does not have SPDX identifier", parser.file.FileName)
 		}
 		parser.st = psPackage2_1
-		parser.pkg = &v2_12.Package{
+		parser.pkg = &v2_1.Package{
 			FilesAnalyzed:             true,
 			IsFilesAnalyzedTagPresent: false,
 		}
@@ -76,14 +76,14 @@ func (parser *tvParser2_1) parsePairFromCreationInfo(tag string, value string) e
 		return parser.parsePairFromReview(tag, value)
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_12.Relationship{}
+		parser.rln = &v2_1.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_12.Annotation{}
+		parser.ann = &v2_1.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation(tag, value)
 	case "AnnotationDate":

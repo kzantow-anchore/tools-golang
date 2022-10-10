@@ -9,7 +9,7 @@ import (
 	"runtime"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_1"
 
 	"github.com/spdx/tools-golang/utils"
 )
@@ -19,7 +19,7 @@ import (
 //   - packageName: name of package / directory
 //   - dirRoot: path to directory to be analyzed
 //   - pathsIgnore: slice of strings for filepaths to ignore
-func BuildPackageSection2_1(packageName string, dirRoot string, pathsIgnore []string) (*v2_12.Package, error) {
+func BuildPackageSection2_1(packageName string, dirRoot string, pathsIgnore []string) (*v2_1.Package, error) {
 	// build the file section first, so we'll have it available
 	// for calculating the package verification code
 	filepaths, err := utils.GetAllFilePaths(dirRoot, pathsIgnore)
@@ -38,7 +38,7 @@ func BuildPackageSection2_1(packageName string, dirRoot string, pathsIgnore []st
 		dirRootLen = len(dirRoot)
 	}
 
-	files := []*v2_12.File{}
+	files := []*v2_1.File{}
 	fileNumber := 0
 	for _, fp := range filepaths {
 		newFilePatch := ""
@@ -61,7 +61,7 @@ func BuildPackageSection2_1(packageName string, dirRoot string, pathsIgnore []st
 	}
 
 	// now build the package section
-	pkg := &v2_12.Package{
+	pkg := &v2_1.Package{
 		PackageName:                 packageName,
 		PackageSPDXIdentifier:       spdx.ElementID(fmt.Sprintf("Package-%s", packageName)),
 		PackageDownloadLocation:     "NOASSERTION",

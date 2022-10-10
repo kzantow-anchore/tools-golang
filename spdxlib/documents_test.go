@@ -6,27 +6,27 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
-	v2_22 "github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_2"
 )
 
 // ===== 2.1 tests =====
 
 func Test2_1ValidDocumentPassesValidation(t *testing.T) {
 	// set up document and some packages and relationships
-	doc := &v2_12.Document{
+	doc := &v2_1.Document{
 		SPDXVersion:    "SPDX-2.1",
 		DataLicense:    "CC0-1.0",
 		SPDXIdentifier: spdx.ElementID("DOCUMENT"),
-		CreationInfo:   &v2_12.CreationInfo{},
-		Packages: []*v2_12.Package{
+		CreationInfo:   &v2_1.CreationInfo{},
+		Packages: []*v2_1.Package{
 			{PackageName: "pkg1", PackageSPDXIdentifier: "p1"},
 			{PackageName: "pkg2", PackageSPDXIdentifier: "p2"},
 			{PackageName: "pkg3", PackageSPDXIdentifier: "p3"},
 			{PackageName: "pkg4", PackageSPDXIdentifier: "p4"},
 			{PackageName: "pkg5", PackageSPDXIdentifier: "p5"},
 		},
-		Relationships: []*v2_12.Relationship{
+		Relationships: []*v2_1.Relationship{
 			{
 				RefA:         spdx.MakeDocElementID("", "DOCUMENT"),
 				RefB:         spdx.MakeDocElementID("", "p1"),
@@ -60,17 +60,17 @@ func Test2_1ValidDocumentPassesValidation(t *testing.T) {
 
 func Test2_1InvalidDocumentFailsValidation(t *testing.T) {
 	// set up document and some packages and relationships
-	doc := &v2_12.Document{
+	doc := &v2_1.Document{
 		SPDXVersion:    "SPDX-2.1",
 		DataLicense:    "CC0-1.0",
 		SPDXIdentifier: spdx.ElementID("DOCUMENT"),
-		CreationInfo:   &v2_12.CreationInfo{},
-		Packages: []*v2_12.Package{
+		CreationInfo:   &v2_1.CreationInfo{},
+		Packages: []*v2_1.Package{
 			{PackageName: "pkg1", PackageSPDXIdentifier: "p1"},
 			{PackageName: "pkg2", PackageSPDXIdentifier: "p2"},
 			{PackageName: "pkg3", PackageSPDXIdentifier: "p3"},
 		},
-		Relationships: []*v2_12.Relationship{
+		Relationships: []*v2_1.Relationship{
 			{
 				RefA:         spdx.MakeDocElementID("", "DOCUMENT"),
 				RefB:         spdx.MakeDocElementID("", "p1"),
@@ -100,19 +100,19 @@ func Test2_1InvalidDocumentFailsValidation(t *testing.T) {
 
 func Test2_2ValidDocumentPassesValidation(t *testing.T) {
 	// set up document and some packages and relationships
-	doc := &v2_22.Document{
+	doc := &v2_2.Document{
 		SPDXVersion:    "SPDX-2.1",
 		DataLicense:    "CC0-1.0",
 		SPDXIdentifier: spdx.ElementID("DOCUMENT"),
-		CreationInfo:   &v2_22.CreationInfo{},
-		Packages: []*v2_22.Package{
+		CreationInfo:   &v2_2.CreationInfo{},
+		Packages: []*v2_2.Package{
 			{PackageName: "pkg1", PackageSPDXIdentifier: "p1"},
 			{PackageName: "pkg2", PackageSPDXIdentifier: "p2"},
 			{PackageName: "pkg3", PackageSPDXIdentifier: "p3"},
 			{PackageName: "pkg4", PackageSPDXIdentifier: "p4"},
 			{PackageName: "pkg5", PackageSPDXIdentifier: "p5"},
 		},
-		Relationships: []*v2_22.Relationship{
+		Relationships: []*v2_2.Relationship{
 			{
 				RefA:         spdx.MakeDocElementID("", "DOCUMENT"),
 				RefB:         spdx.MakeDocElementID("", "p1"),
@@ -146,17 +146,17 @@ func Test2_2ValidDocumentPassesValidation(t *testing.T) {
 
 func Test2_2InvalidDocumentFailsValidation(t *testing.T) {
 	// set up document and some packages and relationships
-	doc := &v2_22.Document{
+	doc := &v2_2.Document{
 		SPDXVersion:    "SPDX-2.1",
 		DataLicense:    "CC0-1.0",
 		SPDXIdentifier: spdx.ElementID("DOCUMENT"),
-		CreationInfo:   &v2_22.CreationInfo{},
-		Packages: []*v2_22.Package{
+		CreationInfo:   &v2_2.CreationInfo{},
+		Packages: []*v2_2.Package{
 			{PackageName: "pkg1", PackageSPDXIdentifier: "p1"},
 			{PackageName: "pkg2", PackageSPDXIdentifier: "p2"},
 			{PackageName: "pkg3", PackageSPDXIdentifier: "p3"},
 		},
-		Relationships: []*v2_22.Relationship{
+		Relationships: []*v2_2.Relationship{
 			{
 				RefA:         spdx.MakeDocElementID("", "DOCUMENT"),
 				RefB:         spdx.MakeDocElementID("", "p1"),

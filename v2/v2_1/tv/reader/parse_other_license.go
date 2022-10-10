@@ -5,14 +5,14 @@ package reader
 import (
 	"fmt"
 
-	v2_12 "github.com/spdx/tools-golang/v2/v2_1"
+	"github.com/spdx/tools-golang/v2/v2_1"
 )
 
 func (parser *tvParser2_1) parsePairFromOtherLicense(tag string, value string) error {
 	switch tag {
 	// tag for creating new other license section
 	case "LicenseID":
-		parser.otherLic = &v2_12.OtherLicense{}
+		parser.otherLic = &v2_1.OtherLicense{}
 		parser.doc.OtherLicenses = append(parser.doc.OtherLicenses, parser.otherLic)
 		parser.otherLic.LicenseIdentifier = value
 	case "ExtractedText":
@@ -25,14 +25,14 @@ func (parser *tvParser2_1) parsePairFromOtherLicense(tag string, value string) e
 		parser.otherLic.LicenseComment = value
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_12.Relationship{}
+		parser.rln = &v2_1.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_12.Annotation{}
+		parser.ann = &v2_1.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation(tag, value)
 	case "AnnotationDate":

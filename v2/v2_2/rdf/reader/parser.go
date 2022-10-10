@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	v2_22 "github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_2"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
@@ -18,17 +18,17 @@ func NewParser2_2(gordfParserObj *gordfParser.Parser, nodeToTriples map[string][
 	parser := rdfParser2_2{
 		gordfParserObj:      gordfParserObj,
 		nodeStringToTriples: nodeToTriples,
-		doc: &v2_22.Document{
-			ExternalDocumentReferences: []v2_22.ExternalDocumentRef{},
-			CreationInfo:               &v2_22.CreationInfo{},
-			Packages:                   []*v2_22.Package{},
-			Files:                      []*v2_22.File{},
-			OtherLicenses:              []*v2_22.OtherLicense{},
-			Relationships:              []*v2_22.Relationship{},
-			Annotations:                []*v2_22.Annotation{},
-			Reviews:                    []*v2_22.Review{},
+		doc: &v2_2.Document{
+			ExternalDocumentReferences: []v2_2.ExternalDocumentRef{},
+			CreationInfo:               &v2_2.CreationInfo{},
+			Packages:                   []*v2_2.Package{},
+			Files:                      []*v2_2.File{},
+			OtherLicenses:              []*v2_2.OtherLicense{},
+			Relationships:              []*v2_2.Relationship{},
+			Annotations:                []*v2_2.Annotation{},
+			Reviews:                    []*v2_2.Review{},
 		},
-		files:            map[spdx.ElementID]*v2_22.File{},
+		files:            map[spdx.ElementID]*v2_2.File{},
 		assocWithPackage: map[spdx.ElementID]bool{},
 		cache:            map[string]*nodeState{},
 	}
@@ -37,7 +37,7 @@ func NewParser2_2(gordfParserObj *gordfParser.Parser, nodeToTriples map[string][
 
 // main function which takes in a gordfParser and returns
 // a spdxDocument model or the error encountered while parsing it
-func LoadFromGoRDFParser(gordfParserObj *gordfParser.Parser) (*v2_22.Document, error) {
+func LoadFromGoRDFParser(gordfParserObj *gordfParser.Parser) (*v2_2.Document, error) {
 	// nodeToTriples is a mapping from a node to list of triples.
 	// for every node in the set of subjects of all the triples,
 	// it provides a list of triples that are associated with that subject node.

@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/common/spdx"
-	v2_22 "github.com/spdx/tools-golang/v2/v2_2"
+	"github.com/spdx/tools-golang/v2/v2_2"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 )
@@ -132,13 +132,13 @@ func Test_rdfParser2_2_getSnippetInformationFromTriple2_2(t *testing.T) {
 
 func Test_setSnippetID(t *testing.T) {
 	// TestCase 1: invalid input (empty)
-	err := setSnippetID("", &v2_22.Snippet{})
+	err := setSnippetID("", &v2_2.Snippet{})
 	if err == nil {
 		t.Errorf("should've raised an error for empty input")
 	}
 
 	// TestCase 2: valid input
-	si := &v2_22.Snippet{}
+	si := &v2_2.Snippet{}
 	err = setSnippetID("http://spdx.org/spdxdocs/spdx-example#SPDXRef-Snippet", si)
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
@@ -152,10 +152,10 @@ func Test_rdfParser2_2_parseRangeReference(t *testing.T) {
 	var err error
 	var node *gordfParser.Node
 	var parser *rdfParser2_2
-	var si *v2_22.Snippet
+	var si *v2_2.Snippet
 
 	// TestCase 1: ResourceLiteral node without a new file shouldn't raise any error.
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	parser, _ = parserFromBodyContent(``)
 	node = &gordfParser.Node{
 		NodeType: gordfParser.RESOURCELITERAL,
@@ -167,7 +167,7 @@ func Test_rdfParser2_2_parseRangeReference(t *testing.T) {
 	}
 
 	// TestCase 2: invalid file in the reference should raise an error
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	parser, _ = parserFromBodyContent(`
 		<spdx:File rdf:about="http://spdx.org/spdxdocs/spdx-example-444504E0-4F89-41D3-9A0C-0305E82C3301#DoapSource">
 			<spdx:fileName> test file </spdx:fileName>
@@ -180,7 +180,7 @@ func Test_rdfParser2_2_parseRangeReference(t *testing.T) {
 	}
 
 	// TestCase 3: A valid reference must set the file to the files map of the parser.
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	parser, _ = parserFromBodyContent(`
 		<spdx:File rdf:about="http://spdx.org/spdxdocs/spdx-example-444504E0-4F89-41D3-9A0C-0305E82C3301#SPDXRef-DoapSource">
 			<spdx:fileName> test file </spdx:fileName>
@@ -199,7 +199,7 @@ func Test_rdfParser2_2_parseRangeReference(t *testing.T) {
 func Test_rdfParser2_2_getPointerFromNode(t *testing.T) {
 	var parser *rdfParser2_2
 	var node *gordfParser.Node
-	var si *v2_22.Snippet
+	var si *v2_2.Snippet
 	var err error
 	var rt RangeType
 	var number int
@@ -281,7 +281,7 @@ func Test_rdfParser2_2_getPointerFromNode(t *testing.T) {
 func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 	var parser *rdfParser2_2
 	var err error
-	var si *v2_22.Snippet
+	var si *v2_2.Snippet
 	var node *gordfParser.Node
 
 	// TestCase 1: range with less one pointer less must raise an error
@@ -297,7 +297,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
             </j.0:StartEndPointer>
         
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -323,7 +323,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
             </j.0:StartEndPointer>
         
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	dummyTriple := parser.gordfParserObj.Triples[0]
 	// resetting the node to be associated with 3 triples which will have
@@ -353,7 +353,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -377,7 +377,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -401,7 +401,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -425,7 +425,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer> 
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -449,7 +449,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err == nil {
@@ -473,7 +473,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err != nil {
@@ -497,7 +497,7 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 			</j.0:endPointer>
 		</j.0:StartEndPointer>
 	`)
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	node = parser.gordfParserObj.Triples[0].Subject
 	err = parser.setSnippetRangeFromNode(node, si)
 	if err != nil {
@@ -508,13 +508,13 @@ func Test_rdfParser2_2_setSnippetRangeFromNode(t *testing.T) {
 func Test_rdfParser2_2_setSnippetToFileWithID(t *testing.T) {
 	var parser *rdfParser2_2
 	var fileId spdx.ElementID
-	var si *v2_22.Snippet
-	var file *v2_22.File
+	var si *v2_2.Snippet
+	var file *v2_2.File
 	var err error
 
 	// TestCase 1: file id which is not associated with any file must raise an error.
 	parser, _ = parserFromBodyContent("")
-	si = &v2_22.Snippet{}
+	si = &v2_2.Snippet{}
 	err = parser.setSnippetToFileWithID(si, fileId)
 	if err == nil {
 		t.Errorf("expected an error saying undefined file")
@@ -522,7 +522,7 @@ func Test_rdfParser2_2_setSnippetToFileWithID(t *testing.T) {
 
 	// TestCase 2: file exists, but snippet of the file doesn't ( it mustn't raise any error )
 	fileId = spdx.ElementID("File1")
-	file = &v2_22.File{
+	file = &v2_2.File{
 		FileSPDXIdentifier: fileId,
 	}
 	parser.files[fileId] = file
