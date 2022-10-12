@@ -7,6 +7,14 @@ import (
 )
 
 func Test_Convert(t *testing.T) {
+	type s1 struct {
+		Value string
+	}
+
+	type s2 struct {
+		Value string
+	}
+
 	tests := []struct {
 		name       string
 		fromStruct interface{}
@@ -34,19 +42,6 @@ func Test_Convert(t *testing.T) {
 				Value string
 			}{
 				Value: "the value",
-			},
-		},
-		{
-			name: "string ptr equals",
-			fromStruct: struct {
-				String *string
-			}{
-				String: s("the value"),
-			},
-			toStruct: struct {
-				String *string
-			}{
-				String: s("the value"),
 			},
 		},
 		{
@@ -154,7 +149,7 @@ func Test_Convert(t *testing.T) {
 			},
 		},
 		{
-			name: "string to ptrs slice",
+			name: "string slice to ptrs slice",
 			fromStruct: struct {
 				StringsToPtrStr []string
 			}{
@@ -177,6 +172,259 @@ func Test_Convert(t *testing.T) {
 				PtrToStrings *[]string
 			}{
 				PtrToStrings: &[]string{"the thing 1", "the thing 2"},
+			},
+		},
+		{
+			name: "string slice ptr to slice",
+			fromStruct: struct {
+				PtrToStrings *[]string
+			}{
+				PtrToStrings: &[]string{"the thing 1", "the thing 2"},
+			},
+			toStruct: struct {
+				PtrToStrings []string
+			}{
+				PtrToStrings: []string{"the thing 1", "the thing 2"},
+			},
+		},
+		{
+			name: "string slice ptr to slice",
+			fromStruct: struct {
+				PtrToStrings []string
+			}{
+				PtrToStrings: []string{"the thing 1", "the thing 2"},
+			},
+			toStruct: struct {
+				PtrToStrings *[]string
+			}{
+				PtrToStrings: &[]string{"the thing 1", "the thing 2"},
+			},
+		},
+		{
+			name: "struct to struct",
+			fromStruct: struct {
+				Struct s1
+			}{
+				Struct: s1{
+					Value: "something",
+				},
+			},
+			toStruct: struct {
+				Struct s2
+			}{
+				Struct: s2{
+					Value: "something",
+				},
+			},
+		},
+		{
+			name: "struct to ptr",
+			fromStruct: struct {
+				Struct s1
+			}{
+				Struct: s1{
+					Value: "something",
+				},
+			},
+			toStruct: struct {
+				Struct *s2
+			}{
+				Struct: &s2{
+					Value: "something",
+				},
+			},
+		},
+		{
+			name: "struct ptr to struct",
+			fromStruct: struct {
+				Struct *s1
+			}{
+				Struct: &s1{
+					Value: "something",
+				},
+			},
+			toStruct: struct {
+				Struct s2
+			}{
+				Struct: s2{
+					Value: "something",
+				},
+			},
+		},
+		{
+			name: "struct ptr to struct ptr",
+			fromStruct: struct {
+				Struct *s1
+			}{
+				Struct: &s1{
+					Value: "something",
+				},
+			},
+			toStruct: struct {
+				Struct *s2
+			}{
+				Struct: &s2{
+					Value: "something",
+				},
+			},
+		},
+		{
+			name: "map to map",
+			fromStruct: struct {
+				Map map[s1]string
+			}{
+				Map: map[s1]string{
+					s1{Value: "some-key"}: "some-value",
+				},
+			},
+			toStruct: struct {
+				Map map[s2]string
+			}{
+				Map: map[s2]string{
+					s2{Value: "some-key"}: "some-value",
+				},
+			},
+		},
+		{
+			name: "map to map of ptr",
+			fromStruct: struct {
+				Map map[s1]string
+			}{
+				Map: map[s1]string{
+					s1{Value: "some-key"}: "some-value",
+				},
+			},
+			toStruct: struct {
+				Map map[s2]*string
+			}{
+				Map: map[s2]*string{
+					s2{Value: "some-key"}: s("some-value"),
+				},
+			},
+		},
+		{
+			name: "map key ptr to map",
+			fromStruct: struct {
+				Map map[*s1]string
+			}{
+				Map: map[*s1]string{
+					&s1{Value: "some-key"}: "some-value",
+				},
+			},
+			toStruct: struct {
+				Map map[s2]string
+			}{
+				Map: map[s2]string{
+					s2{Value: "some-key"}: "some-value",
+				},
+			},
+		},
+		{
+			name: "map ptr to map",
+			fromStruct: struct {
+				Map *map[*s1]string
+			}{
+				Map: &map[*s1]string{
+					&s1{Value: "some-key"}: "some-value",
+				},
+			},
+			toStruct: struct {
+				Map map[s2]string
+			}{
+				Map: map[s2]string{
+					s2{Value: "some-key"}: "some-value",
+				},
+			},
+		},
+		{
+			name: "map string to int",
+			fromStruct: struct {
+				Value string
+			}{
+				Value: "12",
+			},
+			toStruct: struct {
+				Value int
+			}{
+				Value: 12,
+			},
+		},
+		{
+			name: "map int to string",
+			fromStruct: struct {
+				Value int
+			}{
+				Value: 12,
+			},
+			toStruct: struct {
+				Value string
+			}{
+				Value: "12",
+			},
+		},
+		{
+			name: "map string slice to string",
+			fromStruct: struct {
+				Value []string
+			}{
+				Value: []string{"thing 1"},
+			},
+			toStruct: struct {
+				Value string
+			}{
+				Value: "thing 1",
+			},
+		},
+		{
+			name: "map string to string slice",
+			fromStruct: struct {
+				Value string
+			}{
+				Value: "thing 1",
+			},
+			toStruct: struct {
+				Value []string
+			}{
+				Value: []string{"thing 1"},
+			},
+		},
+		{
+			name: "map int slice to string",
+			fromStruct: struct {
+				Value []int
+			}{
+				Value: []int{84},
+			},
+			toStruct: struct {
+				Value string
+			}{
+				Value: "84",
+			},
+		},
+		{
+			name: "map string to uint slice",
+			fromStruct: struct {
+				Value string
+			}{
+				Value: "63",
+			},
+			toStruct: struct {
+				Value []uint
+			}{
+				Value: []uint{63},
+			},
+		},
+		{
+			name: "map string to uint16 slice",
+			fromStruct: struct {
+				Value string
+			}{
+				Value: "63",
+			},
+			toStruct: struct {
+				Value []uint16
+			}{
+				Value: []uint16{63},
 			},
 		},
 	}
