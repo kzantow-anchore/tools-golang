@@ -147,6 +147,10 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 			}
 		}
 	case fromType.Kind() == reflect.Slice && baseTargetType.Kind() == reflect.Slice:
+		if fromValue.IsNil() {
+			return nilValue, nil
+		}
+
 		length := fromValue.Len()
 		targetElementType := baseTargetType.Elem()
 		toValue = reflect.MakeSlice(baseTargetType, length, length)
@@ -160,6 +164,10 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 			}
 		}
 	case fromType.Kind() == reflect.Map && baseTargetType.Kind() == reflect.Map:
+		if fromValue.IsNil() {
+			return nilValue, nil
+		}
+
 		keyType := baseTargetType.Key()
 		elementType := baseTargetType.Elem()
 		toValue = reflect.MakeMap(baseTargetType)

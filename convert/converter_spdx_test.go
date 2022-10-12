@@ -1,51 +1,82 @@
 package convert
 
 import (
+	"reflect"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 func Test_ConvertSPDXDocuments(t *testing.T) {
-	v2_2doc := v2_2.Document{
-		Packages: []*v2_2.Package{
-			{
-				PackageName: "Pkg 1",
-				Files: []*v2_2.File{
+	tests := []struct {
+		name     string
+		source   interface{}
+		expected interface{}
+	}{
+		{
+			name: "basic v2_2 to v2_3",
+			source: v2_2.Document{
+				Packages: []*v2_2.Package{
 					{
-						FileName: "File 1",
+						PackageName: "Pkg 1",
+						Files: []*v2_2.File{
+							{
+								FileName: "File 1",
+							},
+							{
+								FileName: "File 2",
+							},
+						},
+						PackageVerificationCode: common.PackageVerificationCode{
+							Value: "verification code value",
+							ExcludedFiles: []string{
+								"a",
+								"b",
+							},
+						},
 					},
+				},
+			},
+			expected: v2_3.Document{
+				Packages: []*v2_3.Package{
 					{
-						FileName: "File 2",
+						PackageName: "Pkg 1",
+						Files: []*v2_3.File{
+							{
+								FileName: "File 1",
+							},
+							{
+								FileName: "File 2",
+							},
+						},
+						PackageVerificationCode: &common.PackageVerificationCode{
+							Value: "verification code value",
+							ExcludedFiles: []string{
+								"a",
+								"b",
+							},
+						},
 					},
 				},
 			},
 		},
 	}
 
-	v2_3doc := v2_3.Document{}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			outType := reflect.TypeOf(test.expected)
+			outInstance := reflect.New(outType).Interface()
+			err := Convert(test.source, outInstance)
+			if err != nil {
+				t.Fatalf("error converting: %v", err)
+			}
+			outInstance = reflect.ValueOf(outInstance).Elem().Interface()
 
-	err := Convert(v2_2doc, &v2_3doc)
-	if err != nil {
-		t.Fatalf("unable to convert: %v", err)
-	}
-
-	if len(v2_3doc.Packages) != 1 {
-		t.Errorf("Incorrect Packages length: %v", len(v2_3doc.Packages))
-	}
-
-	pkg := v2_3doc.Packages[0]
-	files := pkg.Files
-	if len(files) != 2 {
-		t.Errorf("Incorrect Files length: %v", len(files))
-	}
-
-	if files[0].FileName != "File 1" {
-		t.Errorf("Incorrect File name: %v", files[0].FileName)
-	}
-
-	if files[1].FileName != "File 2" {
-		t.Errorf("Incorrect File name: %v", files[1].FileName)
+			if !reflect.DeepEqual(test.expected, outInstance) {
+				t.Fatalf("structs do not match: %+v %+v", test.expected, outInstance)
+			}
+		})
 	}
 }
