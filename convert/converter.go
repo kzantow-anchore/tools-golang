@@ -49,7 +49,7 @@ func Convert(from interface{}, to interface{}) error {
 		fromField := fromType.Field(i)
 		fromFieldValue := fromValue.Field(i)
 
-		if !fromFieldValue.IsValid() || fromFieldValue.IsZero() || fromFieldValue.IsNil() {
+		if !fromFieldValue.IsValid() || fromFieldValue.IsZero() {
 			continue
 		}
 
@@ -64,6 +64,10 @@ func Convert(from interface{}, to interface{}) error {
 
 		if err != nil {
 			return err
+		}
+
+		if newValue == nilValue {
+			continue
 		}
 
 		msg := fmt.Sprintf("from value: %v to value: %v", fromFieldValue.Interface(), newValue.Interface())
@@ -84,11 +88,11 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 
 	// handle incoming pointer types
 	if fromType.Kind() == reflect.Ptr {
-		fromValue = fromValue.Elem()
-		if !fromValue.IsValid() {
+		if fromValue.IsNil() {
 			return nilValue, nil
 		}
-		if fromValue.IsZero() || fromValue.IsNil() {
+		fromValue = fromValue.Elem()
+		if !fromValue.IsValid() || fromValue.IsZero() {
 			return nilValue, nil
 		}
 		fromType = fromValue.Type()
@@ -120,6 +124,10 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 			newValue, err := getValue(fromFieldValue, toFieldType)
 			if err != nil {
 				return nilValue, err
+			}
+
+			if newValue == nilValue {
+				continue
 			}
 
 			toFieldValue.Set(newValue)
@@ -164,6 +172,12 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 			v, err := getValue(fromVal, elementType)
 			if err != nil {
 				return nilValue, err
+			}
+			if k == nilValue || v == nilValue {
+				continue
+			}
+			if v == nilValue {
+				continue
 			}
 			if k.IsValid() && v.IsValid() {
 				toValue.SetMapIndex(k, v)
@@ -249,6 +263,9 @@ func convertValueTypes(value reflect.Value, targetType reflect.Type) (reflect.Va
 		v, err := convertValueTypes(value, elementType)
 		if err != nil {
 			return nilValue, err
+		}
+		if v == nilValue {
+			return v, nil
 		}
 		slice := reflect.MakeSlice(targetType, 1, 1)
 		slice.Index(0).Set(v)
