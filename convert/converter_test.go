@@ -427,6 +427,42 @@ func Test_Convert(t *testing.T) {
 				Value: []uint16{63},
 			},
 		},
+		{
+			name: "test top-level conversion functions",
+			fromStruct: T3{
+				T1: T1{
+					Same:     "same value",
+					OldValue: "old value",
+				},
+			},
+			toStruct: T4{
+				T2: T2{
+					Same:     "same value",
+					NewValue: "old value",
+				},
+			},
+		},
+		{
+			name: "test nested conversion functions",
+			fromStruct: T5{
+				Version: "2.2",
+				Embedded: T3{
+					T1: T1{
+						Same:     "same value",
+						OldValue: "old value",
+					},
+				},
+			},
+			toStruct: T6{
+				Version: "2.3",
+				Embedded: T4{
+					T2: T2{
+						Same:     "same value",
+						NewValue: "old value",
+					},
+				},
+			},
+		},
 	}
 
 	for _, test := range tests {
@@ -457,3 +493,55 @@ func Test_Convert(t *testing.T) {
 func s(s string) *string {
 	return &s
 }
+
+// -------- structs to test conversion functions:
+
+type T1 struct {
+	Same     string
+	OldValue string
+}
+
+type T2 struct {
+	Same     string
+	NewValue string
+}
+
+func (t *T2) ConvertFrom(i interface{}) error {
+	t1 := i.(T1)
+	t.NewValue = t1.OldValue
+	return nil
+}
+
+var _ From = (*T2)(nil)
+
+type T3 struct {
+	T1 T1
+}
+
+type T4 struct {
+	T2 T2
+}
+
+func (t *T4) ConvertFrom(i interface{}) error {
+	t3 := i.(T3)
+	return Convert(t3.T1, &t.T2)
+}
+
+var _ From = (*T4)(nil)
+
+type T5 struct {
+	Version  string
+	Embedded T3
+}
+
+type T6 struct {
+	Version  string
+	Embedded T4
+}
+
+func (t *T6) ConvertFrom(_ interface{}) error {
+	t.Version = "2.3"
+	return nil
+}
+
+var _ From = (*T6)(nil)

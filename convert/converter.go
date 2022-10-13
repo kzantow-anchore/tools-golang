@@ -6,17 +6,15 @@ import (
 	"strconv"
 )
 
-type Converter func(from interface{}, to interface{}) error
-
-type ConvertFrom interface {
-	ConvertFrom(interface{}, Converter) error
+type From interface {
+	ConvertFrom(interface{}) error
 }
 
 const convertFromName = "ConvertFrom"
 
 var (
 	nilValue        = reflect.ValueOf(nil)
-	convertFromType = reflect.TypeOf((*ConvertFrom)(nil)).Elem()
+	convertFromType = reflect.TypeOf((*From)(nil)).Elem()
 )
 
 // Convert takes two objects, e.g. v2_1.Document and &v2_2.Document{} and attempts to
@@ -31,18 +29,16 @@ func Convert(from interface{}, to interface{}) error {
 		fromType = fromValue.Type()
 	}
 
-	toValue := reflect.ValueOf(to)
-	toType := toValue.Type()
+	toValuePtr := reflect.ValueOf(to)
+	toTypePtr := toValuePtr.Type()
 
-	if toType.Kind() != reflect.Ptr {
+	if toTypePtr.Kind() != reflect.Ptr {
 		return fmt.Errorf("to struct provided was not a pointer, unable to set values: %v", to)
 	}
 
 	// handle incoming pointers
-	for toType.Kind() == reflect.Ptr {
-		toValue = toValue.Elem()
-		toType = toValue.Type()
-	}
+	toValue := toValuePtr.Elem()
+	toType := toValue.Type()
 
 	// Assume structs at this point
 	for i := 0; i < fromType.NumField(); i++ {
@@ -70,10 +66,20 @@ func Convert(from interface{}, to interface{}) error {
 			continue
 		}
 
-		msg := fmt.Sprintf("from value: %v to value: %v", fromFieldValue.Interface(), newValue.Interface())
-		fmt.Println(msg)
-
 		toFieldValue.Set(newValue)
+	}
+
+	if toTypePtr.Implements(convertFromType) {
+		convertFrom := toValuePtr.MethodByName(convertFromName)
+		if !convertFrom.IsValid() {
+			return fmt.Errorf("unable to get ConvertFrom method")
+		}
+		args := []reflect.Value{fromValue}
+		out := convertFrom.Call(args)
+		err := out[0].Interface()
+		if err != nil {
+			return fmt.Errorf("an error occurred calling %s.%s: %v", toType.Name(), convertFromName, err)
+		}
 	}
 
 	return nil
@@ -134,12 +140,12 @@ func getValue(fromValue reflect.Value, targetType reflect.Type) (reflect.Value, 
 		}
 
 		// allow structs to implement a custom convert function from previous/next version struct
-		if baseTargetType.Implements(convertFromType) {
-			convertFrom := toValue.MethodByName(convertFromName)
+		if reflect.PtrTo(baseTargetType).Implements(convertFromType) {
+			convertFrom := toValue.Addr().MethodByName(convertFromName)
 			if !convertFrom.IsValid() {
 				return nilValue, fmt.Errorf("unable to get ConvertFrom method")
 			}
-			args := []reflect.Value{}
+			args := []reflect.Value{fromValue}
 			out := convertFrom.Call(args)
 			err := out[0].Interface()
 			if err != nil {
