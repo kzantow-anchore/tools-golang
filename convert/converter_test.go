@@ -32,6 +32,35 @@ func Test_Convert(t *testing.T) {
 			}{},
 		},
 		{
+			name: "missing pointer properties are omitted",
+			fromStruct: struct {
+				Value *string
+			}{},
+			toStruct: struct {
+				Value *string
+			}{},
+		},
+		{
+			name: "missing slice properties are omitted",
+			fromStruct: struct {
+				Value []string
+			}{},
+			toStruct: struct {
+				Value []string
+			}{},
+		},
+		{
+			name: "nil pointer properties are nil",
+			fromStruct: struct {
+				Value *string
+			}{
+				Value: nil,
+			},
+			toStruct: struct {
+				Value string
+			}{},
+		},
+		{
 			name: "string equals",
 			fromStruct: struct {
 				Value string
