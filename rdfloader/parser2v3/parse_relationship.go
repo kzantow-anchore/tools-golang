@@ -8,8 +8,8 @@ import (
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // parsing the relationship that exists in the rdf document.
@@ -17,7 +17,7 @@ import (
 // parsing the relationship appends the relationship to the current document's
 // Relationships Slice.
 func (parser *rdfParser2_3) parseRelationship(triple *gordfParser.Triple) (err error) {
-	reln := v2_3.Relationship{}
+	reln := spdx.Relationship{}
 
 	reln.RefA, err = getReferenceFromURI(triple.Subject.ID)
 	if err != nil {
@@ -87,7 +87,7 @@ func (parser *rdfParser2_3) parseRelationship(triple *gordfParser.Triple) (err e
 	return nil
 }
 
-func (parser *rdfParser2_3) parseRelatedElementFromTriple(reln *v2_3.Relationship, triple *gordfParser.Triple) error {
+func (parser *rdfParser2_3) parseRelatedElementFromTriple(reln *spdx.Relationship, triple *gordfParser.Triple) error {
 	// iterate over relatedElement Type and check which SpdxElement it is.
 	var err error
 	switch triple.Object.ID {

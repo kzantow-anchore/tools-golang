@@ -8,8 +8,8 @@ import (
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // returns a new instance of rdfParser2_3 given the gordf object and nodeToTriples mapping
@@ -17,17 +17,17 @@ func NewParser2_3(gordfParserObj *gordfParser.Parser, nodeToTriples map[string][
 	parser := rdfParser2_3{
 		gordfParserObj:      gordfParserObj,
 		nodeStringToTriples: nodeToTriples,
-		doc: &v2_3.Document{
-			ExternalDocumentReferences: []v2_3.ExternalDocumentRef{},
-			CreationInfo:               &v2_3.CreationInfo{},
-			Packages:                   []*v2_3.Package{},
-			Files:                      []*v2_3.File{},
-			OtherLicenses:              []*v2_3.OtherLicense{},
-			Relationships:              []*v2_3.Relationship{},
-			Annotations:                []*v2_3.Annotation{},
-			Reviews:                    []*v2_3.Review{},
+		doc: &spdx.Document{
+			ExternalDocumentReferences: []spdx.ExternalDocumentRef{},
+			CreationInfo:               &spdx.CreationInfo{},
+			Packages:                   []*spdx.Package{},
+			Files:                      []*spdx.File{},
+			OtherLicenses:              []*spdx.OtherLicense{},
+			Relationships:              []*spdx.Relationship{},
+			Annotations:                []*spdx.Annotation{},
+			Reviews:                    []*spdx.Review{},
 		},
-		files:            map[common.ElementID]*v2_3.File{},
+		files:            map[common.ElementID]*spdx.File{},
 		assocWithPackage: map[common.ElementID]bool{},
 		cache:            map[string]*nodeState{},
 	}
@@ -36,7 +36,7 @@ func NewParser2_3(gordfParserObj *gordfParser.Parser, nodeToTriples map[string][
 
 // main function which takes in a gordfParser and returns
 // a spdxDocument model or the error encountered while parsing it
-func LoadFromGoRDFParser(gordfParserObj *gordfParser.Parser) (*v2_3.Document, error) {
+func LoadFromGoRDFParser(gordfParserObj *gordfParser.Parser) (*spdx.Document, error) {
 	// nodeToTriples is a mapping from a node to list of triples.
 	// for every node in the set of subjects of all the triples,
 	// it provides a list of triples that are associated with that subject node.

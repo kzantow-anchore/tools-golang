@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 func (parser *tvParser2_3) parsePairFromSnippet2_3(tag string, value string) error {
@@ -18,7 +18,7 @@ func (parser *tvParser2_3) parsePairFromSnippet2_3(tag string, value string) err
 		if parser.file != nil && parser.file.FileSPDXIdentifier == nullSpdxElementId2_3 {
 			return fmt.Errorf("file with FileName %s does not have SPDX identifier", parser.file.FileName)
 		}
-		parser.snippet = &v2_3.Snippet{}
+		parser.snippet = &spdx.Snippet{}
 		eID, err := extractElementID(value)
 		if err != nil {
 			return err
@@ -26,7 +26,7 @@ func (parser *tvParser2_3) parsePairFromSnippet2_3(tag string, value string) err
 		// FIXME: how should we handle where not associated with current file?
 		if parser.file != nil {
 			if parser.file.Snippets == nil {
-				parser.file.Snippets = map[common.ElementID]*v2_3.Snippet{}
+				parser.file.Snippets = map[common.ElementID]*spdx.Snippet{}
 			}
 			parser.file.Snippets[eID] = parser.snippet
 		}
@@ -107,14 +107,14 @@ func (parser *tvParser2_3) parsePairFromSnippet2_3(tag string, value string) err
 		parser.snippet.SnippetAttributionTexts = append(parser.snippet.SnippetAttributionTexts, value)
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_3.Relationship{}
+		parser.rln = &spdx.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship2_3(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship2_3(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_3.Annotation{}
+		parser.ann = &spdx.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation2_3(tag, value)
 	case "AnnotationDate":

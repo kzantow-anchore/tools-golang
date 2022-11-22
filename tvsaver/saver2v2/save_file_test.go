@@ -7,12 +7,12 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_22 "github.com/spdx/tools-golang/v2_2"
 )
 
 // ===== File section Saver tests =====
 func TestSaver2_2FileSavesText(t *testing.T) {
-	f := &v2_2.File{
+	f := &v2_22.File{
 		FileName:           "/tmp/whatever.txt",
 		FileSPDXIdentifier: common.ElementID("File123"),
 		FileTypes: []string{
@@ -31,20 +31,20 @@ func TestSaver2_2FileSavesText(t *testing.T) {
 		},
 		LicenseComments:   "this is a license comment(s)",
 		FileCopyrightText: "Copyright (c) Jane Doe",
-		ArtifactOfProjects: []*v2_2.ArtifactOfProject{
-			&v2_2.ArtifactOfProject{
+		ArtifactOfProjects: []*v2_22.ArtifactOfProject{
+			&v2_22.ArtifactOfProject{
 				Name:     "project1",
 				HomePage: "http://example.com/1/",
 				URI:      "http://example.com/1/uri.whatever",
 			},
-			&v2_2.ArtifactOfProject{
+			&v2_22.ArtifactOfProject{
 				Name: "project2",
 			},
-			&v2_2.ArtifactOfProject{
+			&v2_22.ArtifactOfProject{
 				Name:     "project3",
 				HomePage: "http://example.com/3/",
 			},
-			&v2_2.ArtifactOfProject{
+			&v2_22.ArtifactOfProject{
 				Name: "project4",
 				URI:  "http://example.com/4/uri.whatever",
 			},
@@ -114,7 +114,7 @@ FileDependency: g.txt
 }
 
 func TestSaver2_2FileSavesSnippetsAlso(t *testing.T) {
-	sn1 := &v2_2.Snippet{
+	sn1 := &v2_22.Snippet{
 		SnippetSPDXIdentifier:         common.ElementID("Snippet19"),
 		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File123").ElementRefID,
 		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 17}, EndPointer: common.SnippetRangePointer{Offset: 209}}},
@@ -122,7 +122,7 @@ func TestSaver2_2FileSavesSnippetsAlso(t *testing.T) {
 		SnippetCopyrightText:          "Copyright (c) John Doe 20x6",
 	}
 
-	sn2 := &v2_2.Snippet{
+	sn2 := &v2_22.Snippet{
 		SnippetSPDXIdentifier:         common.ElementID("Snippet20"),
 		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File123").ElementRefID,
 		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 268}, EndPointer: common.SnippetRangePointer{Offset: 309}}},
@@ -130,12 +130,12 @@ func TestSaver2_2FileSavesSnippetsAlso(t *testing.T) {
 		SnippetCopyrightText:          "NOASSERTION",
 	}
 
-	sns := map[common.ElementID]*v2_2.Snippet{
+	sns := map[common.ElementID]*v2_22.Snippet{
 		common.ElementID("Snippet19"): sn1,
 		common.ElementID("Snippet20"): sn2,
 	}
 
-	f := &v2_2.File{
+	f := &v2_22.File{
 		FileName:           "/tmp/whatever.txt",
 		FileSPDXIdentifier: common.ElementID("File123"),
 		Checksums: []common.Checksum{
@@ -186,7 +186,7 @@ SnippetCopyrightText: NOASSERTION
 }
 
 func TestSaver2_2FileOmitsOptionalFieldsIfEmpty(t *testing.T) {
-	f := &v2_2.File{
+	f := &v2_22.File{
 		FileName:           "/tmp/whatever.txt",
 		FileSPDXIdentifier: common.ElementID("File123"),
 		Checksums: []common.Checksum{
@@ -224,7 +224,7 @@ FileCopyrightText: Copyright (c) Jane Doe
 }
 
 func TestSaver2_2FileWrapsCopyrightMultiLine(t *testing.T) {
-	f := &v2_2.File{
+	f := &v2_22.File{
 		FileName:           "/tmp/whatever.txt",
 		FileSPDXIdentifier: common.ElementID("File123"),
 		Checksums: []common.Checksum{
@@ -264,7 +264,7 @@ Copyright (c) John Doe</text>
 }
 
 func TestSaver2_2FileWrapsCommentsAndNoticesMultiLine(t *testing.T) {
-	f := &v2_2.File{
+	f := &v2_22.File{
 		FileName:           "/tmp/whatever.txt",
 		FileSPDXIdentifier: common.ElementID("File123"),
 		Checksums: []common.Checksum{

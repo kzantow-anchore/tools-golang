@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	v2_12 "github.com/spdx/tools-golang/v2_1"
 )
 
 // ===== Package section Saver tests =====
@@ -18,7 +18,7 @@ func TestSaver2_1PackageSavesTextCombo1(t *testing.T) {
 	// PackageVerificationCodeExcludedFile has string
 
 	// NOTE, this is an entirely made up CPE and the format is likely invalid
-	per1 := &v2_1.PackageExternalReference{
+	per1 := &v2_12.PackageExternalReference{
 		Category:           "SECURITY",
 		RefType:            "cpe22Type",
 		Locator:            "cpe:/a:john_doe_inc:p1:0.1.0",
@@ -26,7 +26,7 @@ func TestSaver2_1PackageSavesTextCombo1(t *testing.T) {
 	}
 
 	// NOTE, this is an entirely made up NPM
-	per2 := &v2_1.PackageExternalReference{
+	per2 := &v2_12.PackageExternalReference{
 		Category: "PACKAGE-MANAGER",
 		RefType:  "npm",
 		Locator:  "p1@0.1.0",
@@ -34,14 +34,14 @@ func TestSaver2_1PackageSavesTextCombo1(t *testing.T) {
 multi-line external ref comment`,
 	}
 
-	per3 := &v2_1.PackageExternalReference{
+	per3 := &v2_12.PackageExternalReference{
 		Category: "OTHER",
 		RefType:  "anything",
 		Locator:  "anything-without-spaces-can-go-here",
 		// no ExternalRefComment for this one
 	}
 
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageVersion:            "0.1.0",
@@ -83,7 +83,7 @@ multi-line external ref comment`,
 		PackageSummary:         "this is a summary comment",
 		PackageDescription:     "this is a description comment",
 		PackageComment:         "this is a comment comment",
-		PackageExternalReferences: []*v2_1.PackageExternalReference{
+		PackageExternalReferences: []*v2_12.PackageExternalReference{
 			per1,
 			per2,
 			per3,
@@ -144,7 +144,7 @@ func TestSaver2_1PackageSavesTextCombo2(t *testing.T) {
 	// FilesAnalyzed true, IsFilesAnalyzedTagPresent false
 	// PackageVerificationCodeExcludedFile is empty
 
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageVersion:            "0.1.0",
@@ -232,7 +232,7 @@ func TestSaver2_1PackageSavesTextCombo3(t *testing.T) {
 	// FilesAnalyzed false, IsFilesAnalyzedTagPresent true
 	// PackageVerificationCodeExcludedFile is empty
 
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageVersion:            "0.1.0",
@@ -316,7 +316,7 @@ PackageComment: this is a comment comment
 }
 
 func TestSaver2_1PackageSaveOmitsOptionalFieldsIfEmpty(t *testing.T) {
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "http://example.com/p1/p1-0.1.0-master.tar.gz",
@@ -362,7 +362,7 @@ PackageCopyrightText: Copyright (c) John Doe, Inc.
 }
 
 func TestSaver2_1PackageSavesFilesIfPresent(t *testing.T) {
-	f1 := &v2_1.File{
+	f1 := &v2_12.File{
 		FileName:           "/tmp/whatever1.txt",
 		FileSPDXIdentifier: common.ElementID("File1231"),
 		Checksums: []common.Checksum{
@@ -376,7 +376,7 @@ func TestSaver2_1PackageSavesFilesIfPresent(t *testing.T) {
 		FileCopyrightText:  "Copyright (c) Jane Doe",
 	}
 
-	f2 := &v2_1.File{
+	f2 := &v2_12.File{
 		FileName:           "/tmp/whatever2.txt",
 		FileSPDXIdentifier: common.ElementID("File1232"),
 		Checksums: []common.Checksum{
@@ -390,7 +390,7 @@ func TestSaver2_1PackageSavesFilesIfPresent(t *testing.T) {
 		FileCopyrightText:  "Copyright (c) John Doe",
 	}
 
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "http://example.com/p1/p1-0.1.0-master.tar.gz",
@@ -408,7 +408,7 @@ func TestSaver2_1PackageSavesFilesIfPresent(t *testing.T) {
 		},
 		PackageLicenseDeclared: "Apache-2.0 OR GPL-2.0-or-later",
 		PackageCopyrightText:   "Copyright (c) John Doe, Inc.",
-		Files: []*v2_1.File{
+		Files: []*v2_12.File{
 			f1,
 			f2,
 		},
@@ -454,7 +454,7 @@ FileCopyrightText: Copyright (c) John Doe
 }
 
 func TestSaver2_1PackageWrapsCopyrightMultiLine(t *testing.T) {
-	pkg := &v2_1.Package{
+	pkg := &v2_12.Package{
 		PackageName:               "p1",
 		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "http://example.com/p1/p1-0.1.0-master.tar.gz",

@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func renderSnippet2_3(sn *v2_3.Snippet, w io.Writer) error {
+func renderSnippet2_3(sn *spdx.Snippet, w io.Writer) error {
 	if sn.SnippetSPDXIdentifier != "" {
 		fmt.Fprintf(w, "SnippetSPDXID: %s\n", common.RenderElementID(sn.SnippetSPDXIdentifier))
 	}

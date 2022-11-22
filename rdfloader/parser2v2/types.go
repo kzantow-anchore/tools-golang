@@ -5,7 +5,7 @@ package parser2v2
 import (
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_22 "github.com/spdx/tools-golang/v2_2"
 )
 
 type rdfParser2_2 struct {
@@ -15,10 +15,10 @@ type rdfParser2_2 struct {
 	nodeStringToTriples map[string][]*gordfParser.Triple
 
 	// document into which data is being parsed
-	doc *v2_2.Document
+	doc *v2_22.Document
 
 	// map of packages and files.
-	files            map[common.ElementID]*v2_2.File
+	files            map[common.ElementID]*v2_22.File
 	assocWithPackage map[common.ElementID]bool
 
 	// mapping of nodeStrings to parsed object to save double computation.

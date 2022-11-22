@@ -7,7 +7,7 @@ import (
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 // Cardinality: Mandatory, one.

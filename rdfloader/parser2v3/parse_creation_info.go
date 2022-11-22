@@ -6,12 +6,12 @@ import (
 	"fmt"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // Cardinality: Mandatory, one.
-func (parser *rdfParser2_3) parseCreationInfoFromNode(ci *v2_3.CreationInfo, node *gordfParser.Node) error {
+func (parser *rdfParser2_3) parseCreationInfoFromNode(ci *spdx.CreationInfo, node *gordfParser.Node) error {
 	for _, triple := range parser.nodeToTriples(node) {
 		switch triple.Predicate.ID {
 		case SPDX_LICENSE_LIST_VERSION: // 2.7
@@ -37,7 +37,7 @@ func (parser *rdfParser2_3) parseCreationInfoFromNode(ci *v2_3.CreationInfo, nod
 	return nil
 }
 
-func setCreator(creatorStr string, ci *v2_3.CreationInfo) error {
+func setCreator(creatorStr string, ci *spdx.CreationInfo) error {
 	entityType, entity, err := ExtractSubs(creatorStr, ":")
 	if err != nil {
 		return fmt.Errorf("error setting creator of a creation info: %s", err)

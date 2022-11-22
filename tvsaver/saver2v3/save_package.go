@@ -8,11 +8,11 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func renderPackage2_3(pkg *v2_3.Package, w io.Writer) error {
+func renderPackage2_3(pkg *spdx.Package, w io.Writer) error {
 	if pkg.PackageName != "" {
 		fmt.Fprintf(w, "PackageName: %s\n", pkg.PackageName)
 	}

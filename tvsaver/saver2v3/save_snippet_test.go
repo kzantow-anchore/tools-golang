@@ -6,13 +6,13 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // ===== Snippet section Saver tests =====
 func TestSaver2_3SnippetSavesText(t *testing.T) {
-	sn := &v2_3.Snippet{
+	sn := &spdx.Snippet{
 		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
 		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
 		Ranges: []common.SnippetRange{
@@ -68,7 +68,7 @@ SnippetAttributionText: some attributions
 }
 
 func TestSaver2_3SnippetOmitsOptionalFieldsIfEmpty(t *testing.T) {
-	sn := &v2_3.Snippet{
+	sn := &spdx.Snippet{
 		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
 		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
 		Ranges: []common.SnippetRange{
@@ -105,7 +105,7 @@ SnippetCopyrightText: Copyright (c) John Doe 20x6
 }
 
 func TestSaver2_3SnippetWrapsCopyrightMultiline(t *testing.T) {
-	sn := &v2_3.Snippet{
+	sn := &spdx.Snippet{
 		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
 		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
 		Ranges: []common.SnippetRange{

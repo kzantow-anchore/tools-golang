@@ -8,7 +8,7 @@ import (
 	"sort"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	"github.com/spdx/tools-golang/v2_1"
 )
 
 func renderFile2_1(f *v2_1.File, w io.Writer) error {

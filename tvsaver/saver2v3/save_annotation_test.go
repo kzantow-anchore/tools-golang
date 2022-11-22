@@ -6,13 +6,13 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // ===== Annotation section Saver tests =====
 func TestSaver2_3AnnotationSavesTextForPerson(t *testing.T) {
-	ann := &v2_3.Annotation{
+	ann := &spdx.Annotation{
 		Annotator:                common.Annotator{AnnotatorType: "Person", Annotator: "John Doe"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
@@ -44,7 +44,7 @@ AnnotationComment: This is an annotation about the SPDX document
 }
 
 func TestSaver2_3AnnotationSavesTextForOrganization(t *testing.T) {
-	ann := &v2_3.Annotation{
+	ann := &spdx.Annotation{
 		Annotator:                common.Annotator{AnnotatorType: "Organization", Annotator: "John Doe, Inc."},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
@@ -76,7 +76,7 @@ AnnotationComment: This is an annotation about the SPDX document
 }
 
 func TestSaver2_3AnnotationSavesTextForTool(t *testing.T) {
-	ann := &v2_3.Annotation{
+	ann := &spdx.Annotation{
 		Annotator:                common.Annotator{AnnotatorType: "Tool", Annotator: "magictool-1.1"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",

@@ -7,13 +7,13 @@ import (
 	"strings"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // returns a file instance and the error if any encountered.
-func (parser *rdfParser2_3) getFileFromNode(fileNode *gordfParser.Node) (file *v2_3.File, err error) {
-	file = &v2_3.File{}
+func (parser *rdfParser2_3) getFileFromNode(fileNode *gordfParser.Node) (file *spdx.File, err error) {
+	file = &spdx.File{}
 
 	currState := parser.cache[fileNode.ID]
 	if currState == nil {
@@ -24,7 +24,7 @@ func (parser *rdfParser2_3) getFileFromNode(fileNode *gordfParser.Node) (file *v
 		}
 	} else if currState.Color == GREY {
 		// we have already started parsing this file node and we needn't parse it again.
-		return currState.object.(*v2_3.File), nil
+		return currState.object.(*spdx.File), nil
 	}
 
 	// setting color to grey to indicate that we've started parsing this node.
@@ -87,7 +87,7 @@ func (parser *rdfParser2_3) getFileFromNode(fileNode *gordfParser.Node) (file *v
 		// deprecated artifactOf (see sections 4.9, 4.10, 4.11)
 		case SPDX_ARTIFACT_OF:
 			// cardinality: min 0
-			var artifactOf *v2_3.ArtifactOfProject
+			var artifactOf *spdx.ArtifactOfProject
 			artifactOf, err = parser.getArtifactFromNode(subTriple.Object)
 			file.ArtifactOfProjects = append(file.ArtifactOfProjects, artifactOf)
 		case RDFS_COMMENT: // 4.12
@@ -126,7 +126,7 @@ func (parser *rdfParser2_3) getFileFromNode(fileNode *gordfParser.Node) (file *v
 	return file, nil
 }
 
-func (parser *rdfParser2_3) setFileChecksumFromNode(file *v2_3.File, checksumNode *gordfParser.Node) error {
+func (parser *rdfParser2_3) setFileChecksumFromNode(file *spdx.File, checksumNode *gordfParser.Node) error {
 	checksumAlgorithm, checksumValue, err := parser.getChecksumFromNode(checksumNode)
 	if err != nil {
 		return fmt.Errorf("error parsing checksumNode of a file: %v", err)
@@ -145,8 +145,8 @@ func (parser *rdfParser2_3) setFileChecksumFromNode(file *v2_3.File, checksumNod
 	return nil
 }
 
-func (parser *rdfParser2_3) getArtifactFromNode(node *gordfParser.Node) (*v2_3.ArtifactOfProject, error) {
-	artifactOf := &v2_3.ArtifactOfProject{}
+func (parser *rdfParser2_3) getArtifactFromNode(node *gordfParser.Node) (*spdx.ArtifactOfProject, error) {
+	artifactOf := &spdx.ArtifactOfProject{}
 	// setting artifactOfProjectURI attribute (which is optional)
 	if node.NodeType == gordfParser.IRI {
 		artifactOf.URI = node.ID
@@ -187,7 +187,7 @@ func (parser *rdfParser2_3) setUnpackagedFiles() {
 	}
 }
 
-func setFileIdentifier(idURI string, file *v2_3.File) (err error) {
+func setFileIdentifier(idURI string, file *spdx.File) (err error) {
 	idURI = strings.TrimSpace(idURI)
 	uriFragment := getLastPartOfURI(idURI)
 	file.FileSPDXIdentifier, err = ExtractElementID(uriFragment)

@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (pkg *v2_3.Package, err error) {
-	pkg = &v2_3.Package{} // new package which will be returned
+func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (pkg *spdx.Package, err error) {
+	pkg = &spdx.Package{} // new package which will be returned
 
 	currState := parser.cache[packageNode.ID]
 	if currState == nil {
@@ -24,7 +24,7 @@ func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (p
 		}
 	} else if currState.Color == GREY {
 		// we have already started parsing this package node and we needn't parse it again.
-		return currState.object.(*v2_3.Package), nil
+		return currState.object.(*spdx.Package), nil
 	}
 
 	// setting color of the state to grey to indicate that we've started to
@@ -179,8 +179,8 @@ func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (p
 }
 
 // parses externalReference found in the package by the associated triple.
-func (parser *rdfParser2_3) getPackageExternalRef(node *gordfParser.Node) (externalDocRef *v2_3.PackageExternalReference, err error) {
-	externalDocRef = &v2_3.PackageExternalReference{}
+func (parser *rdfParser2_3) getPackageExternalRef(node *gordfParser.Node) (externalDocRef *spdx.PackageExternalReference, err error) {
+	externalDocRef = &spdx.PackageExternalReference{}
 	for _, triple := range parser.nodeToTriples(node) {
 		switch triple.Predicate.ID {
 		case SPDX_REFERENCE_CATEGORY:
@@ -230,7 +230,7 @@ func getPrimaryPackagePurpose(purpose string) string {
 	return ""
 }
 
-func (parser *rdfParser2_3) setPackageVerificationCode(pkg *v2_3.Package, node *gordfParser.Node) error {
+func (parser *rdfParser2_3) setPackageVerificationCode(pkg *spdx.Package, node *gordfParser.Node) error {
 	if pkg.PackageVerificationCode == nil {
 		pkg.PackageVerificationCode = &common.PackageVerificationCode{}
 	}
@@ -254,9 +254,9 @@ func (parser *rdfParser2_3) setPackageVerificationCode(pkg *v2_3.Package, node *
 
 // appends the file to the package and also sets the assocWithPackage for the
 // file to indicate the file is associated with a package
-func (parser *rdfParser2_3) setFileToPackage(pkg *v2_3.Package, file *v2_3.File) {
+func (parser *rdfParser2_3) setFileToPackage(pkg *spdx.Package, file *spdx.File) {
 	if pkg.Files == nil {
-		pkg.Files = []*v2_3.File{}
+		pkg.Files = []*spdx.File{}
 	}
 	pkg.Files = append(pkg.Files, file)
 	parser.assocWithPackage[file.FileSPDXIdentifier] = true
@@ -265,7 +265,7 @@ func (parser *rdfParser2_3) setFileToPackage(pkg *v2_3.Package, file *v2_3.File)
 // given a supplierObject, sets the PackageSupplier attribute of the pkg.
 // Args:
 //    value: [NOASSERTION | [Person | Organization]: string]
-func setPackageSupplier(pkg *v2_3.Package, value string) error {
+func setPackageSupplier(pkg *spdx.Package, value string) error {
 	value = strings.TrimSpace(value)
 	supplier := &common.Supplier{}
 	if strings.ToUpper(value) == "NOASSERTION" {
@@ -294,7 +294,7 @@ func setPackageSupplier(pkg *v2_3.Package, value string) error {
 // given a OriginatorObject, sets the PackageOriginator attribute of the pkg.
 // Args:
 //    value: [NOASSERTION | [Person | Organization]: string]
-func setPackageOriginator(pkg *v2_3.Package, value string) error {
+func setPackageOriginator(pkg *spdx.Package, value string) error {
 	value = strings.TrimSpace(value)
 	originator := &common.Originator{}
 	if strings.ToUpper(value) == "NOASSERTION" {
@@ -321,7 +321,7 @@ func setPackageOriginator(pkg *v2_3.Package, value string) error {
 }
 
 // validates the uri and sets the location if it is valid
-func setDocumentLocationFromURI(pkg *v2_3.Package, locationURI string) error {
+func setDocumentLocationFromURI(pkg *spdx.Package, locationURI string) error {
 	switch locationURI {
 	case SPDX_NOASSERTION_CAPS, SPDX_NOASSERTION_SMALL:
 		pkg.PackageDownloadLocation = "NOASSERTION"
@@ -338,13 +338,13 @@ func setDocumentLocationFromURI(pkg *v2_3.Package, locationURI string) error {
 
 // sets the FilesAnalyzed attribute to the given package
 // boolValue is a string of type "true" or "false"
-func setFilesAnalyzed(pkg *v2_3.Package, boolValue string) (err error) {
+func setFilesAnalyzed(pkg *spdx.Package, boolValue string) (err error) {
 	pkg.IsFilesAnalyzedTagPresent = true
 	pkg.FilesAnalyzed, err = boolFromString(boolValue)
 	return err
 }
 
-func (parser *rdfParser2_3) setPackageChecksum(pkg *v2_3.Package, node *gordfParser.Node) error {
+func (parser *rdfParser2_3) setPackageChecksum(pkg *spdx.Package, node *gordfParser.Node) error {
 	checksumAlgorithm, checksumValue, err := parser.getChecksumFromNode(node)
 	if err != nil {
 		return fmt.Errorf("error getting checksum algorithm and value from %v", node)

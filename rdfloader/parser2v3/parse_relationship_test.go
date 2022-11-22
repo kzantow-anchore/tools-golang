@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 func Test_getReferenceFromURI(t *testing.T) {
@@ -83,7 +83,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln := &v2_3.Relationship{}
+	reln := &spdx.Relationship{}
 	triple := rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_PACKAGE)[0]
 	err := parser.parseRelatedElementFromTriple(reln, triple)
 	if err != nil {
@@ -112,7 +112,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln = &v2_3.Relationship{}
+	reln = &spdx.Relationship{}
 	triple = rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_PACKAGE)[0]
 	err = parser.parseRelatedElementFromTriple(reln, triple)
 	if err == nil {
@@ -127,7 +127,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln = &v2_3.Relationship{}
+	reln = &spdx.Relationship{}
 	triple = rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_FILE)[0]
 	err = parser.parseRelatedElementFromTriple(reln, triple)
 	if err != nil {
@@ -156,7 +156,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln = &v2_3.Relationship{}
+	reln = &spdx.Relationship{}
 	triple = rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_FILE)[0]
 	err = parser.parseRelatedElementFromTriple(reln, triple)
 	if err == nil {
@@ -171,7 +171,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln = &v2_3.Relationship{}
+	reln = &spdx.Relationship{}
 	triple = rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_SPDX_ELEMENT)[0]
 	err = parser.parseRelatedElementFromTriple(reln, triple)
 	if err != nil {
@@ -200,7 +200,7 @@ func Test_rdfParser2_3_parseRelatedElementFromTriple(t *testing.T) {
 			</spdx:relatedSpdxElement>
 		</spdx:Relationship>
 	`)
-	reln = &v2_3.Relationship{}
+	reln = &spdx.Relationship{}
 	triple = rdfwriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_SPDX_ELEMENT)[0]
 	err = parser.parseRelatedElementFromTriple(reln, triple)
 	if err == nil {

@@ -4,6 +4,7 @@ package parser2v3
 import (
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/tvloader/reader"
 )
 
@@ -12,9 +13,9 @@ func TestParser2_3CanParseTagValues(t *testing.T) {
 	var tvPairs []reader.TagValuePair
 
 	// create some pairs
-	tvPair1 := reader.TagValuePair{Tag: "SPDXVersion", Value: "SPDX-2.3"}
+	tvPair1 := reader.TagValuePair{Tag: "SPDXVersion", Value: spdx.Version}
 	tvPairs = append(tvPairs, tvPair1)
-	tvPair2 := reader.TagValuePair{Tag: "DataLicense", Value: "CC0-1.0"}
+	tvPair2 := reader.TagValuePair{Tag: "DataLicense", Value: spdx.DataLicense}
 	tvPairs = append(tvPairs, tvPair2)
 	tvPair3 := reader.TagValuePair{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"}
 	tvPairs = append(tvPairs, tvPair3)
@@ -24,10 +25,10 @@ func TestParser2_3CanParseTagValues(t *testing.T) {
 	if err != nil {
 		t.Errorf("got error when calling ParseTagValues: %v", err)
 	}
-	if doc.SPDXVersion != "SPDX-2.3" {
+	if doc.SPDXVersion != spdx.Version {
 		t.Errorf("expected SPDXVersion to be SPDX-2.3, got %v", doc.SPDXVersion)
 	}
-	if doc.DataLicense != "CC0-1.0" {
+	if doc.DataLicense != spdx.DataLicense {
 		t.Errorf("expected DataLicense to be CC0-1.0, got %v", doc.DataLicense)
 	}
 	if doc.SPDXIdentifier != "DOCUMENT" {
@@ -49,7 +50,7 @@ func TestParser2_3InitCreatesResetStatus(t *testing.T) {
 
 func TestParser2_3HasDocumentAfterCallToParseFirstTag(t *testing.T) {
 	parser := tvParser2_3{}
-	err := parser.parsePair2_3("SPDXVersion", "SPDX-2.3")
+	err := parser.parsePair2_3("SPDXVersion", spdx.Version)
 	if err != nil {
 		t.Errorf("got error when calling parsePair2_3: %v", err)
 	}
@@ -60,7 +61,7 @@ func TestParser2_3HasDocumentAfterCallToParseFirstTag(t *testing.T) {
 
 func TestParser2_3StartFailsToParseIfInInvalidState(t *testing.T) {
 	parser := tvParser2_3{st: psReview2_3}
-	err := parser.parsePairFromStart2_3("SPDXVersion", "SPDX-2.3")
+	err := parser.parsePairFromStart2_3("SPDXVersion", spdx.Version)
 	if err == nil {
 		t.Errorf("expected non-nil error, got nil")
 	}
@@ -71,8 +72,8 @@ func TestParser2_3FilesWithoutSpdxIdThrowErrorAtCompleteParse(t *testing.T) {
 	// Last unpackaged file with no packages in doc
 	// Last file of last package in the doc
 	tvPairs := []reader.TagValuePair{
-		{Tag: "SPDXVersion", Value: "SPDX-2.3"},
-		{Tag: "DataLicense", Value: "CC0-1.0"},
+		{Tag: "SPDXVersion", Value: spdx.Version},
+		{Tag: "DataLicense", Value: spdx.DataLicense},
 		{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"},
 		{Tag: "FileName", Value: "f1"},
 	}
@@ -85,8 +86,8 @@ func TestParser2_3FilesWithoutSpdxIdThrowErrorAtCompleteParse(t *testing.T) {
 func TestParser2_3PackageWithoutSpdxIdThrowErrorAtCompleteParse(t *testing.T) {
 	// case: Checks the last package
 	tvPairs := []reader.TagValuePair{
-		{Tag: "SPDXVersion", Value: "SPDX-2.3"},
-		{Tag: "DataLicense", Value: "CC0-1.0"},
+		{Tag: "SPDXVersion", Value: spdx.Version},
+		{Tag: "DataLicense", Value: spdx.DataLicense},
 		{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"},
 		{Tag: "PackageName", Value: "p1"},
 	}

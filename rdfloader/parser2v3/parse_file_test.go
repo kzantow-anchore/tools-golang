@@ -10,8 +10,8 @@ import (
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	rdfloader2 "github.com/spdx/gordf/rdfloader/xmlreader"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // content is the tags within the rdf:RDF tag
@@ -144,9 +144,9 @@ func Test_rdfParser2_3_setUnpackagedFiles(t *testing.T) {
 	// unpackaged files are the files which are not associated with any package
 	// file associated with a package sets parser.assocWithPackage[fileID] to true.
 	rdfParser, _ := parserFromBodyContent(``)
-	file1 := &v2_3.File{FileSPDXIdentifier: common.ElementID("file1")}
-	file2 := &v2_3.File{FileSPDXIdentifier: common.ElementID("file2")}
-	file3 := &v2_3.File{FileSPDXIdentifier: common.ElementID("file3")}
+	file1 := &spdx.File{FileSPDXIdentifier: common.ElementID("file1")}
+	file2 := &spdx.File{FileSPDXIdentifier: common.ElementID("file2")}
+	file3 := &spdx.File{FileSPDXIdentifier: common.ElementID("file3")}
 
 	// setting files to the document as if it were to be set when it was parsed using triples.
 	rdfParser.files[file1.FileSPDXIdentifier] = file1
@@ -175,7 +175,7 @@ func Test_rdfParser2_3_setUnpackagedFiles(t *testing.T) {
 }
 
 func Test_setFileIdentifier(t *testing.T) {
-	file := &v2_3.File{}
+	file := &spdx.File{}
 
 	// TestCase 1: valid example
 	err := setFileIdentifier("http://spdx.org/documents/spdx-toolsv2.1.7-SNAPSHOT#SPDXRef-129", file)
@@ -202,7 +202,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode := gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file := &v2_3.File{}
+	file := &spdx.File{}
 	err := parser.setFileChecksumFromNode(file, checksumNode)
 	if err != nil {
 		t.Errorf("error parsing a valid checksum node")
@@ -233,7 +233,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode = gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file = &v2_3.File{}
+	file = &spdx.File{}
 	err = parser.setFileChecksumFromNode(file, checksumNode)
 	if err != nil {
 		t.Errorf("error parsing a valid checksum node")
@@ -263,7 +263,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode = gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file = &v2_3.File{}
+	file = &spdx.File{}
 	err = parser.setFileChecksumFromNode(file, checksumNode)
 	if err != nil {
 		t.Errorf("error parsing a valid checksum node")
@@ -292,7 +292,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode = gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file = &v2_3.File{}
+	file = &spdx.File{}
 	err = parser.setFileChecksumFromNode(file, checksumNode)
 	if err == nil {
 		t.Errorf("should've raised an error parsing an invalid checksum node")
@@ -306,7 +306,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode = gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file = &v2_3.File{}
+	file = &spdx.File{}
 	err = parser.setFileChecksumFromNode(file, checksumNode)
 	if err == nil {
 		t.Errorf("should've raised an error parsing an invalid checksum node")
@@ -320,7 +320,7 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 		</spdx:Checksum>
     `)
 	checksumNode = gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_CHECKSUM_CAPITALIZED)[0].Subject
-	file = &v2_3.File{}
+	file = &spdx.File{}
 	err = parser.setFileChecksumFromNode(file, checksumNode)
 	if err == nil {
 		t.Errorf("should've raised an error parsing an invalid checksum algorithm for a file")
@@ -485,7 +485,7 @@ func Test_rdfParser2_3_getFileFromNode(t *testing.T) {
 	}
 	parser, _ = parserFromBodyContent(strings.Join(fileDefinitions, ""))
 
-	var file *v2_3.File
+	var file *spdx.File
 	packageTypeTriples := gordfWriter.FilterTriples(parser.gordfParserObj.Triples, nil, &RDF_TYPE, &SPDX_PACKAGE)
 	for _, typeTriple := range packageTypeTriples {
 		pkg, err := parser.getPackageFromNode(typeTriple.Subject)

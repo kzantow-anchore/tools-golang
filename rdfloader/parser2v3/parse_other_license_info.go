@@ -7,7 +7,7 @@ import (
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/gordf/rdfwriter"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx"
 )
 
 func (parser *rdfParser2_3) getExtractedLicensingInfoFromNode(node *gordfParser.Node) (lic ExtractedLicensingInfo, err error) {
@@ -28,7 +28,7 @@ func (parser *rdfParser2_3) getExtractedLicensingInfoFromNode(node *gordfParser.
 	return lic, nil
 }
 
-func (parser *rdfParser2_3) extractedLicenseToOtherLicense(extLicense ExtractedLicensingInfo) (othLic v2_3.OtherLicense) {
+func (parser *rdfParser2_3) extractedLicenseToOtherLicense(extLicense ExtractedLicensingInfo) (othLic spdx.OtherLicense) {
 	othLic.LicenseIdentifier = extLicense.licenseID
 	othLic.ExtractedText = extLicense.extractedText
 	othLic.LicenseComment = extLicense.comment

@@ -1,22 +1,22 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package builder2v2
+package builder
 
 import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
 	"github.com/spdx/tools-golang/utils"
 )
 
-// BuildFileSection2_2 creates an SPDX File (version 2.2), returning that
+// BuildFileSection creates an SPDX File, returning that
 // file or error if any is encountered. Arguments:
 //   - filePath: path to file, relative to prefix
 //   - prefix: relative directory for filePath
 //   - fileNumber: integer index (unique within package) to use in identifier
-func BuildFileSection2_2(filePath string, prefix string, fileNumber int) (*v2_2.File, error) {
+func BuildFileSection(filePath string, prefix string, fileNumber int) (*spdx.File, error) {
 	// build the full file path
 	p := filepath.Join(prefix, filePath)
 
@@ -30,7 +30,7 @@ func BuildFileSection2_2(filePath string, prefix string, fileNumber int) (*v2_2.
 	i := fmt.Sprintf("File%d", fileNumber)
 
 	// now build the File section
-	f := &v2_2.File{
+	f := &spdx.File{
 		FileName:           filePath,
 		FileSPDXIdentifier: common.ElementID(i),
 		Checksums: []common.Checksum{

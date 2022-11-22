@@ -6,7 +6,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 // ===== Other License section Saver tests =====

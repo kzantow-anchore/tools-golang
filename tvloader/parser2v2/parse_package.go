@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_22 "github.com/spdx/tools-golang/v2_2"
 )
 
 func (parser *tvParser2_2) parsePairFromPackage2_2(tag string, value string) error {
@@ -25,7 +25,7 @@ func (parser *tvParser2_2) parsePairFromPackage2_2(tag string, value string) err
 			if parser.pkg != nil && parser.pkg.PackageSPDXIdentifier == nullSpdxElementId2_2 {
 				return fmt.Errorf("package with PackageName %s does not have SPDX identifier", parser.pkg.PackageName)
 			}
-			parser.pkg = &v2_2.Package{
+			parser.pkg = &v2_22.Package{
 				FilesAnalyzed:             true,
 				IsFilesAnalyzedTagPresent: false,
 			}
@@ -46,7 +46,7 @@ func (parser *tvParser2_2) parsePairFromPackage2_2(tag string, value string) err
 		}
 		parser.pkg.PackageSPDXIdentifier = eID
 		if parser.doc.Packages == nil {
-			parser.doc.Packages = []*v2_2.Package{}
+			parser.doc.Packages = []*v2_22.Package{}
 		}
 		parser.doc.Packages = append(parser.doc.Packages, parser.pkg)
 	case "PackageVersion":
@@ -140,7 +140,7 @@ func (parser *tvParser2_2) parsePairFromPackage2_2(tag string, value string) err
 	case "PackageAttributionText":
 		parser.pkg.PackageAttributionTexts = append(parser.pkg.PackageAttributionTexts, value)
 	case "ExternalRef":
-		parser.pkgExtRef = &v2_2.PackageExternalReference{}
+		parser.pkgExtRef = &v2_22.PackageExternalReference{}
 		parser.pkg.PackageExternalReferences = append(parser.pkg.PackageExternalReferences, parser.pkgExtRef)
 		category, refType, locator, err := extractPackageExternalReference(value)
 		if err != nil {
@@ -158,14 +158,14 @@ func (parser *tvParser2_2) parsePairFromPackage2_2(tag string, value string) err
 		parser.pkgExtRef = nil
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_2.Relationship{}
+		parser.rln = &v2_22.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship2_2(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship2_2(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_2.Annotation{}
+		parser.ann = &v2_22.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation2_2(tag, value)
 	case "AnnotationDate":

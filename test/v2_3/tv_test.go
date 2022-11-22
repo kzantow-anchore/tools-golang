@@ -11,8 +11,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 	"github.com/spdx/tools-golang/tvloader"
 	"github.com/spdx/tools-golang/tvsaver"
 )
@@ -38,7 +38,7 @@ func TestLoad(t *testing.T) {
 		panic(fmt.Errorf("error opening File: %s", err))
 	}
 
-	got, err := tvloader.Load2_3(file)
+	got, err := tvloader.Load(file)
 	if err != nil {
 		t.Errorf("Load2_3() error = %v", err)
 		return
@@ -63,7 +63,7 @@ func TestWrite(t *testing.T) {
 	}
 
 	// we should be able to parse what the writer wrote, and it should be identical to the original struct we wrote
-	parsedDoc, err := tvloader.Load2_3(bytes.NewReader(w.Bytes()))
+	parsedDoc, err := tvloader.Load(bytes.NewReader(w.Bytes()))
 	if err != nil {
 		t.Errorf("failed to parse written document: %v", err.Error())
 		return
@@ -78,13 +78,13 @@ func TestWrite(t *testing.T) {
 // want is handwritten translation of the official example SPDX v2.3 document into a Go struct.
 // We expect that the result of parsing the official document should be this value.
 // We expect that the result of writing this struct should match the official example document.
-var want = v2_3.Document{
-	DataLicense:       "CC0-1.0",
-	SPDXVersion:       "SPDX-2.3",
+var want = spdx.Document{
+	DataLicense:       spdx.DataLicense,
+	SPDXVersion:       spdx.Version,
 	SPDXIdentifier:    "SPDXRef-DOCUMENT",
 	DocumentName:      "SPDX-Tools-v2.0",
 	DocumentNamespace: "http://spdx.org/spdxdocs/spdx-example-444504E0-4F89-41D3-9A0C-0305E82C3301",
-	CreationInfo: &v2_3.CreationInfo{
+	CreationInfo: &spdx.CreationInfo{
 		LicenseListVersion: "3.9",
 		Creators: []common.Creator{
 			{CreatorType: "Tool", Creator: "LicenseFind-1.0"},
@@ -95,7 +95,7 @@ var want = v2_3.Document{
 		CreatorComment: "This package has been shipped in source and binary form.\nThe binaries were created with gcc 4.5.1 and expect to link to\ncompatible system run time libraries.",
 	},
 	DocumentComment: "This document was created using SPDX 2.0 using licenses from the web site.",
-	ExternalDocumentReferences: []v2_3.ExternalDocumentRef{
+	ExternalDocumentReferences: []spdx.ExternalDocumentRef{
 		{
 			DocumentRefID: "DocumentRef-spdx-tool-1.2",
 			URI:           "http://spdx.org/spdxdocs/spdx-tools-v1.2-3F2504E0-4F89-41D3-9A0C-0305E82C3301",
@@ -105,7 +105,7 @@ var want = v2_3.Document{
 			},
 		},
 	},
-	OtherLicenses: []*v2_3.OtherLicense{
+	OtherLicenses: []*spdx.OtherLicense{
 		{
 			LicenseIdentifier: "LicenseRef-1",
 			ExtractedText:     "/*\n * (c) Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Hewlett-Packard Development Company, LP\n * All rights reserved.\n *\n * Redistribution and use in source and binary forms, with or without\n * modification, are permitted provided that the following conditions\n * are met:\n * 1. Redistributions of source code must retain the above copyright\n *    notice, this list of conditions and the following disclaimer.\n * 2. Redistributions in binary form must reproduce the above copyright\n *    notice, this list of conditions and the following disclaimer in the\n *    documentation and/or other materials provided with the distribution.\n * 3. The name of the author may not be used to endorse or promote products\n *    derived from this software without specific prior written permission.\n *\n * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR\n * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES\n * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.\n * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,\n * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT\n * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY\n * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF\n * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n*/",
@@ -136,7 +136,7 @@ var want = v2_3.Document{
 			LicenseComment: "This is tye CyperNeko License",
 		},
 	},
-	Annotations: []*v2_3.Annotation{
+	Annotations: []*spdx.Annotation{
 		{
 			Annotator: common.Annotator{
 				Annotator:     "Jane Doe ()",
@@ -165,7 +165,7 @@ var want = v2_3.Document{
 			AnnotationComment: "Another example reviewer.",
 		},
 	},
-	Packages: []*v2_3.Package{
+	Packages: []*spdx.Package{
 		{
 			PackageName:           "glibc",
 			PackageSPDXIdentifier: "SPDXRef-Package",
@@ -213,7 +213,7 @@ var want = v2_3.Document{
 			PackageSummary:         "GNU C library.",
 			PackageDescription:     "The GNU C Library defines functions that are specified by the ISO C standard, as well as additional features specific to POSIX and other derivatives of the Unix operating system, and extensions specific to GNU systems.",
 			PackageComment:         "",
-			PackageExternalReferences: []*v2_3.PackageExternalReference{
+			PackageExternalReferences: []*spdx.PackageExternalReference{
 				{
 					Category: "SECURITY",
 					RefType:  "cpe23Type",
@@ -230,7 +230,7 @@ var want = v2_3.Document{
 				"The GNU C Library is free software.  See the file COPYING.LIB for copying conditions, and LICENSES for notices about a few contributions that require these additional notices to be distributed.  License copyright years may be listed using range notation, e.g., 1996-2015, indicating that every year in the range, inclusive, is a copyrightable year that would otherwise be listed individually.",
 			},
 			Files: nil,
-			Annotations: []v2_3.Annotation{
+			Annotations: []spdx.Annotation{
 				{
 					Annotator: common.Annotator{
 						Annotator:     "Package Commenter",
@@ -256,7 +256,7 @@ var want = v2_3.Document{
 			PackageSPDXIdentifier:   "SPDXRef-fromDoap-0",
 			PackageCopyrightText:    "NOASSERTION",
 			PackageDownloadLocation: "https://search.maven.org/remotecontent?filepath=org/apache/jena/apache-jena/3.12.0/apache-jena-3.12.0.tar.gz",
-			PackageExternalReferences: []*v2_3.PackageExternalReference{
+			PackageExternalReferences: []*spdx.PackageExternalReference{
 				{
 					Category: "PACKAGE-MANAGER",
 					RefType:  "purl",
@@ -305,7 +305,7 @@ var want = v2_3.Document{
 			ReleaseDate:             "2021-10-15T02:38:00Z",
 		},
 	},
-	Files: []*v2_3.File{
+	Files: []*spdx.File{
 		{
 			FileName:           "./src/org/spdx/parser/DOAPProject.java",
 			FileSPDXIdentifier: "SPDXRef-DoapSource",
@@ -367,7 +367,7 @@ var want = v2_3.Document{
 		},
 		{
 			FileSPDXIdentifier: "SPDXRef-File",
-			Annotations: []v2_3.Annotation{
+			Annotations: []spdx.Annotation{
 				{
 					Annotator: common.Annotator{
 						Annotator:     "File Commenter",
@@ -399,7 +399,7 @@ var want = v2_3.Document{
 			FileNotice:         "Copyright (c) 2001 Aaron Lehmann aaroni@vitelus.com\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the �Software�), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED �AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
 		},
 	},
-	Snippets: []v2_3.Snippet{
+	Snippets: []spdx.Snippet{
 		{
 			SnippetSPDXIdentifier:         "SPDXRef-Snippet",
 			SnippetFromFileSPDXIdentifier: "SPDXRef-DoapSource",
@@ -433,7 +433,7 @@ var want = v2_3.Document{
 			SnippetName:             "from linux kernel",
 		},
 	},
-	Relationships: []*v2_3.Relationship{
+	Relationships: []*spdx.Relationship{
 		{
 			RefA:         common.MakeDocElementID("", "DOCUMENT"),
 			RefB:         common.MakeDocElementID("", "Package"),
@@ -480,7 +480,7 @@ var want = v2_3.Document{
 			Relationship: "GENERATED_FROM",
 		},
 	},
-	Reviews: []*v2_3.Review{
+	Reviews: []*spdx.Review{
 		{
 			Reviewer:      "joe@example.com",
 			ReviewerType:  "Person",

@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func renderRelationship2_3(rln *v2_3.Relationship, w io.Writer) error {
+func renderRelationship2_3(rln *spdx.Relationship, w io.Writer) error {
 	rlnAStr := common.RenderDocElementID(rln.RefA)
 	rlnBStr := common.RenderDocElementID(rln.RefB)
 	if rlnAStr != "SPDXRef-" && rlnBStr != "SPDXRef-" && rln.Relationship != "" {

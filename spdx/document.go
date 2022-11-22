@@ -1,9 +1,12 @@
 // Package spdx contains the struct definition for an SPDX Document
 // and its constituent parts.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
-package v2_3
+package spdx
 
 import "github.com/spdx/tools-golang/spdx/common"
+
+const Version = "SPDX-2.3"
+const DataLicense = "CC0-1.0"
 
 // ExternalDocumentRef is a reference to an external SPDX document
 // as defined in section 6.6 for version 2.3 of the spec.
@@ -23,7 +26,7 @@ type ExternalDocumentRef struct {
 // Document is an SPDX Document for version 2.3 of the spec.
 // See https://spdx.github.io/spdx-spec/v2.3/document-creation-information
 type Document struct {
-	// 6.1: SPDX Version; should be in the format "SPDX-2.3"
+	// 6.1: SPDX Version; should be in the format "SPDX-<version>"
 	// Cardinality: mandatory, one
 	SPDXVersion string `json:"spdxVersion"`
 

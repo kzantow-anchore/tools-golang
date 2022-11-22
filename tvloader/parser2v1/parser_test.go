@@ -4,6 +4,7 @@ package parser2v1
 import (
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/tvloader/reader"
 )
 
@@ -14,7 +15,7 @@ func TestParser2_1CanParseTagValues(t *testing.T) {
 	// create some pairs
 	tvPair1 := reader.TagValuePair{Tag: "SPDXVersion", Value: "SPDX-2.1"}
 	tvPairs = append(tvPairs, tvPair1)
-	tvPair2 := reader.TagValuePair{Tag: "DataLicense", Value: "CC0-1.0"}
+	tvPair2 := reader.TagValuePair{Tag: "DataLicense", Value: spdx.DataLicense}
 	tvPairs = append(tvPairs, tvPair2)
 	tvPair3 := reader.TagValuePair{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"}
 	tvPairs = append(tvPairs, tvPair3)
@@ -27,7 +28,7 @@ func TestParser2_1CanParseTagValues(t *testing.T) {
 	if doc.SPDXVersion != "SPDX-2.1" {
 		t.Errorf("expected SPDXVersion to be SPDX-2.1, got %v", doc.SPDXVersion)
 	}
-	if doc.DataLicense != "CC0-1.0" {
+	if doc.DataLicense != spdx.DataLicense {
 		t.Errorf("expected DataLicense to be CC0-1.0, got %v", doc.DataLicense)
 	}
 	if doc.SPDXIdentifier != "DOCUMENT" {
@@ -72,7 +73,7 @@ func TestParser2_1FilesWithoutSpdxIdThrowErrorAtCompleteParse(t *testing.T) {
 	// Last file of last package in the doc
 	tvPairs := []reader.TagValuePair{
 		{Tag: "SPDXVersion", Value: "SPDX-2.1"},
-		{Tag: "DataLicense", Value: "CC0-1.0"},
+		{Tag: "DataLicense", Value: spdx.DataLicense},
 		{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"},
 		{Tag: "FileName", Value: "f1"},
 	}
@@ -86,7 +87,7 @@ func TestParser2_1PackageWithoutSpdxIdThrowErrorAtCompleteParse(t *testing.T) {
 	// case: Checks the last package
 	tvPairs := []reader.TagValuePair{
 		{Tag: "SPDXVersion", Value: "SPDX-2.1"},
-		{Tag: "DataLicense", Value: "CC0-1.0"},
+		{Tag: "DataLicense", Value: spdx.DataLicense},
 		{Tag: "SPDXID", Value: "SPDXRef-DOCUMENT"},
 		{Tag: "PackageName", Value: "p1"},
 	}

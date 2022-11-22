@@ -38,7 +38,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := tvloader.Load2_2(r)
+	doc, err := tvloader.Load(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filename, err)
 		return
@@ -48,7 +48,7 @@ func main() {
 	fmt.Printf("Successfully loaded %s\n\n", filename)
 
 	// check whether the SPDX file has at least one package that it describes
-	pkgIDs, err := spdxlib.GetDescribedPackageIDs2_2(doc)
+	pkgIDs, err := spdxlib.GetDescribedPackageIDs(doc)
 	if err != nil {
 		fmt.Printf("Unable to get describe packages from SPDX document: %v\n", err)
 		return
@@ -91,7 +91,7 @@ func main() {
 		// values, sorted by # of occurrences
 		fmt.Printf("============================\n")
 		fmt.Printf("Package %s (%s)\n", string(pkgID), pkg.PackageName)
-		err = reporter.Generate2_2(pkg, os.Stdout)
+		err = reporter.Generate(pkg, os.Stdout)
 		if err != nil {
 			fmt.Printf("Error while generating report: %v\n", err)
 		}

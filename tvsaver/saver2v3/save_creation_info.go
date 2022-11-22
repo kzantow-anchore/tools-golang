@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx"
 )
 
-func renderCreationInfo2_3(ci *v2_3.CreationInfo, w io.Writer) error {
+func renderCreationInfo2_3(ci *spdx.CreationInfo, w io.Writer) error {
 	if ci.LicenseListVersion != "" {
 		fmt.Fprintf(w, "LicenseListVersion: %s\n", ci.LicenseListVersion)
 	}

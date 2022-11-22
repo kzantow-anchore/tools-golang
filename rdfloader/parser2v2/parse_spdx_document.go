@@ -7,7 +7,7 @@ import (
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_22 "github.com/spdx/tools-golang/v2_2"
 )
 
 func (parser *rdfParser2_2) parseSpdxDocumentNode(spdxDocNode *gordfParser.Node) (err error) {
@@ -44,7 +44,7 @@ func (parser *rdfParser2_2) parseSpdxDocumentNode(spdxDocNode *gordfParser.Node)
 			parser.doc.DocumentName = objectValue
 		case SPDX_EXTERNAL_DOCUMENT_REF: // 2.6: externalDocumentReferences
 			// cardinality: min 0
-			var extRef v2_2.ExternalDocumentRef
+			var extRef v2_22.ExternalDocumentRef
 			extRef, err = parser.getExternalDocumentRefFromNode(subTriple.Object)
 			if err != nil {
 				return err
@@ -61,7 +61,7 @@ func (parser *rdfParser2_2) parseSpdxDocumentNode(spdxDocNode *gordfParser.Node)
 			err = parser.setReviewFromNode(subTriple.Object)
 		case SPDX_DESCRIBES_PACKAGE: // describes Package
 			// cardinality: min 0
-			var pkg *v2_2.Package
+			var pkg *v2_22.Package
 			pkg, err = parser.getPackageFromNode(subTriple.Object)
 			if err != nil {
 				return err
@@ -91,7 +91,7 @@ func (parser *rdfParser2_2) parseSpdxDocumentNode(spdxDocNode *gordfParser.Node)
 	return nil
 }
 
-func (parser *rdfParser2_2) getExternalDocumentRefFromNode(node *gordfParser.Node) (edr v2_2.ExternalDocumentRef, err error) {
+func (parser *rdfParser2_2) getExternalDocumentRefFromNode(node *gordfParser.Node) (edr v2_22.ExternalDocumentRef, err error) {
 	for _, triple := range parser.nodeToTriples(node) {
 		switch triple.Predicate.ID {
 		case SPDX_EXTERNAL_DOCUMENT_ID:

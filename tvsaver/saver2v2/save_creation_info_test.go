@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 // ===== Creation Info section Saver tests =====

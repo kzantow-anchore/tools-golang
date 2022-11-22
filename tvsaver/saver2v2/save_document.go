@@ -10,7 +10,7 @@ import (
 	"sort"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 // RenderDocument2_2 is the main entry point to take an SPDX in-memory

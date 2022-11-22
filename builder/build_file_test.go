@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package builder2v1
+package builder
 
 import (
 	"testing"
@@ -9,12 +9,12 @@ import (
 )
 
 // ===== File section builder tests =====
-func TestBuilder2_1CanBuildFileSection(t *testing.T) {
+func TestBuilderCanBuildFileSection(t *testing.T) {
 	filePath := "/file1.testdata.txt"
-	prefix := "../../testdata/project1/"
+	prefix := "../testdata/project1/"
 	fileNumber := 17
 
-	file1, err := BuildFileSection2_1(filePath, prefix, fileNumber)
+	file1, err := BuildFileSection(filePath, prefix, fileNumber)
 	if err != nil {
 		t.Fatalf("expected nil error, got %v", err)
 	}
@@ -62,12 +62,12 @@ func TestBuilder2_1CanBuildFileSection(t *testing.T) {
 
 }
 
-func TestBuilder2_1BuildFileSectionFailsForInvalidFilePath(t *testing.T) {
+func TestBuilderBuildFileSectionFailsForInvalidFilePath(t *testing.T) {
 	filePath := "/file1.testdata.txt"
 	prefix := "oops/wrong/path"
 	fileNumber := 11
 
-	_, err := BuildFileSection2_1(filePath, prefix, fileNumber)
+	_, err := BuildFileSection(filePath, prefix, fileNumber)
 	if err == nil {
 		t.Fatalf("expected non-nil error, got nil")
 	}

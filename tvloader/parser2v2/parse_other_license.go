@@ -5,14 +5,14 @@ package parser2v2
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_22 "github.com/spdx/tools-golang/v2_2"
 )
 
 func (parser *tvParser2_2) parsePairFromOtherLicense2_2(tag string, value string) error {
 	switch tag {
 	// tag for creating new other license section
 	case "LicenseID":
-		parser.otherLic = &v2_2.OtherLicense{}
+		parser.otherLic = &v2_22.OtherLicense{}
 		parser.doc.OtherLicenses = append(parser.doc.OtherLicenses, parser.otherLic)
 		parser.otherLic.LicenseIdentifier = value
 	case "ExtractedText":
@@ -25,14 +25,14 @@ func (parser *tvParser2_2) parsePairFromOtherLicense2_2(tag string, value string
 		parser.otherLic.LicenseComment = value
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_2.Relationship{}
+		parser.rln = &v2_22.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship2_2(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship2_2(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_2.Annotation{}
+		parser.ann = &v2_22.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation2_2(tag, value)
 	case "AnnotationDate":

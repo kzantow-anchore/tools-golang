@@ -7,7 +7,7 @@ import (
 	"io"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 func renderSnippet2_2(sn *v2_2.Snippet, w io.Writer) error {

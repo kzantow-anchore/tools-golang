@@ -35,9 +35,9 @@ func main() {
 	fileOut := args[3]
 
 	// to use the SPDX builder package, the first step is to define a
-	// builder.Config2_2 struct. this config data can be reused, in case you
+	// builder.Config struct. this config data can be reused, in case you
 	// are building SPDX documents for several directories in sequence.
-	config := &builder.Config2_2{
+	config := &builder.Config{
 
 		// NamespacePrefix is a prefix that will be used to populate the
 		// mandatory DocumentNamespace field in the Creation Info section.
@@ -87,7 +87,7 @@ func main() {
 	//   - what to name the package; and
 	//   - where the directory is located on disk; and
 	//   - the config object we just defined.
-	doc, err := builder.Build2_2(packageName, packageRootDir, config)
+	doc, err := builder.Build(packageName, packageRootDir, config)
 	if err != nil {
 		fmt.Printf("Error while building document: %v\n", err)
 		return
@@ -108,7 +108,7 @@ func main() {
 	}
 	defer w.Close()
 
-	err = tvsaver.Save2_2(doc, w)
+	err = tvsaver.Save2_3(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

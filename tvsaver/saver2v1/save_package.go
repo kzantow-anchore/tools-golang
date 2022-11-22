@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	"github.com/spdx/tools-golang/v2_1"
 )
 
 func renderPackage2_1(pkg *v2_1.Package, w io.Writer) error {

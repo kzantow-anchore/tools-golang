@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package builder2v3
+package builder
 
 import (
 	"testing"
@@ -9,13 +9,13 @@ import (
 )
 
 // ===== Package section builder tests =====
-func TestBuilder2_3CanBuildPackageSection(t *testing.T) {
+func TestBuilderCanBuildPackageSection(t *testing.T) {
 	packageName := "project1"
-	dirRoot := "../../testdata/project1/"
+	dirRoot := "../testdata/project1/"
 
 	wantVerificationCode := common.PackageVerificationCode{Value: "fc9ac4a370af0a471c2e52af66d6b4cf4e2ba12b"}
 
-	pkg, err := BuildPackageSection2_3(packageName, dirRoot, nil)
+	pkg, err := BuildPackageSection(packageName, dirRoot, nil)
 	if err != nil {
 		t.Fatalf("expected nil error, got %v", err)
 	}
@@ -102,16 +102,16 @@ func TestBuilder2_3CanBuildPackageSection(t *testing.T) {
 	}
 }
 
-func TestBuilder2_3CanIgnoreFiles(t *testing.T) {
+func TestBuilderCanIgnoreFiles(t *testing.T) {
 	packageName := "project3"
-	dirRoot := "../../testdata/project3/"
+	dirRoot := "../testdata/project3/"
 	pathsIgnored := []string{
 		"**/ignoredir/",
 		"/excludedir/",
 		"**/ignorefile.txt",
 		"/alsoEXCLUDEthis.txt",
 	}
-	pkg, err := BuildPackageSection2_3(packageName, dirRoot, pathsIgnored)
+	pkg, err := BuildPackageSection(packageName, dirRoot, pathsIgnored)
 	if err != nil {
 		t.Fatalf("expected nil error, got %v", err)
 	}

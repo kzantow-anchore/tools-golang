@@ -7,8 +7,8 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
 	"github.com/spdx/tools-golang/tvloader/reader"
+	"github.com/spdx/tools-golang/v2_1"
 )
 
 // ParseTagValues takes a list of (tag, value) pairs, parses it and returns

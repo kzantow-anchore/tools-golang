@@ -6,13 +6,13 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 // ===== Relationship section Saver tests =====
 func TestSaver2_3RelationshipSavesText(t *testing.T) {
-	rln := &v2_3.Relationship{
+	rln := &spdx.Relationship{
 		RefA:                common.MakeDocElementID("", "DOCUMENT"),
 		RefB:                common.MakeDocElementID("", "2"),
 		Relationship:        "DESCRIBES",
@@ -40,7 +40,7 @@ RelationshipComment: this is a comment
 }
 
 func TestSaver2_3RelationshipOmitsOptionalFieldsIfEmpty(t *testing.T) {
-	rln := &v2_3.Relationship{
+	rln := &spdx.Relationship{
 		RefA:         common.MakeDocElementID("", "DOCUMENT"),
 		RefB:         common.MakeDocElementID("", "2"),
 		Relationship: "DESCRIBES",
@@ -65,7 +65,7 @@ func TestSaver2_3RelationshipOmitsOptionalFieldsIfEmpty(t *testing.T) {
 }
 
 func TestSaver2_3RelationshipCanHaveNONEOnRight(t *testing.T) {
-	rln := &v2_3.Relationship{
+	rln := &spdx.Relationship{
 		RefA:         common.MakeDocElementID("", "PackageA"),
 		RefB:         common.MakeDocElementSpecial("NONE"),
 		Relationship: "DEPENDS_ON",
@@ -90,7 +90,7 @@ func TestSaver2_3RelationshipCanHaveNONEOnRight(t *testing.T) {
 }
 
 func TestSaver2_3RelationshipCanHaveNOASSERTIONOnRight(t *testing.T) {
-	rln := &v2_3.Relationship{
+	rln := &spdx.Relationship{
 		RefA:         common.MakeDocElementID("", "PackageA"),
 		RefB:         common.MakeDocElementSpecial("NOASSERTION"),
 		Relationship: "DEPENDS_ON",
@@ -115,7 +115,7 @@ func TestSaver2_3RelationshipCanHaveNOASSERTIONOnRight(t *testing.T) {
 }
 
 func TestSaver2_3RelationshipWrapsCommentMultiLine(t *testing.T) {
-	rln := &v2_3.Relationship{
+	rln := &spdx.Relationship{
 		RefA:         common.MakeDocElementID("", "DOCUMENT"),
 		RefB:         common.MakeDocElementID("", "2"),
 		Relationship: "DESCRIBES",

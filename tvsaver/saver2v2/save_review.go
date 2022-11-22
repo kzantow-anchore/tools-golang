@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 func renderReview2_2(rev *v2_2.Review, w io.Writer) error {

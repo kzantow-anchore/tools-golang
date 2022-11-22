@@ -3,27 +3,27 @@
 package parser2v3
 
 import (
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 type tvParser2_3 struct {
 	// document into which data is being parsed
-	doc *v2_3.Document
+	doc *spdx.Document
 
 	// current parser state
 	st tvParserState2_3
 
 	// current SPDX item being filled in, if any
-	pkg       *v2_3.Package
-	pkgExtRef *v2_3.PackageExternalReference
-	file      *v2_3.File
-	fileAOP   *v2_3.ArtifactOfProject
-	snippet   *v2_3.Snippet
-	otherLic  *v2_3.OtherLicense
-	rln       *v2_3.Relationship
-	ann       *v2_3.Annotation
-	rev       *v2_3.Review
+	pkg       *spdx.Package
+	pkgExtRef *spdx.PackageExternalReference
+	file      *spdx.File
+	fileAOP   *spdx.ArtifactOfProject
+	snippet   *spdx.Snippet
+	otherLic  *spdx.OtherLicense
+	rln       *spdx.Relationship
+	ann       *spdx.Annotation
+	rev       *spdx.Review
 	// don't need creation info pointer b/c only one,
 	// and we can get to it via doc.CreationInfo
 }

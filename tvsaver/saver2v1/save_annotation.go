@@ -7,7 +7,7 @@ import (
 	"io"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	"github.com/spdx/tools-golang/v2_1"
 )
 
 func renderAnnotation2_1(ann *v2_1.Annotation, w io.Writer) error {

@@ -4,7 +4,7 @@ package parser2v3
 import (
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx"
 )
 
 // ===== Parser other license section state change tests =====
@@ -14,11 +14,11 @@ func TestParser2_3OLStartsNewOtherLicenseAfterParsingLicenseIDTag(t *testing.T) 
 	olname1 := "License 11"
 
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
-		otherLic: &v2_3.OtherLicense{
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		otherLic: &spdx.OtherLicense{
 			LicenseIdentifier: olid1,
 			LicenseName:       olname1,
 		},
@@ -90,10 +90,10 @@ func TestParser2_3OLStartsNewOtherLicenseAfterParsingLicenseIDTag(t *testing.T) 
 
 func TestParser2_3OLMovesToReviewAfterParsingReviewerTag(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
 	}
 	parser.doc.Packages = append(parser.doc.Packages, parser.pkg)
 	parser.pkg.Files = append(parser.pkg.Files, parser.file)
@@ -110,11 +110,11 @@ func TestParser2_3OLMovesToReviewAfterParsingReviewerTag(t *testing.T) {
 
 func TestParser2_3OtherLicenseStaysAfterParsingRelationshipTags(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
-		otherLic: &v2_3.OtherLicense{
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		otherLic: &spdx.OtherLicense{
 			LicenseIdentifier: "LicenseRef-whatever",
 			LicenseName:       "the whatever license",
 		},
@@ -152,11 +152,11 @@ func TestParser2_3OtherLicenseStaysAfterParsingRelationshipTags(t *testing.T) {
 
 func TestParser2_3OtherLicenseStaysAfterParsingAnnotationTags(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
-		otherLic: &v2_3.OtherLicense{
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		otherLic: &spdx.OtherLicense{
 			LicenseIdentifier: "LicenseRef-whatever",
 			LicenseName:       "the whatever license",
 		},
@@ -216,11 +216,11 @@ func TestParser2_3OtherLicenseStaysAfterParsingAnnotationTags(t *testing.T) {
 
 func TestParser2_3OLFailsAfterParsingOtherSectionTags(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
-		otherLic: &v2_3.OtherLicense{
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		otherLic: &spdx.OtherLicense{
 			LicenseIdentifier: "LicenseRef-Lic11",
 			LicenseName:       "License 11",
 		},
@@ -230,7 +230,7 @@ func TestParser2_3OLFailsAfterParsingOtherSectionTags(t *testing.T) {
 	parser.doc.OtherLicenses = append(parser.doc.OtherLicenses, parser.otherLic)
 
 	// can't go back to old sections
-	err := parser.parsePair2_3("SPDXVersion", "SPDX-2.3")
+	err := parser.parsePair2_3("SPDXVersion", spdx.Version)
 	if err == nil {
 		t.Errorf("expected error when calling parsePair2_3, got nil")
 	}
@@ -247,10 +247,10 @@ func TestParser2_3OLFailsAfterParsingOtherSectionTags(t *testing.T) {
 // ===== Other License data section tests =====
 func TestParser2_3CanParseOtherLicenseTags(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
 	}
 	parser.doc.Packages = append(parser.doc.Packages, parser.pkg)
 	parser.pkg.Files = append(parser.pkg.Files, parser.file)
@@ -323,10 +323,10 @@ func TestParser2_3CanParseOtherLicenseTags(t *testing.T) {
 
 func TestParser2_3OLUnknownTagFails(t *testing.T) {
 	parser := tvParser2_3{
-		doc:  &v2_3.Document{Packages: []*v2_3.Package{}},
+		doc:  &spdx.Document{Packages: []*spdx.Package{}},
 		st:   psOtherLicense2_3,
-		pkg:  &v2_3.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*v2_3.File{}},
-		file: &v2_3.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
+		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
+		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
 	}
 	parser.doc.Packages = append(parser.doc.Packages, parser.pkg)
 	parser.pkg.Files = append(parser.pkg.Files, parser.file)

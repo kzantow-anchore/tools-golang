@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	v2_12 "github.com/spdx/tools-golang/v2_1"
 )
 
 func (parser *tvParser2_1) parsePairFromFile2_1(tag string, value string) error {
@@ -23,7 +23,7 @@ func (parser *tvParser2_1) parsePairFromFile2_1(tag string, value string) error 
 		if parser.file != nil && parser.file.FileSPDXIdentifier == nullSpdxElementId2_1 {
 			return fmt.Errorf("file with FileName %s does not have SPDX identifier", parser.file.FileName)
 		}
-		parser.file = &v2_1.File{}
+		parser.file = &v2_12.File{}
 		parser.file.FileName = value
 	// tag for creating new package section and going back to parsing Package
 	case "PackageName":
@@ -51,12 +51,12 @@ func (parser *tvParser2_1) parsePairFromFile2_1(tag string, value string) error 
 		parser.file.FileSPDXIdentifier = eID
 		if parser.pkg == nil {
 			if parser.doc.Files == nil {
-				parser.doc.Files = []*v2_1.File{}
+				parser.doc.Files = []*v2_12.File{}
 			}
 			parser.doc.Files = append(parser.doc.Files, parser.file)
 		} else {
 			if parser.pkg.Files == nil {
-				parser.pkg.Files = []*v2_1.File{}
+				parser.pkg.Files = []*v2_12.File{}
 			}
 			parser.pkg.Files = append(parser.pkg.Files, parser.file)
 		}
@@ -86,7 +86,7 @@ func (parser *tvParser2_1) parsePairFromFile2_1(tag string, value string) error 
 	case "FileCopyrightText":
 		parser.file.FileCopyrightText = value
 	case "ArtifactOfProjectName":
-		parser.fileAOP = &v2_1.ArtifactOfProject{}
+		parser.fileAOP = &v2_12.ArtifactOfProject{}
 		parser.file.ArtifactOfProjects = append(parser.file.ArtifactOfProjects, parser.fileAOP)
 		parser.fileAOP.Name = value
 	case "ArtifactOfProjectHomePage":
@@ -109,14 +109,14 @@ func (parser *tvParser2_1) parsePairFromFile2_1(tag string, value string) error 
 		parser.file.FileDependencies = append(parser.file.FileDependencies, value)
 	// for relationship tags, pass along but don't change state
 	case "Relationship":
-		parser.rln = &v2_1.Relationship{}
+		parser.rln = &v2_12.Relationship{}
 		parser.doc.Relationships = append(parser.doc.Relationships, parser.rln)
 		return parser.parsePairForRelationship2_1(tag, value)
 	case "RelationshipComment":
 		return parser.parsePairForRelationship2_1(tag, value)
 	// for annotation tags, pass along but don't change state
 	case "Annotator":
-		parser.ann = &v2_1.Annotation{}
+		parser.ann = &v2_12.Annotation{}
 		parser.doc.Annotations = append(parser.doc.Annotations, parser.ann)
 		return parser.parsePairForAnnotation2_1(tag, value)
 	case "AnnotationDate":

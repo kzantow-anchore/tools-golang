@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package builder2v3
+package builder
 
 import (
 	"time"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-// BuildCreationInfoSection2_3 creates an SPDX Package (version 2.3), returning that
+// BuildCreationInfoSection creates an SPDX Package, returning that
 // package or error if any is encountered. Arguments:
 //   - packageName: name of package / directory
 //   - code: verification code from Package
@@ -17,7 +17,7 @@ import (
 //   - creatorType: one of Person, Organization or Tool
 //   - creator: creator string
 //   - testValues: for testing only; call with nil when using in production
-func BuildCreationInfoSection2_3(creatorType string, creator string, testValues map[string]string) (*v2_3.CreationInfo, error) {
+func BuildCreationInfoSection(creatorType string, creator string, testValues map[string]string) (*spdx.CreationInfo, error) {
 	// build creator slices
 	creators := []common.Creator{
 		// add builder as a tool
@@ -39,7 +39,7 @@ func BuildCreationInfoSection2_3(creatorType string, creator string, testValues 
 		created = testVal
 	}
 
-	ci := &v2_3.CreationInfo{
+	ci := &spdx.CreationInfo{
 		Creators: creators,
 		Created:  created,
 	}

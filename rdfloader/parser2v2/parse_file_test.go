@@ -11,7 +11,7 @@ import (
 	rdfloader2 "github.com/spdx/gordf/rdfloader/xmlreader"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/v2_2"
 )
 
 // content is the tags within the rdf:RDF tag

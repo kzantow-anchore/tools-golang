@@ -6,12 +6,12 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx"
 )
 
 // ===== Review section Saver tests =====
 func TestSaver2_3ReviewSavesText(t *testing.T) {
-	rev := &v2_3.Review{
+	rev := &spdx.Review{
 		Reviewer:      "John Doe",
 		ReviewerType:  "Person",
 		ReviewDate:    "2018-10-14T10:28:00Z",
@@ -40,7 +40,7 @@ ReviewComment: this is a review comment
 }
 
 func TestSaver2_3ReviewOmitsOptionalFieldsIfEmpty(t *testing.T) {
-	rev := &v2_3.Review{
+	rev := &spdx.Review{
 		Reviewer:     "John Doe",
 		ReviewerType: "Person",
 		ReviewDate:   "2018-10-14T10:28:00Z",
@@ -67,7 +67,7 @@ ReviewDate: 2018-10-14T10:28:00Z
 }
 
 func TestSaver2_3ReviewWrapsMultiLine(t *testing.T) {
-	rev := &v2_3.Review{
+	rev := &spdx.Review{
 		Reviewer:     "John Doe",
 		ReviewerType: "Person",
 		ReviewDate:   "2018-10-14T10:28:00Z",

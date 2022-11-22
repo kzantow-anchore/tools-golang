@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package v2_3
+package spdx
 
 import "github.com/spdx/tools-golang/spdx/common"
 

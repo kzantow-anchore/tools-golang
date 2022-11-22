@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package builder2v2
+package builder
 
 import (
 	"testing"
@@ -9,10 +9,10 @@ import (
 )
 
 // ===== Relationship section builder tests =====
-func TestBuilder2_2CanBuildRelationshipSection(t *testing.T) {
+func TestBuilderCanBuildRelationshipSection(t *testing.T) {
 	packageName := "project17"
 
-	rln, err := BuildRelationshipSection2_2(packageName)
+	rln, err := BuildRelationshipSection(packageName)
 	if err != nil {
 		t.Fatalf("expected nil error, got %v", err)
 	}

@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func renderAnnotation2_3(ann *v2_3.Annotation, w io.Writer) error {
+func renderAnnotation2_3(ann *spdx.Annotation, w io.Writer) error {
 	if ann.Annotator.Annotator != "" && ann.Annotator.AnnotatorType != "" {
 		fmt.Fprintf(w, "Annotator: %s: %s\n", ann.Annotator.AnnotatorType, ann.Annotator.Annotator)
 	}

@@ -7,11 +7,11 @@ import (
 	"io"
 	"sort"
 
+	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
-func renderFile2_3(f *v2_3.File, w io.Writer) error {
+func renderFile2_3(f *spdx.File, w io.Writer) error {
 	if f.FileName != "" {
 		fmt.Fprintf(w, "FileName: %s\n", f.FileName)
 	}
