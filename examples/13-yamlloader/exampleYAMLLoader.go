@@ -36,7 +36,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a json file, version 2.2
-	doc, err := spdx_yaml.Load2_2(r)
+	doc, err := spdx_yaml.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", args[1], err)
 		return

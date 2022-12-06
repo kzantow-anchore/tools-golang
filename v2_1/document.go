@@ -5,6 +5,9 @@ package v2_1
 
 import "github.com/spdx/tools-golang/spdx/common"
 
+const Version = "SPDX-2.1"
+const DataLicense = "CC0-1.0"
+
 // ExternalDocumentRef is a reference to an external SPDX document
 // as defined in section 2.6 for version 2.1 of the spec.
 type ExternalDocumentRef struct {

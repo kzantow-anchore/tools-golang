@@ -1,9 +1,10 @@
 package convert
 
 import (
-	converter "github.com/anchore/go-struct-converter"
+	"github.com/anchore/go-struct-converter"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/v2_1"
 	"github.com/spdx/tools-golang/v2_2"
 )
@@ -14,8 +15,8 @@ var DocumentChain = converter.NewChain(
 	spdx.Document{},
 )
 
-// ConvertDocument converts the provided SPDX document to the latest verison
-func ConvertDocument(doc interface{}) (spdx.Document, error) {
+// Document converts the provided SPDX document to the latest verison
+func Document(doc common.Document) (spdx.Document, error) {
 	latest := spdx.Document{}
 	err := DocumentChain.Convert(doc, &latest)
 	if err != nil {
@@ -30,8 +31,8 @@ var PackageChain = converter.NewChain(
 	spdx.Package{},
 )
 
-// ConvertPackage converts the provided SPDX document to the latest verison
-func ConvertPackage(pkg interface{}) (spdx.Package, error) {
+// Package converts the provided SPDX document to the latest verison
+func Package(pkg common.Package) (spdx.Package, error) {
 	latest := spdx.Package{}
 	err := PackageChain.Convert(pkg, &latest)
 	if err != nil {
@@ -46,8 +47,8 @@ var FileChain = converter.NewChain(
 	spdx.File{},
 )
 
-// ConvertFile converts the provided SPDX document to the latest verison
-func ConvertFile(file interface{}) (spdx.File, error) {
+// File converts the provided SPDX document to the latest verison
+func File(file common.File) (spdx.File, error) {
 	latest := spdx.File{}
 	err := FileChain.Convert(file, &latest)
 	if err != nil {

@@ -25,7 +25,7 @@ func TestLoad2_3(t *testing.T) {
 		if err != nil {
 			t.Errorf("unable to write SPDX 2.3 example to YAML: %v", err)
 		}
-		err = Save2_3(&want2_3, f)
+		err = Write(&want2_3, f)
 		if err != nil {
 			t.Errorf("unable to serialize SPDX 2.3 example to YAML: %v", err)
 		}
@@ -36,7 +36,7 @@ func TestLoad2_3(t *testing.T) {
 		panic(fmt.Errorf("error opening File: %s", err))
 	}
 
-	got, err := Load2_3(file)
+	got, err := Read(file)
 	if err != nil {
 		t.Errorf("yaml.parser.Load2_3() error = %v", err)
 		return
@@ -55,13 +55,13 @@ func TestWrite2_3(t *testing.T) {
 	w := &bytes.Buffer{}
 	// get a copy of the handwritten struct so we don't mutate it on accident
 	handwrittenExample := want2_3
-	if err := Save2_3(&handwrittenExample, w); err != nil {
+	if err := Write(&handwrittenExample, w); err != nil {
 		t.Errorf("Save2_3() error = %v", err.Error())
 		return
 	}
 
 	// we should be able to parse what the writer wrote, and it should be identical to the original handwritten struct
-	parsedDoc, err := Load2_3(bytes.NewReader(w.Bytes()))
+	parsedDoc, err := Read(bytes.NewReader(w.Bytes()))
 	if err != nil {
 		t.Errorf("failed to parse written document: %v", err.Error())
 		return

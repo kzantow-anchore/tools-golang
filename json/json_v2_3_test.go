@@ -56,13 +56,13 @@ func TestWrite2_3(t *testing.T) {
 	w := &bytes.Buffer{}
 	// get a copy of the handwritten struct so we don't mutate it on accident
 	handwrittenExample := want2_3
-	if err := Save2_3(&handwrittenExample, w); err != nil {
-		t.Errorf("Save2_3() error = %v", err.Error())
+	if err := Write(&handwrittenExample, w); err != nil {
+		t.Errorf("Write() error = %v", err.Error())
 		return
 	}
 
 	// we should be able to parse what the writer wrote, and it should be identical to the original struct we wrote
-	parsedDoc, err := Load2_3(bytes.NewReader(w.Bytes()))
+	parsedDoc, err := Read(bytes.NewReader(w.Bytes()))
 	if err != nil {
 		t.Errorf("failed to parse written document: %v", err.Error())
 		return

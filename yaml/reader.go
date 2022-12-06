@@ -4,46 +4,77 @@ package spdx_yaml
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 
 	"sigs.k8s.io/yaml"
 
+	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/v2_1"
 	"github.com/spdx/tools-golang/v2_2"
 )
 
-// Load2_2 takes in an io.Reader and returns an SPDX document.
-func Load2_2(content io.Reader) (*v2_2.Document, error) {
-	// convert io.Reader to a slice of bytes and call the parser
+func Read(content io.Reader) (*spdx.Document, error) {
 	buf := new(bytes.Buffer)
 	_, err := buf.ReadFrom(content)
 	if err != nil {
 		return nil, err
 	}
 
-	var doc v2_2.Document
-	err = yaml.Unmarshal(buf.Bytes(), &doc)
+	var data interface{}
+	err = yaml.Unmarshal(buf.Bytes(), &data)
 	if err != nil {
 		return nil, err
 	}
 
-	return &doc, nil
+	val, ok := data.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("not a valid SPDX YAML document")
+	}
+
+	version, ok := val["spdxVersion"]
+	if !ok {
+		return nil, fmt.Errorf("document does not contain spdxVersion field")
+	}
+
+	switch version {
+	case v2_1.Version:
+		var doc v2_1.Document
+		err = yaml.Unmarshal(buf.Bytes(), &doc)
+		if err != nil {
+			return nil, err
+		}
+		data = doc
+	case v2_2.Version:
+		var doc v2_2.Document
+		err = yaml.Unmarshal(buf.Bytes(), &doc)
+		if err != nil {
+			return nil, err
+		}
+		data = doc
+	case spdx.Version:
+		var doc spdx.Document
+		err = yaml.Unmarshal(buf.Bytes(), &doc)
+		if err != nil {
+			return nil, err
+		}
+		data = doc
+	default:
+		return nil, fmt.Errorf("unsupported SDPX version: %s", version)
+	}
+
+	out, err := convert.Document(data)
+	return &out, err
 }
 
-// Load2_3 takes in an io.Reader and returns an SPDX document.
-func Load2_3(content io.Reader) (*spdx.Document, error) {
-	// convert io.Reader to a slice of bytes and call the parser
+func ReadInto(content io.Reader, doc common.Document) error {
 	buf := new(bytes.Buffer)
 	_, err := buf.ReadFrom(content)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	var doc spdx.Document
-	err = yaml.Unmarshal(buf.Bytes(), &doc)
-	if err != nil {
-		return nil, err
-	}
-
-	return &doc, nil
+	return yaml.Unmarshal(buf.Bytes(), &doc)
 }
