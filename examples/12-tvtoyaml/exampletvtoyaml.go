@@ -57,7 +57,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as an YAML file
-	err = spdx_yaml.Save2_2(doc, w)
+	err = spdx_yaml.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

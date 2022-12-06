@@ -36,7 +36,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a json file, version 2.2
-	doc, err := spdx_json.Load2_2(r)
+	doc, err := spdx_json.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", args[1], err)
 		return
@@ -57,7 +57,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as an SPDX tag-value file, version 2.2
-	err = tvsaver.Save2_2(doc, w)
+	err = tvsaver.Save2_3(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

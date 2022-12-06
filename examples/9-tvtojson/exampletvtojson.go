@@ -57,7 +57,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as JSON file
-	err = spdx_json.Save2_2(doc, w)
+	err = spdx_json.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return
