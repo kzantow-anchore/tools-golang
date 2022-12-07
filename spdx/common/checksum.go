@@ -2,6 +2,13 @@
 
 package common
 
+import (
+	"fmt"
+	"strings"
+
+	"github.com/spdx/tools-golang/tagvalue/lib"
+)
+
 // ChecksumAlgorithm represents the algorithm used to generate the file checksum in the Checksum struct.
 type ChecksumAlgorithm string
 
@@ -32,3 +39,19 @@ type Checksum struct {
 	Algorithm ChecksumAlgorithm `json:"algorithm"`
 	Value     string            `json:"checksumValue"`
 }
+
+func (d Checksum) ToTagValue() (string, error) {
+	return fmt.Sprintf("%s: %s", d.Algorithm, d.Value), nil
+}
+
+func (d *Checksum) FromTagValue(s string) error {
+	parts := strings.Split(s, ": ")
+	if len(parts) == 2 {
+		d.Algorithm = ChecksumAlgorithm(parts[0])
+		d.Value = parts[1]
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*Checksum)(nil)
+var _ tv.FromValue = (*Checksum)(nil)

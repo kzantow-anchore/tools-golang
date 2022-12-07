@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 type Supplier struct {
@@ -103,3 +105,23 @@ type PackageVerificationCode struct {
 	// the SPDX document file itself.
 	ExcludedFiles []string `json:"packageVerificationCodeExcludedFiles,omitempty"`
 }
+
+func (d PackageVerificationCode) ToTagValue() (string, error) {
+	if len(d.ExcludedFiles) > 0 {
+		return fmt.Sprintf("%s (excludes: %s)", d.Value, strings.Join(d.ExcludedFiles, ", ")), nil
+	}
+	return d.Value, nil
+}
+
+func (d *PackageVerificationCode) FromTagValue(s string) error {
+	parts := strings.SplitN(s, " ", 2)
+	d.Value = parts[0]
+	if len(parts) == 2 {
+		e := parts[1]
+		d.ExcludedFiles = strings.Split(strings.TrimSuffix(strings.TrimPrefix(e, "(excludes: "), ")"), ", ")
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*PackageVerificationCode)(nil)
+var _ tv.FromValue = (*PackageVerificationCode)(nil)

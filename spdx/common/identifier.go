@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 const (
@@ -21,7 +23,7 @@ type ElementID string
 
 // MarshalJSON returns an SPDXRef- prefixed JSON string
 func (d ElementID) MarshalJSON() ([]byte, error) {
-	return json.Marshal(prefixElementId(d))
+	return json.Marshal(PrefixElementId(d))
 }
 
 // UnmarshalJSON validates SPDXRef- prefixes and removes them when processing ElementIDs
@@ -30,7 +32,7 @@ func (d *ElementID) UnmarshalJSON(data []byte) error {
 	idStr := string(data)
 	idStr = strings.Trim(idStr, "\"")
 
-	e, err := trimElementIdPrefix(idStr)
+	e, err := TrimElementIdPrefix(idStr)
 	if err != nil {
 		return err
 	}
@@ -38,8 +40,24 @@ func (d *ElementID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// prefixElementId adds the SPDXRef- prefix to an element ID if it does not have one
-func prefixElementId(id ElementID) string {
+func (d ElementID) ToTagValue() (string, error) {
+	return fmt.Sprintf("%s", PrefixElementId(d)), nil
+}
+
+func (d *ElementID) FromTagValue(s string) error {
+	e, err := TrimElementIdPrefix(s)
+	if err != nil {
+		return err
+	}
+	*d = e
+	return nil
+}
+
+var _ tv.ToValue = (*ElementID)(nil)
+var _ tv.FromValue = (*ElementID)(nil)
+
+// PrefixElementId adds the SPDXRef- prefix to an element ID if it does not have one
+func PrefixElementId(id ElementID) string {
 	val := string(id)
 	if !strings.HasPrefix(val, spdxRefPrefix) {
 		return spdxRefPrefix + val
@@ -47,11 +65,33 @@ func prefixElementId(id ElementID) string {
 	return val
 }
 
-// trimElementIdPrefix removes the SPDXRef- prefix from an element ID string or returns an error if it
+// TrimElementIdPrefix removes the SPDXRef- prefix from an element ID string or returns an error if it
 // does not start with SPDXRef-
-func trimElementIdPrefix(id string) (ElementID, error) {
+func TrimElementIdPrefix(id string) (ElementID, error) {
 	// handle SPDXRef-
 	idFields := strings.SplitN(id, spdxRefPrefix, 2)
+	if len(idFields) != 2 {
+		return "", fmt.Errorf("failed to parse SPDX identifier '%s'", id)
+	}
+
+	e := ElementID(idFields[1])
+	return e, nil
+}
+
+// PrefixDocumentRef adds the SPDXRef- prefix to an element ID if it does not have one
+func PrefixDocumentRef(id ElementID) string {
+	val := string(id)
+	if !strings.HasPrefix(val, documentRefPrefix) {
+		return documentRefPrefix + val
+	}
+	return val
+}
+
+// TrimDocumentRefPrefix removes the SPDXRef- prefix from an element ID string or returns an error if it
+// does not start with DocumentRef-
+func TrimDocumentRefPrefix(id string) (ElementID, error) {
+	// handle DocumentRef-
+	idFields := strings.SplitN(id, documentRefPrefix, 2)
 	if len(idFields) != 2 {
 		return "", fmt.Errorf("failed to parse SPDX identifier '%s'", id)
 	}
@@ -80,14 +120,29 @@ type DocElementID struct {
 	SpecialID     string
 }
 
+func (d DocElementID) ToTagValue() (string, error) {
+	v := RenderDocElementID(d)
+	if v != spdxRefPrefix {
+		return v, nil
+	}
+	return "", nil
+}
+
+func (d *DocElementID) FromTagValue(s string) error {
+	return d.FromString(s)
+}
+
+var _ tv.ToValue = (*DocElementID)(nil)
+var _ tv.FromValue = (*DocElementID)(nil)
+
 // MarshalJSON converts the receiver into a slice of bytes representing a DocElementID in string form.
 // This function is also used when marshalling to YAML
 func (d DocElementID) MarshalJSON() ([]byte, error) {
 	if d.DocumentRefID != "" && d.ElementRefID != "" {
-		idStr := prefixElementId(d.ElementRefID)
+		idStr := PrefixElementId(d.ElementRefID)
 		return json.Marshal(fmt.Sprintf("%s%s:%s", documentRefPrefix, d.DocumentRefID, idStr))
 	} else if d.ElementRefID != "" {
-		return json.Marshal(prefixElementId(d.ElementRefID))
+		return json.Marshal(PrefixElementId(d.ElementRefID))
 	} else if d.SpecialID != "" {
 		return json.Marshal(d.SpecialID)
 	}
@@ -102,6 +157,10 @@ func (d *DocElementID) UnmarshalJSON(data []byte) (err error) {
 	idStr := string(data)
 	idStr = strings.Trim(idStr, "\"")
 
+	return d.FromString(idStr)
+}
+
+func (d *DocElementID) FromString(idStr string) (err error) {
 	// handle special cases
 	if idStr == "NONE" || idStr == "NOASSERTION" {
 		d.SpecialID = idStr
@@ -126,7 +185,7 @@ func (d *DocElementID) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	d.ElementRefID, err = trimElementIdPrefix(idStr)
+	d.ElementRefID, err = TrimElementIdPrefix(idStr)
 	return err
 }
 

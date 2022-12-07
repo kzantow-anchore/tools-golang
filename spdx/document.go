@@ -3,7 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"fmt"
+	"strings"
+
+	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/tagvalue/lib"
+)
 
 const Version = "SPDX-2.3"
 const DataLicense = "CC0-1.0"
@@ -23,6 +29,30 @@ type ExternalDocumentRef struct {
 	Checksum common.Checksum `json:"checksum"`
 }
 
+func (d ExternalDocumentRef) ToTagValue() (string, error) {
+	return fmt.Sprintf("%s %s %s", common.PrefixDocumentRef(common.ElementID(d.DocumentRefID)), d.URI, d.Checksum), nil
+}
+
+func (d *ExternalDocumentRef) FromTagValue(s string) error {
+	parts := strings.SplitN(s, " ", 3)
+	if len(parts) == 3 {
+		elementID, err := common.TrimDocumentRefPrefix(parts[0])
+		if err != nil {
+			return err
+		}
+		d.DocumentRefID = string(elementID)
+		d.URI = parts[1]
+		err = d.Checksum.FromTagValue(parts[2])
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*ExternalDocumentRef)(nil)
+var _ tv.FromValue = (*ExternalDocumentRef)(nil)
+
 // Document is an SPDX Document for version 2.3 of the spec.
 // See https://spdx.github.io/spdx-spec/v2.3/document-creation-information
 type Document struct {
@@ -37,7 +67,7 @@ type Document struct {
 	// 6.3: SPDX Identifier; should be "DOCUMENT" to represent
 	//      mandatory identifier of SPDXRef-DOCUMENT
 	// Cardinality: mandatory, one
-	SPDXIdentifier common.ElementID `json:"SPDXID"`
+	SPDXIdentifier common.ElementID `json:"SPDXID" tv:"SPDXID"`
 
 	// 6.4: Document Name
 	// Cardinality: mandatory, one
@@ -49,7 +79,7 @@ type Document struct {
 
 	// 6.6: External Document References
 	// Cardinality: optional, one or many
-	ExternalDocumentReferences []ExternalDocumentRef `json:"externalDocumentRefs,omitempty"`
+	ExternalDocumentReferences []ExternalDocumentRef `json:"externalDocumentRefs,omitempty" tv:"ExternalDocumentRef"`
 
 	// 6.11: Document Comment
 	// Cardinality: optional, one

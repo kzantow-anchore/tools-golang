@@ -6,6 +6,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	"github.com/spdx/tools-golang/tagvalue/lib"
+)
+
+const (
+	AnnotatorTypePerson       = "Person"
+	AnnotatorTypeOrganization = "Organization"
+	AnnotatorTypeTool         = "Tool"
+
+	AnnotationTypeReview = "REVIEW"
+	AnnotationTypeOther  = "OTHER"
 )
 
 type Annotator struct {
@@ -13,6 +24,22 @@ type Annotator struct {
 	// including AnnotatorType: one of "Person", "Organization" or "Tool"
 	AnnotatorType string
 }
+
+func (d Annotator) ToTagValue() (string, error) {
+	return fmt.Sprintf("%s: %s", d.AnnotatorType, d.Annotator), nil
+}
+
+func (d *Annotator) FromTagValue(s string) error {
+	parts := strings.Split(s, ": ")
+	if len(parts) == 2 {
+		d.AnnotatorType = parts[0]
+		d.Annotator = parts[1]
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*Annotator)(nil)
+var _ tv.FromValue = (*Annotator)(nil)
 
 // UnmarshalJSON takes an annotator in the typical one-line format and parses it into an Annotator struct.
 // This function is also used when unmarshalling YAML
