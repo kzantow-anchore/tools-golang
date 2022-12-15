@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Relationship is a Relationship section of an SPDX Document for

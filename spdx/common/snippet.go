@@ -5,7 +5,7 @@ package common
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 type SnippetRangePointer struct {

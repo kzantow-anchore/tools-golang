@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 type Supplier struct {

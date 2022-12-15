@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Package is a Package section of an SPDX Document for version 2.3 of the spec.
@@ -71,7 +71,7 @@ type Package struct {
 
 	// 7.13: Concluded License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one
-	PackageLicenseConcluded string `json:"licenseConcluded,omitempty"`
+	PackageLicenseConcluded common.LicenseID `json:"licenseConcluded,omitempty"`
 
 	// 7.14: All Licenses Info from Files: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one or many if filesAnalyzed is true / omitted;
@@ -80,7 +80,7 @@ type Package struct {
 
 	// 7.15: Declared License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one
-	PackageLicenseDeclared string `json:"licenseDeclared,omitempty"`
+	PackageLicenseDeclared common.LicenseID `json:"licenseDeclared,omitempty"`
 
 	// 7.16: Comments on License
 	// Cardinality: optional, one

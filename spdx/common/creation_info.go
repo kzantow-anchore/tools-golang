@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Creator is a wrapper around the Creator SPDX field. The SPDX field contains two values, which requires special

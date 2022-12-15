@@ -5,7 +5,7 @@ package spdx
 import (
 	"fmt"
 
-	"github.com/spdx/tools-golang/tagvalue/lib"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Review is a Review section of an SPDX Document for version 2.3 of the spec.
