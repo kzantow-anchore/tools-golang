@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"runtime"
 
+	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/utils"
 )
 

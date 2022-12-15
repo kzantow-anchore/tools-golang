@@ -2,9 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// Snippet is a Snippet section of an SPDX Document for version 2.3 of the spec.
+// Snippet is a Snippet section of an SPDX Document
 type Snippet struct {
 
 	// 9.1: Snippet SPDX Identifier: "SPDXRef-[idstring]"

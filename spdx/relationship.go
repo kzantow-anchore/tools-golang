@@ -2,10 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// Relationship is a Relationship section of an SPDX Document for
-// version 2.3 of the spec.
+// Relationship is a Relationship section of an SPDX Document
 type Relationship struct {
 
 	// 11.1: Relationship

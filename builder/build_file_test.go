@@ -5,7 +5,7 @@ package builder
 import (
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/common"
 )
 
 // ===== File section builder tests =====

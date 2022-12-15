@@ -2,7 +2,9 @@
 
 package v2_2
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
 // Package is a Package section of an SPDX Document for version 2.2 of the spec.
 type Package struct {
@@ -101,7 +103,7 @@ type Package struct {
 
 	// 7.22: Package External Reference Comment
 	// Cardinality: conditional (optional, one) for each External Reference
-	// contained within PackageExternalReference2_1 struct, if present
+	// contained within PackageExternalReference struct, if present
 
 	// 7.23: Package Attribution Text
 	// Cardinality: optional, one or many

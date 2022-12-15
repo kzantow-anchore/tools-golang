@@ -2,7 +2,9 @@
 
 package v2_1
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
 // CreationInfo is a Document Creation Information section of an
 // SPDX Document for version 2.1 of the spec.

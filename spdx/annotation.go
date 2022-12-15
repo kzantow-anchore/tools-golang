@@ -2,9 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// Annotation is an Annotation section of an SPDX Document for version 2.3 of the spec.
+// Annotation is an Annotation section of an SPDX Document
 type Annotation struct {
 	// 12.1: Annotator
 	// Cardinality: conditional (mandatory, one) if there is an Annotation

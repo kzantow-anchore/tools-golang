@@ -7,8 +7,8 @@ package builder
 import (
 	"fmt"
 
+	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Config is a collection of configuration settings for builder.

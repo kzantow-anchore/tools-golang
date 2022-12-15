@@ -2,7 +2,9 @@
 
 package v2_2
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
 // Snippet is a Snippet section of an SPDX Document for version 2.2 of the spec.
 type Snippet struct {

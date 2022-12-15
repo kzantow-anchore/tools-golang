@@ -2,8 +2,7 @@
 
 package spdx
 
-// OtherLicense is an Other License Information section of an
-// SPDX Document for version 2.3 of the spec.
+// OtherLicense is an Other License Information section of an SPDX Document
 type OtherLicense struct {
 	// 10.1: License Identifier: "LicenseRef-[idstring]"
 	// Cardinality: conditional (mandatory, one) if license is not

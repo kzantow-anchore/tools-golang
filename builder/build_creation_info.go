@@ -5,8 +5,8 @@ package builder
 import (
 	"time"
 
+	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // BuildCreationInfoSection creates an SPDX Package, returning that

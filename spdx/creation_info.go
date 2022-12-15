@@ -2,10 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// CreationInfo is a Document Creation Information section of an
-// SPDX Document for version 2.3 of the spec.
+// CreationInfo is a Document Creation Information section of an SPDX Document
 type CreationInfo struct {
 	// 6.7: License List Version
 	// Cardinality: optional, one

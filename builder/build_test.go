@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func TestBuildCreatesDocument(t *testing.T) {

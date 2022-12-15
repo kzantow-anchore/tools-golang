@@ -2,9 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// File is a File section of an SPDX Document for version 2.3 of the spec.
+// File is a File section of an SPDX Document
 type File struct {
 	// 8.1: File Name
 	// Cardinality: mandatory, one
@@ -74,7 +76,7 @@ type File struct {
 }
 
 // ArtifactOfProject is a DEPRECATED collection of data regarding
-// a Package, as defined in sections 8.9-8.11 in version 2.3 of the spec.
+// a Package, as defined in sections 8.9-8.11.
 // NOTE: the JSON schema does not define the structure of this object:
 // https://github.com/spdx/spdx-spec/blob/development/v2.3.1/schemas/spdx-schema.json#L480
 type ArtifactOfProject struct {

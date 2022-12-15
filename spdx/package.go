@@ -2,9 +2,11 @@
 
 package spdx
 
-import "github.com/spdx/tools-golang/spdx/common"
+import (
+	"github.com/spdx/tools-golang/common"
+)
 
-// Package is a Package section of an SPDX Document for version 2.3 of the spec.
+// Package is a Package section of an SPDX Document
 type Package struct {
 	// NOT PART OF SPEC
 	// flag: does this "package" contain files that were in fact "unpackaged",
@@ -102,7 +104,7 @@ type Package struct {
 
 	// 7.22: Package External Reference Comment
 	// Cardinality: conditional (optional, one) for each External Reference
-	// contained within PackageExternalReference2_1 struct, if present
+	// contained within PackageExternalReference struct, if present
 
 	// 7.23: Package Attribution Text
 	// Cardinality: optional, one or many
@@ -132,7 +134,7 @@ type Package struct {
 }
 
 // PackageExternalReference is an External Reference to additional info
-// about a Package, as defined in section 7.21 in version 2.3 of the spec.
+// about a Package, as defined in section 7.21
 type PackageExternalReference struct {
 	// category is "SECURITY", "PACKAGE-MANAGER" or "OTHER"
 	Category string `json:"referenceCategory"`

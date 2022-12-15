@@ -16,7 +16,7 @@ import (
 	"os"
 
 	"github.com/spdx/tools-golang/idsearcher"
-	"github.com/spdx/tools-golang/tvsaver"
+	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -138,7 +138,7 @@ func main() {
 	}
 	defer w.Close()
 
-	err = tvsaver.Save2_3(doc, w)
+	err = spdx_tagvalue.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

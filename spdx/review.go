@@ -2,7 +2,7 @@
 
 package spdx
 
-// Review is a Review section of an SPDX Document for version 2.3 of the spec.
+// Review is a Review section of an SPDX Document.
 // DEPRECATED in version 2.0 of spec; retained here for compatibility.
 type Review struct {
 
