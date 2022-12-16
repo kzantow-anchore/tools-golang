@@ -14,6 +14,7 @@ import (
 	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/v2_1"
 	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/spdx/v2_3"
 )
 
 func Read(content io.Reader) (*spdx.Document, error) {
@@ -54,8 +55,8 @@ func Read(content io.Reader) (*spdx.Document, error) {
 			return nil, err
 		}
 		data = doc
-	case spdx.Version:
-		var doc spdx.Document
+	case v2_3.Version:
+		var doc v2_3.Document
 		err = yaml.Unmarshal(buf.Bytes(), &doc)
 		if err != nil {
 			return nil, err

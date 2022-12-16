@@ -14,7 +14,7 @@ import (
 	v2_1_reader "github.com/spdx/tools-golang/spdx/v2_1/tagvalue/reader"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 	v2_2_reader "github.com/spdx/tools-golang/spdx/v2_2/tagvalue/reader"
-	v2_3 "github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx/v2_3"
 	v2_3_reader "github.com/spdx/tools-golang/spdx/v2_3/tagvalue/reader"
 	"github.com/spdx/tools-golang/tagvalue/reader"
 )

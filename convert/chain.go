@@ -1,7 +1,7 @@
 package convert
 
 import (
-	converter "github.com/anchore/go-struct-converter"
+	"github.com/anchore/go-struct-converter"
 
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
@@ -16,8 +16,11 @@ var DocumentChain = converter.NewChain(
 	v2_3.Document{},
 )
 
-// Document converts the provided SPDX document to the latest verison
+// Document converts the provided SPDX document to the latest version
 func Document(doc common.Document) (spdx.Document, error) {
+	if doc, ok := doc.(spdx.Document); ok {
+		return doc, nil
+	}
 	latest := spdx.Document{}
 	err := DocumentChain.Convert(doc, &latest)
 	if err != nil {
