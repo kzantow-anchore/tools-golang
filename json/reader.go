@@ -11,8 +11,8 @@ import (
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/v2_1"
-	"github.com/spdx/tools-golang/v2_2"
+	"github.com/spdx/tools-golang/spdx/v2_1"
+	"github.com/spdx/tools-golang/spdx/v2_2"
 )
 
 func Read(content io.Reader) (*spdx.Document, error) {

@@ -9,11 +9,11 @@ import (
 
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/tagvalue/writer"
-	"github.com/spdx/tools-golang/v2_1"
-	v2_1_writer "github.com/spdx/tools-golang/v2_1/tagvalue/writer"
-	"github.com/spdx/tools-golang/v2_2"
-	v2_2_writer "github.com/spdx/tools-golang/v2_2/tagvalue/writer"
+	"github.com/spdx/tools-golang/spdx/v2_1"
+	v2_1_writer "github.com/spdx/tools-golang/spdx/v2_1/tagvalue/writer"
+	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_2_writer "github.com/spdx/tools-golang/spdx/v2_2/tagvalue/writer"
+	v2_3_writer "github.com/spdx/tools-golang/spdx/v2_3/tagvalue/writer"
 )
 
 // Write takes an io.Writer and an SPDX Document,
@@ -26,7 +26,7 @@ func Write(doc common.Document, w io.Writer) error {
 	case v2_2.Document:
 		return v2_2_writer.RenderDocument(&doc, w)
 	case spdx.Document:
-		return writer.RenderDocument(&doc, w)
+		return v2_3_writer.RenderDocument(&doc, w)
 	}
 	return fmt.Errorf("unsupported document type: %v", doc)
 }

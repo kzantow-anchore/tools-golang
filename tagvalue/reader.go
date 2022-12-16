@@ -10,12 +10,13 @@ import (
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
-	spdx_reader "github.com/spdx/tools-golang/spdx/tagvalue/reader"
+	"github.com/spdx/tools-golang/spdx/v2_1"
+	v2_1_reader "github.com/spdx/tools-golang/spdx/v2_1/tagvalue/reader"
+	"github.com/spdx/tools-golang/spdx/v2_2"
+	v2_2_reader "github.com/spdx/tools-golang/spdx/v2_2/tagvalue/reader"
+	v2_3 "github.com/spdx/tools-golang/spdx/v2_3"
+	v2_3_reader "github.com/spdx/tools-golang/spdx/v2_3/tagvalue/reader"
 	"github.com/spdx/tools-golang/tagvalue/reader"
-	"github.com/spdx/tools-golang/v2_1"
-	v2_1_reader "github.com/spdx/tools-golang/v2_1/tagvalue/reader"
-	"github.com/spdx/tools-golang/v2_2"
-	v2_2_reader "github.com/spdx/tools-golang/v2_2/tagvalue/reader"
 )
 
 // Read takes an io.Reader and returns a fully-parsed SPDX Document
@@ -44,8 +45,8 @@ func Read(content io.Reader) (*spdx.Document, error) {
 		data, err = v2_1_reader.ParseTagValues(tvPairs)
 	case v2_2.Version:
 		data, err = v2_2_reader.ParseTagValues(tvPairs)
-	case spdx.Version:
-		data, err = spdx_reader.ParseTagValues(tvPairs)
+	case v2_3.Version:
+		data, err = v2_3_reader.ParseTagValues(tvPairs)
 	default:
 		return nil, fmt.Errorf("unsupported SPDX version: '%v'", version)
 	}
