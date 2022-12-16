@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package spdx_yaml
+package yaml
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
-	spdx_yaml "github.com/spdx/tools-golang/yaml"
+	"github.com/spdx/tools-golang/yaml"
 )
 
 func Test_Read(t *testing.T) {
@@ -22,7 +22,7 @@ func Test_Read(t *testing.T) {
 	}
 
 	var got v2_2.Document
-	err = spdx_yaml.ReadInto(file, got)
+	err = yaml.ReadInto(file, got)
 	if err != nil {
 		t.Errorf("yaml.parser.Load() error = %v", err)
 		return
@@ -41,14 +41,14 @@ func TestWrite(t *testing.T) {
 	w := &bytes.Buffer{}
 	// get a copy of the handwritten struct so we don't mutate it on accident
 	handwrittenExample := want
-	if err := spdx_yaml.Write(handwrittenExample, w); err != nil {
+	if err := yaml.Write(handwrittenExample, w); err != nil {
 		t.Errorf("Save() error = %v", err.Error())
 		return
 	}
 
 	// we should be able to parse what the writer wrote, and it should be identical to the original handwritten struct
 	var parsedDoc v2_2.Document
-	err := spdx_yaml.ReadInto(bytes.NewReader(w.Bytes()), parsedDoc)
+	err := yaml.ReadInto(bytes.NewReader(w.Bytes()), parsedDoc)
 	if err != nil {
 		t.Errorf("failed to parse written document: %v", err.Error())
 		return

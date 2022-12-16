@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-package spdx_yaml
+package yaml
 
 import (
 	"bytes"
@@ -13,7 +13,7 @@ import (
 
 	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
-	spdx_yaml "github.com/spdx/tools-golang/yaml"
+	"github.com/spdx/tools-golang/yaml"
 )
 
 var update = *flag.Bool("update-snapshots", false, "update the example snapshot")
@@ -26,7 +26,7 @@ func TestLoad(t *testing.T) {
 		if err != nil {
 			t.Errorf("unable to write SPDX 2.3 example to YAML: %v", err)
 		}
-		err = spdx_yaml.Write(&want, f)
+		err = yaml.Write(&want, f)
 		if err != nil {
 			t.Errorf("unable to serialize SPDX 2.3 example to YAML: %v", err)
 		}
@@ -37,7 +37,7 @@ func TestLoad(t *testing.T) {
 		panic(fmt.Errorf("error opening File: %s", err))
 	}
 
-	got, err := spdx_yaml.Read(file)
+	got, err := yaml.Read(file)
 	if err != nil {
 		t.Errorf("yaml.parser.Load() error = %v", err)
 		return
@@ -56,13 +56,13 @@ func TestWrite(t *testing.T) {
 	w := &bytes.Buffer{}
 	// get a copy of the handwritten struct so we don't mutate it on accident
 	handwrittenExample := want
-	if err := spdx_yaml.Write(&handwrittenExample, w); err != nil {
+	if err := yaml.Write(&handwrittenExample, w); err != nil {
 		t.Errorf("Save() error = %v", err.Error())
 		return
 	}
 
 	// we should be able to parse what the writer wrote, and it should be identical to the original handwritten struct
-	parsedDoc, err := spdx_yaml.Read(bytes.NewReader(w.Bytes()))
+	parsedDoc, err := yaml.Read(bytes.NewReader(w.Bytes()))
 	if err != nil {
 		t.Errorf("failed to parse written document: %v", err.Error())
 		return

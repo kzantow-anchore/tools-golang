@@ -1,7 +1,7 @@
 // Package tvsaver is used to save tools-golang data structures
 // as SPDX tag-value documents.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
-package spdx_tagvalue
+package tagvalue
 
 import (
 	"fmt"
