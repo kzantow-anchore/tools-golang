@@ -18,6 +18,7 @@ var DocumentChain = converter.NewChain(
 
 // Document converts the provided SPDX document to the latest version
 func Document(doc common.Document) (spdx.Document, error) {
+	doc = FromPtr(doc)
 	if doc, ok := doc.(spdx.Document); ok {
 		return doc, nil
 	}
