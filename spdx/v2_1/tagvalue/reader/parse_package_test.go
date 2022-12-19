@@ -2,9 +2,9 @@
 package reader
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_1"
 )
 
@@ -350,15 +350,15 @@ func TestParserCanParsePackageTags(t *testing.T) {
 
 	for _, checksum := range parser.pkg.PackageChecksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != codeSha1 {
 				t.Errorf("expected %s for PackageChecksum SHA1, got %s", codeSha1, checksum.Value)
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != codeSha256 {
 				t.Errorf("expected %s for PackageChecksum SHA256, got %s", codeSha256, checksum.Value)
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != codeMd5 {
 				t.Errorf("expected %s for PackageChecksum MD5, got %s", codeMd5, checksum.Value)
 			}
@@ -477,7 +477,7 @@ func TestParserCanParsePackageTags(t *testing.T) {
 	// Package External References and Comments
 	ref1 := "SECURITY cpe23Type cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*"
 	ref1Category := "SECURITY"
-	ref1Type := common2.TypeSecurityCPE23Type
+	ref1Type := common.TypeSecurityCPE23Type
 	ref1Locator := "cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*"
 	ref1Comment := "this is comment #1"
 	ref2 := "OTHER LocationRef-acmeforge acmecorp/acmenator/4.1.3alpha"
@@ -1025,7 +1025,7 @@ func TestCanCheckAndExtractExcludesFilenameAndCode(t *testing.T) {
 func TestCanExtractPackageExternalReference(t *testing.T) {
 	ref1 := "SECURITY cpe23Type cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*"
 	category := "SECURITY"
-	refType := common2.TypeSecurityCPE23Type
+	refType := common.TypeSecurityCPE23Type
 	location := "cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*"
 
 	gotCategory, gotRefType, gotLocation, err := extractPackageExternalReference(ref1)
@@ -1046,7 +1046,7 @@ func TestCanExtractPackageExternalReference(t *testing.T) {
 func TestCanExtractPackageExternalReferenceWithExtraWhitespace(t *testing.T) {
 	ref1 := "  SECURITY    \t cpe23Type   cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:* \t "
 	category := "SECURITY"
-	refType := common2.TypeSecurityCPE23Type
+	refType := common.TypeSecurityCPE23Type
 	location := "cpe:2.3:a:pivotal_software:spring_framework:4.1.0:*:*:*:*:*:*:*"
 
 	gotCategory, gotRefType, gotLocation, err := extractPackageExternalReference(ref1)

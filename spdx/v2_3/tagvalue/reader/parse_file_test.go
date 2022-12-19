@@ -2,10 +2,10 @@
 package reader
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // ===== Parser file section state change tests =====
@@ -446,15 +446,15 @@ func TestParserCanParseFileTags(t *testing.T) {
 	}
 	for _, checksum := range parser.file.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != codeSha1 {
 				t.Errorf("expected %s for FileChecksumSHA1, got %s", codeSha1, checksum.Value)
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != codeSha256 {
 				t.Errorf("expected %s for FileChecksumSHA1, got %s", codeSha256, checksum.Value)
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != codeMd5 {
 				t.Errorf("expected %s for FileChecksumSHA1, got %s", codeMd5, checksum.Value)
 			}
@@ -935,7 +935,7 @@ func TestParserFilesWithoutSpdxIdThrowError(t *testing.T) {
 	// case 2: Invalid file with snippet
 	// Last unpackaged file before the snippet start
 	fileName := "f2.txt"
-	sid1 := common2.ElementID("s1")
+	sid1 := common.ElementID("s1")
 	parser2 := tvParser{
 		doc:  &spdx.Document{},
 		st:   psCreationInfo,

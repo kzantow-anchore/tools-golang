@@ -3,7 +3,7 @@
 package v2_3
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // File is a File section of an SPDX Document
@@ -14,7 +14,7 @@ type File struct {
 
 	// 8.2: File SPDX Identifier: "SPDXRef-[idstring]"
 	// Cardinality: mandatory, one
-	FileSPDXIdentifier common2.ElementID `json:"SPDXID"`
+	FileSPDXIdentifier common.ElementID `json:"SPDXID"`
 
 	// 8.3: File Types
 	// Cardinality: optional, multiple
@@ -22,7 +22,7 @@ type File struct {
 
 	// 8.4: File Checksum: may have keys for SHA1, SHA256, MD5, SHA3-256, SHA3-384, SHA3-512, BLAKE2b-256, BLAKE2b-384, BLAKE2b-512, BLAKE3, ADLER32
 	// Cardinality: mandatory, one SHA1, others may be optionally provided
-	Checksums []common2.Checksum `json:"checksums"`
+	Checksums []common.Checksum `json:"checksums"`
 
 	// 8.5: Concluded License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one
@@ -70,7 +70,7 @@ type File struct {
 	// Note that Snippets could be defined in a different Document! However,
 	// the only ones that _THIS_ document can contain are this ones that are
 	// defined here -- so this should just be an ElementID.
-	Snippets map[common2.ElementID]*Snippet `json:"-" yaml:"-"`
+	Snippets map[common.ElementID]*Snippet `json:"-" yaml:"-"`
 
 	Annotations []Annotation `json:"annotations,omitempty"`
 }

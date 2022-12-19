@@ -5,11 +5,11 @@ package tagvalue
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 
 	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_1"
 	v2_1_reader "github.com/spdx/tools-golang/spdx/v2_1/tagvalue/reader"
 	"github.com/spdx/tools-golang/spdx/v2_2"

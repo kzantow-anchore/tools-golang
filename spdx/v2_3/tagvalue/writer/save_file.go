@@ -4,11 +4,11 @@ package writer
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 	"sort"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func renderFile(f *spdx.File, w io.Writer) error {

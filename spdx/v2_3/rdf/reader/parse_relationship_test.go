@@ -3,12 +3,12 @@
 package reader
 
 import (
-	"github.com/spdx/tools-golang/spdx/common"
 	"reflect"
 	"testing"
 
 	"github.com/spdx/gordf/rdfwriter"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func Test_getReferenceFromURI(t *testing.T) {

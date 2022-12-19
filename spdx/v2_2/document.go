@@ -4,7 +4,7 @@
 package v2_2
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 const Version = "SPDX-2.2"
@@ -22,7 +22,7 @@ type ExternalDocumentRef struct {
 	URI string `json:"spdxDocument"`
 
 	// Checksum is the actual hash data
-	Checksum common2.Checksum `json:"checksum"`
+	Checksum common.Checksum `json:"checksum"`
 }
 
 // Document is an SPDX Document for version 2.2 of the spec.
@@ -39,7 +39,7 @@ type Document struct {
 	// 6.3: SPDX Identifier; should be "DOCUMENT" to represent
 	//      mandatory identifier of SPDXRef-DOCUMENT
 	// Cardinality: mandatory, one
-	SPDXIdentifier common2.ElementID `json:"SPDXID"`
+	SPDXIdentifier common.ElementID `json:"SPDXID"`
 
 	// 6.4: Document Name
 	// Cardinality: mandatory, one

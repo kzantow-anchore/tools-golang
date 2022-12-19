@@ -3,14 +3,14 @@
 package v2_1
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Annotation is an Annotation section of an SPDX Document for version 2.1 of the spec.
 type Annotation struct {
 	// 8.1: Annotator
 	// Cardinality: conditional (mandatory, one) if there is an Annotation
-	Annotator common2.Annotator `json:"annotator"`
+	Annotator common.Annotator `json:"annotator"`
 
 	// 8.2: Annotation Date: YYYY-MM-DDThh:mm:ssZ
 	// Cardinality: conditional (mandatory, one) if there is an Annotation
@@ -23,7 +23,7 @@ type Annotation struct {
 	// 8.4: SPDX Identifier Reference
 	// Cardinality: conditional (mandatory, one) if there is an Annotation
 	// This field is not used in hierarchical data formats where the referenced element is clear, such as JSON or YAML.
-	AnnotationSPDXIdentifier common2.DocElementID `json:"-"`
+	AnnotationSPDXIdentifier common.DocElementID `json:"-"`
 
 	// 8.5: Annotation Comment
 	// Cardinality: conditional (mandatory, one) if there is an Annotation

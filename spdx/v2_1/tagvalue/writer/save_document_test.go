@@ -4,68 +4,68 @@ package writer
 
 import (
 	"bytes"
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/spdx/v2_1"
+	"github.com/spdx/tools-golang/spdx/common"
+	spdx "github.com/spdx/tools-golang/spdx/v2_1"
 )
 
 // ===== entire Document Saver tests =====
 func TestSaverDocumentSavesText(t *testing.T) {
 
 	// Creation Info section
-	ci := &v2_1.CreationInfo{
-		Creators: []common2.Creator{
+	ci := &spdx.CreationInfo{
+		Creators: []common.Creator{
 			{Creator: "John Doe", CreatorType: "Person"},
 		},
 		Created: "2018-10-10T06:20:00Z",
 	}
 
 	// unpackaged files
-	f1 := &v2_1.File{
+	f1 := &spdx.File{
 		FileName:           "/tmp/whatever1.txt",
-		FileSPDXIdentifier: common2.ElementID("File1231"),
-		Checksums:          []common2.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983c", Algorithm: common2.SHA1}},
+		FileSPDXIdentifier: common.ElementID("File1231"),
+		Checksums:          []common.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983c", Algorithm: common.SHA1}},
 		LicenseConcluded:   "Apache-2.0",
 		LicenseInfoInFiles: []string{"Apache-2.0"},
 		FileCopyrightText:  "Copyright (c) Jane Doe",
 	}
 
-	f2 := &v2_1.File{
+	f2 := &spdx.File{
 		FileName:           "/tmp/whatever2.txt",
-		FileSPDXIdentifier: common2.ElementID("File1232"),
-		Checksums:          []common2.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983d", Algorithm: common2.SHA1}},
+		FileSPDXIdentifier: common.ElementID("File1232"),
+		Checksums:          []common.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983d", Algorithm: common.SHA1}},
 		LicenseConcluded:   "MIT",
 		LicenseInfoInFiles: []string{"MIT"},
 		FileCopyrightText:  "Copyright (c) John Doe",
 	}
 
-	unFiles := []*v2_1.File{
+	unFiles := []*spdx.File{
 		f1,
 		f2,
 	}
 
 	// Package 1: packaged files with snippets
-	sn1 := &v2_1.Snippet{
+	sn1 := &spdx.Snippet{
 		SnippetSPDXIdentifier:         "Snippet19",
-		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "FileHasSnippets").ElementRefID,
-		Ranges:                        []common2.SnippetRange{{StartPointer: common2.SnippetRangePointer{Offset: 17}, EndPointer: common2.SnippetRangePointer{Offset: 209}}},
+		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "FileHasSnippets").ElementRefID,
+		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 17}, EndPointer: common.SnippetRangePointer{Offset: 209}}},
 		SnippetLicenseConcluded:       "GPL-2.0-or-later",
 		SnippetCopyrightText:          "Copyright (c) John Doe 20x6",
 	}
 
-	sn2 := &v2_1.Snippet{
+	sn2 := &spdx.Snippet{
 		SnippetSPDXIdentifier:         "Snippet20",
-		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "FileHasSnippets").ElementRefID,
-		Ranges:                        []common2.SnippetRange{{StartPointer: common2.SnippetRangePointer{Offset: 268}, EndPointer: common2.SnippetRangePointer{Offset: 309}}},
+		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "FileHasSnippets").ElementRefID,
+		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 268}, EndPointer: common.SnippetRangePointer{Offset: 309}}},
 		SnippetLicenseConcluded:       "WTFPL",
 		SnippetCopyrightText:          "NOASSERTION",
 	}
 
-	f3 := &v2_1.File{
+	f3 := &spdx.File{
 		FileName:           "/tmp/file-with-snippets.txt",
-		FileSPDXIdentifier: common2.ElementID("FileHasSnippets"),
-		Checksums:          []common2.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983e", Algorithm: common2.SHA1}},
+		FileSPDXIdentifier: common.ElementID("FileHasSnippets"),
+		Checksums:          []common.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983e", Algorithm: common.SHA1}},
 		LicenseConcluded:   "GPL-2.0-or-later AND WTFPL",
 		LicenseInfoInFiles: []string{
 			"Apache-2.0",
@@ -73,28 +73,28 @@ func TestSaverDocumentSavesText(t *testing.T) {
 			"WTFPL",
 		},
 		FileCopyrightText: "Copyright (c) Jane Doe",
-		Snippets: map[common2.ElementID]*v2_1.Snippet{
-			common2.ElementID("Snippet19"): sn1,
-			common2.ElementID("Snippet20"): sn2,
+		Snippets: map[common.ElementID]*spdx.Snippet{
+			common.ElementID("Snippet19"): sn1,
+			common.ElementID("Snippet20"): sn2,
 		},
 	}
 
-	f4 := &v2_1.File{
+	f4 := &spdx.File{
 		FileName:           "/tmp/another-file.txt",
-		FileSPDXIdentifier: common2.ElementID("FileAnother"),
-		Checksums:          []common2.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983f", Algorithm: common2.SHA1}},
+		FileSPDXIdentifier: common.ElementID("FileAnother"),
+		Checksums:          []common.Checksum{{Value: "85ed0817af83a24ad8da68c2b5094de69833983f", Algorithm: common.SHA1}},
 		LicenseConcluded:   "BSD-3-Clause",
 		LicenseInfoInFiles: []string{"BSD-3-Clause"},
 		FileCopyrightText:  "Copyright (c) Jane Doe LLC",
 	}
 
-	pkgWith := &v2_1.Package{
+	pkgWith := &spdx.Package{
 		PackageName:               "p1",
-		PackageSPDXIdentifier:     common2.ElementID("p1"),
+		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "http://example.com/p1/p1-0.1.0-master.tar.gz",
 		FilesAnalyzed:             true,
 		IsFilesAnalyzedTagPresent: true,
-		PackageVerificationCode:   common2.PackageVerificationCode{Value: "0123456789abcdef0123456789abcdef01234567"},
+		PackageVerificationCode:   common.PackageVerificationCode{Value: "0123456789abcdef0123456789abcdef01234567"},
 		PackageLicenseConcluded:   "GPL-2.0-or-later AND BSD-3-Clause AND WTFPL",
 		PackageLicenseInfoFromFiles: []string{
 			"Apache-2.0",
@@ -104,14 +104,14 @@ func TestSaverDocumentSavesText(t *testing.T) {
 		},
 		PackageLicenseDeclared: "Apache-2.0 OR GPL-2.0-or-later",
 		PackageCopyrightText:   "Copyright (c) John Doe, Inc.",
-		Files: []*v2_1.File{
+		Files: []*spdx.File{
 			f3,
 			f4,
 		},
 	}
 
 	// Other Licenses 1 and 2
-	ol1 := &v2_1.OtherLicense{
+	ol1 := &spdx.OtherLicense{
 		LicenseIdentifier: "LicenseRef-1",
 		ExtractedText: `License 1 text
 blah blah blah
@@ -119,57 +119,57 @@ blah blah blah blah`,
 		LicenseName: "License 1",
 	}
 
-	ol2 := &v2_1.OtherLicense{
+	ol2 := &spdx.OtherLicense{
 		LicenseIdentifier: "LicenseRef-2",
 		ExtractedText:     `License 2 text - this is a license that does some stuff`,
 		LicenseName:       "License 2",
 	}
 
 	// Relationships
-	rln1 := &v2_1.Relationship{
-		RefA:         common2.MakeDocElementID("", "DOCUMENT"),
-		RefB:         common2.MakeDocElementID("", "p1"),
+	rln1 := &spdx.Relationship{
+		RefA:         common.MakeDocElementID("", "DOCUMENT"),
+		RefB:         common.MakeDocElementID("", "p1"),
 		Relationship: "DESCRIBES",
 	}
 
-	rln2 := &v2_1.Relationship{
-		RefA:         common2.MakeDocElementID("", "DOCUMENT"),
-		RefB:         common2.MakeDocElementID("", "File1231"),
+	rln2 := &spdx.Relationship{
+		RefA:         common.MakeDocElementID("", "DOCUMENT"),
+		RefB:         common.MakeDocElementID("", "File1231"),
 		Relationship: "DESCRIBES",
 	}
 
-	rln3 := &v2_1.Relationship{
-		RefA:         common2.MakeDocElementID("", "DOCUMENT"),
-		RefB:         common2.MakeDocElementID("", "File1232"),
+	rln3 := &spdx.Relationship{
+		RefA:         common.MakeDocElementID("", "DOCUMENT"),
+		RefB:         common.MakeDocElementID("", "File1232"),
 		Relationship: "DESCRIBES",
 	}
 
 	// Annotations
-	ann1 := &v2_1.Annotation{
-		Annotator: common2.Annotator{Annotator: "John Doe",
+	ann1 := &spdx.Annotation{
+		Annotator: common.Annotator{Annotator: "John Doe",
 			AnnotatorType: "Person"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
-		AnnotationSPDXIdentifier: common2.MakeDocElementID("", "DOCUMENT"),
+		AnnotationSPDXIdentifier: common.MakeDocElementID("", "DOCUMENT"),
 		AnnotationComment:        "This is an annotation about the SPDX document",
 	}
 
-	ann2 := &v2_1.Annotation{
-		Annotator: common2.Annotator{Annotator: "John Doe, Inc.",
+	ann2 := &spdx.Annotation{
+		Annotator: common.Annotator{Annotator: "John Doe, Inc.",
 			AnnotatorType: "Organization"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
-		AnnotationSPDXIdentifier: common2.MakeDocElementID("", "p1"),
+		AnnotationSPDXIdentifier: common.MakeDocElementID("", "p1"),
 		AnnotationComment:        "This is an annotation about Package p1",
 	}
 
 	// Reviews
-	rev1 := &v2_1.Review{
+	rev1 := &spdx.Review{
 		Reviewer:     "John Doe",
 		ReviewerType: "Person",
 		ReviewDate:   "2018-10-14T10:28:00Z",
 	}
-	rev2 := &v2_1.Review{
+	rev2 := &spdx.Review{
 		Reviewer:      "Jane Doe LLC",
 		ReviewerType:  "Organization",
 		ReviewDate:    "2018-10-14T10:28:00Z",
@@ -177,31 +177,31 @@ blah blah blah blah`,
 	}
 
 	// now, build the document
-	doc := &v2_1.Document{
+	doc := &spdx.Document{
 		SPDXVersion:       "SPDX-2.1",
-		DataLicense:       v2_1.DataLicense,
-		SPDXIdentifier:    common2.ElementID("DOCUMENT"),
+		DataLicense:       spdx.DataLicense,
+		SPDXIdentifier:    common.ElementID("DOCUMENT"),
 		DocumentName:      "spdx-go-0.0.1.abcdef",
 		DocumentNamespace: "https://github.com/swinslow/spdx-docs/spdx-go/spdx-go-0.0.1.abcdef.whatever",
 		CreationInfo:      ci,
-		Packages: []*v2_1.Package{
+		Packages: []*spdx.Package{
 			pkgWith,
 		},
 		Files: unFiles,
-		OtherLicenses: []*v2_1.OtherLicense{
+		OtherLicenses: []*spdx.OtherLicense{
 			ol1,
 			ol2,
 		},
-		Relationships: []*v2_1.Relationship{
+		Relationships: []*spdx.Relationship{
 			rln1,
 			rln2,
 			rln3,
 		},
-		Annotations: []*v2_1.Annotation{
+		Annotations: []*spdx.Annotation{
 			ann1,
 			ann2,
 		},
-		Reviews: []*v2_1.Review{
+		Reviews: []*spdx.Review{
 			rev1,
 			rev2,
 		},
@@ -333,7 +333,7 @@ ReviewComment: I have reviewed this SPDX document and it is awesome
 }
 
 func TestSaverDocumentReturnsErrorIfNilCreationInfo(t *testing.T) {
-	doc := &v2_1.Document{}
+	doc := &spdx.Document{}
 
 	var got bytes.Buffer
 	err := RenderDocument(doc, &got)

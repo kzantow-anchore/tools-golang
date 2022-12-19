@@ -5,13 +5,13 @@ package rdf
 import (
 	"errors"
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 
 	"github.com/spdx/gordf/rdfloader"
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 	v2_2_reader "github.com/spdx/tools-golang/spdx/v2_2/rdf/reader"
 	"github.com/spdx/tools-golang/spdx/v2_3"

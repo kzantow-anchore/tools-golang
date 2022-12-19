@@ -2,10 +2,10 @@
 package reader
 
 import (
-	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // ===== Parser snippet section state change tests =====

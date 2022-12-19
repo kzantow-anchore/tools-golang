@@ -4,10 +4,10 @@ package writer
 
 import (
 	"bytes"
-	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // ===== Creation Info section Saver tests =====

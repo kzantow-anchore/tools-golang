@@ -4,8 +4,9 @@ package json
 
 import (
 	"encoding/json"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
+
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Write takes an SPDX Document and an io.Writer, and writes the document to the writer in JSON format.

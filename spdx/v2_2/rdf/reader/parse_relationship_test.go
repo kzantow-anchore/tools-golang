@@ -3,11 +3,11 @@
 package reader
 
 import (
-	"github.com/spdx/tools-golang/spdx/common"
 	"reflect"
 	"testing"
 
 	"github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 )
 

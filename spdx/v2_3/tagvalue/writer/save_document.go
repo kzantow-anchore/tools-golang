@@ -5,11 +5,11 @@ package writer
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 	"sort"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // RenderDocument is the main entry point to take an SPDX in-memory

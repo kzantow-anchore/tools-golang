@@ -3,9 +3,9 @@ package spdxlib
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // ValidateDocument returns an error if the Document is found to be invalid, or nil if the Document is valid.

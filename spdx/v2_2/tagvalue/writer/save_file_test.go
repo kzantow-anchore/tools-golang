@@ -4,9 +4,9 @@ package writer
 
 import (
 	"bytes"
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 )
 
@@ -14,15 +14,15 @@ import (
 func TestSaverFileSavesText(t *testing.T) {
 	f := &v2_2.File{
 		FileName:           "/tmp/whatever.txt",
-		FileSPDXIdentifier: common2.ElementID("File123"),
+		FileSPDXIdentifier: common.ElementID("File123"),
 		FileTypes: []string{
 			"TEXT",
 			"DOCUMENTATION",
 		},
-		Checksums: []common2.Checksum{
-			{Algorithm: common2.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
-			{Algorithm: common2.SHA256, Value: "11b6d3ee554eedf79299905a98f9b9a04e498210b59f15094c916c91d150efcd"},
-			{Algorithm: common2.MD5, Value: "624c1abb3664f4b35547e7c73864ad24"},
+		Checksums: []common.Checksum{
+			{Algorithm: common.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
+			{Algorithm: common.SHA256, Value: "11b6d3ee554eedf79299905a98f9b9a04e498210b59f15094c916c91d150efcd"},
+			{Algorithm: common.MD5, Value: "624c1abb3664f4b35547e7c73864ad24"},
 		},
 		LicenseConcluded: "Apache-2.0",
 		LicenseInfoInFiles: []string{
@@ -115,31 +115,31 @@ FileDependency: g.txt
 
 func TestSaverFileSavesSnippetsAlso(t *testing.T) {
 	sn1 := &v2_2.Snippet{
-		SnippetSPDXIdentifier:         common2.ElementID("Snippet19"),
-		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "File123").ElementRefID,
-		Ranges:                        []common2.SnippetRange{{StartPointer: common2.SnippetRangePointer{Offset: 17}, EndPointer: common2.SnippetRangePointer{Offset: 209}}},
+		SnippetSPDXIdentifier:         common.ElementID("Snippet19"),
+		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File123").ElementRefID,
+		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 17}, EndPointer: common.SnippetRangePointer{Offset: 209}}},
 		SnippetLicenseConcluded:       "GPL-2.0-or-later",
 		SnippetCopyrightText:          "Copyright (c) John Doe 20x6",
 	}
 
 	sn2 := &v2_2.Snippet{
-		SnippetSPDXIdentifier:         common2.ElementID("Snippet20"),
-		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "File123").ElementRefID,
-		Ranges:                        []common2.SnippetRange{{StartPointer: common2.SnippetRangePointer{Offset: 268}, EndPointer: common2.SnippetRangePointer{Offset: 309}}},
+		SnippetSPDXIdentifier:         common.ElementID("Snippet20"),
+		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File123").ElementRefID,
+		Ranges:                        []common.SnippetRange{{StartPointer: common.SnippetRangePointer{Offset: 268}, EndPointer: common.SnippetRangePointer{Offset: 309}}},
 		SnippetLicenseConcluded:       "WTFPL",
 		SnippetCopyrightText:          "NOASSERTION",
 	}
 
-	sns := map[common2.ElementID]*v2_2.Snippet{
-		common2.ElementID("Snippet19"): sn1,
-		common2.ElementID("Snippet20"): sn2,
+	sns := map[common.ElementID]*v2_2.Snippet{
+		common.ElementID("Snippet19"): sn1,
+		common.ElementID("Snippet20"): sn2,
 	}
 
 	f := &v2_2.File{
 		FileName:           "/tmp/whatever.txt",
-		FileSPDXIdentifier: common2.ElementID("File123"),
-		Checksums: []common2.Checksum{
-			{Algorithm: common2.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
+		FileSPDXIdentifier: common.ElementID("File123"),
+		Checksums: []common.Checksum{
+			{Algorithm: common.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
 		},
 		LicenseConcluded: "Apache-2.0",
 		LicenseInfoInFiles: []string{
@@ -188,9 +188,9 @@ SnippetCopyrightText: NOASSERTION
 func TestSaverFileOmitsOptionalFieldsIfEmpty(t *testing.T) {
 	f := &v2_2.File{
 		FileName:           "/tmp/whatever.txt",
-		FileSPDXIdentifier: common2.ElementID("File123"),
-		Checksums: []common2.Checksum{
-			{Algorithm: common2.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
+		FileSPDXIdentifier: common.ElementID("File123"),
+		Checksums: []common.Checksum{
+			{Algorithm: common.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
 		},
 		LicenseConcluded: "Apache-2.0",
 		LicenseInfoInFiles: []string{
@@ -226,9 +226,9 @@ FileCopyrightText: Copyright (c) Jane Doe
 func TestSaverFileWrapsCopyrightMultiLine(t *testing.T) {
 	f := &v2_2.File{
 		FileName:           "/tmp/whatever.txt",
-		FileSPDXIdentifier: common2.ElementID("File123"),
-		Checksums: []common2.Checksum{
-			{Algorithm: common2.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
+		FileSPDXIdentifier: common.ElementID("File123"),
+		Checksums: []common.Checksum{
+			{Algorithm: common.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
 		},
 		LicenseConcluded: "Apache-2.0",
 		LicenseInfoInFiles: []string{
@@ -266,9 +266,9 @@ Copyright (c) John Doe</text>
 func TestSaverFileWrapsCommentsAndNoticesMultiLine(t *testing.T) {
 	f := &v2_2.File{
 		FileName:           "/tmp/whatever.txt",
-		FileSPDXIdentifier: common2.ElementID("File123"),
-		Checksums: []common2.Checksum{
-			{Algorithm: common2.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
+		FileSPDXIdentifier: common.ElementID("File123"),
+		Checksums: []common.Checksum{
+			{Algorithm: common.SHA1, Value: "85ed0817af83a24ad8da68c2b5094de69833983c"},
 		},
 		LicenseComments: `this is a
 multi-line license comment`,

@@ -4,8 +4,9 @@ package reader
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"strings"
+
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // used to extract key / value from embedded substrings

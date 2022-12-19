@@ -4,9 +4,9 @@ package reader
 
 import (
 	"fmt"
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"strings"
 
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 )
 
@@ -54,7 +54,7 @@ func (parser *tvParser) parsePairFromPackage(tag string, value string) error {
 	case "PackageFileName":
 		parser.pkg.PackageFileName = value
 	case "PackageSupplier":
-		supplier := &common2.Supplier{Supplier: value}
+		supplier := &common.Supplier{Supplier: value}
 		if value == "NOASSERTION" {
 			parser.pkg.PackageSupplier = supplier
 			break
@@ -73,7 +73,7 @@ func (parser *tvParser) parsePairFromPackage(tag string, value string) error {
 		}
 		parser.pkg.PackageSupplier = supplier
 	case "PackageOriginator":
-		originator := &common2.Originator{Originator: value}
+		originator := &common.Originator{Originator: value}
 		if value == "NOASSERTION" {
 			parser.pkg.PackageOriginator = originator
 			break
@@ -108,12 +108,12 @@ func (parser *tvParser) parsePairFromPackage(tag string, value string) error {
 			return err
 		}
 		if parser.pkg.PackageChecksums == nil {
-			parser.pkg.PackageChecksums = []common2.Checksum{}
+			parser.pkg.PackageChecksums = []common.Checksum{}
 		}
-		switch common2.ChecksumAlgorithm(subkey) {
-		case common2.SHA1, common2.SHA256, common2.MD5:
-			algorithm := common2.ChecksumAlgorithm(subkey)
-			parser.pkg.PackageChecksums = append(parser.pkg.PackageChecksums, common2.Checksum{Algorithm: algorithm, Value: subvalue})
+		switch common.ChecksumAlgorithm(subkey) {
+		case common.SHA1, common.SHA256, common.MD5:
+			algorithm := common.ChecksumAlgorithm(subkey)
+			parser.pkg.PackageChecksums = append(parser.pkg.PackageChecksums, common.Checksum{Algorithm: algorithm, Value: subvalue})
 		default:
 			return fmt.Errorf("got unknown checksum type %s", subkey)
 		}
@@ -189,13 +189,13 @@ func (parser *tvParser) parsePairFromPackage(tag string, value string) error {
 
 // ===== Helper functions =====
 
-func extractCodeAndExcludes(value string) common2.PackageVerificationCode {
+func extractCodeAndExcludes(value string) common.PackageVerificationCode {
 	// FIXME this should probably be done using regular expressions instead
 	// split by paren + word "excludes:"
 	sp := strings.SplitN(value, "(excludes:", 2)
 	if len(sp) < 2 {
 		// not found; return the whole string as just the code
-		return common2.PackageVerificationCode{Value: value, ExcludedFiles: []string{}}
+		return common.PackageVerificationCode{Value: value, ExcludedFiles: []string{}}
 	}
 
 	// if we're here, code is in first part and excludes filename is in
@@ -203,7 +203,7 @@ func extractCodeAndExcludes(value string) common2.PackageVerificationCode {
 	code := strings.TrimSpace(sp[0])
 	parsedSp := strings.SplitN(sp[1], ")", 2)
 	fileName := strings.TrimSpace(parsedSp[0])
-	return common2.PackageVerificationCode{Value: code, ExcludedFiles: []string{fileName}}
+	return common.PackageVerificationCode{Value: code, ExcludedFiles: []string{fileName}}
 }
 
 func extractPackageExternalReference(value string) (string, string, string, error) {

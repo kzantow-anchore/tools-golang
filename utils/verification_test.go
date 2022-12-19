@@ -3,10 +3,10 @@
 package utils
 
 import (
-	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func TestPackageCanGetVerificationCode(t *testing.T) {

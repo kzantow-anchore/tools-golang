@@ -4,11 +4,11 @@ package writer
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 	"sort"
 	"strings"
 
+	"github.com/spdx/tools-golang/spdx/common"
 	spdx "github.com/spdx/tools-golang/spdx/v2_1"
 )
 

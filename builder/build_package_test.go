@@ -3,8 +3,9 @@
 package builder
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
+
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // ===== Package section builder tests =====
@@ -12,7 +13,7 @@ func TestBuilderCanBuildPackageSection(t *testing.T) {
 	packageName := "project1"
 	dirRoot := "../testdata/project1/"
 
-	wantVerificationCode := common2.PackageVerificationCode{Value: "fc9ac4a370af0a471c2e52af66d6b4cf4e2ba12b"}
+	wantVerificationCode := common.PackageVerificationCode{Value: "fc9ac4a370af0a471c2e52af66d6b4cf4e2ba12b"}
 
 	pkg, err := BuildPackageSection(packageName, dirRoot, nil)
 	if err != nil {
@@ -25,7 +26,7 @@ func TestBuilderCanBuildPackageSection(t *testing.T) {
 	if pkg.PackageName != "project1" {
 		t.Errorf("expected %v, got %v", "project1", pkg.PackageName)
 	}
-	if pkg.PackageSPDXIdentifier != common2.ElementID("Package-project1") {
+	if pkg.PackageSPDXIdentifier != common.ElementID("Package-project1") {
 		t.Errorf("expected %v, got %v", "Package-project1", pkg.PackageSPDXIdentifier)
 	}
 	if pkg.PackageDownloadLocation != "NOASSERTION" {
@@ -67,20 +68,20 @@ func TestBuilderCanBuildPackageSection(t *testing.T) {
 	if fileEmpty.FileName != "./emptyfile.testdata.txt" {
 		t.Errorf("expected %v, got %v", "./emptyfile.testdata.txt", fileEmpty.FileName)
 	}
-	if fileEmpty.FileSPDXIdentifier != common2.ElementID("File0") {
+	if fileEmpty.FileSPDXIdentifier != common.ElementID("File0") {
 		t.Errorf("expected %v, got %v", "File0", fileEmpty.FileSPDXIdentifier)
 	}
 	for _, checksum := range fileEmpty.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != "da39a3ee5e6b4b0d3255bfef95601890afd80709" {
 				t.Errorf("expected %v, got %v", "da39a3ee5e6b4b0d3255bfef95601890afd80709", checksum.Value)
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" {
 				t.Errorf("expected %v, got %v", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", checksum.Value)
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != "d41d8cd98f00b204e9800998ecf8427e" {
 				t.Errorf("expected %v, got %v", "d41d8cd98f00b204e9800998ecf8427e", checksum.Value)
 			}

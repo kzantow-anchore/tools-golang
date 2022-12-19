@@ -6,11 +6,11 @@ package utils
 import (
 	"crypto/sha1"
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"sort"
 	"strings"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // GetVerificationCode takes a slice of files and an optional filename

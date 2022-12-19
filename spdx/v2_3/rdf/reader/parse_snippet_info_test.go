@@ -3,11 +3,11 @@
 package reader
 
 import (
-	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func Test_rdfParser2_3_getSnippetInformationFromTriple2_3(t *testing.T) {

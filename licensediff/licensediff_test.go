@@ -3,10 +3,10 @@
 package licensediff
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func TestDifferCanCreateDiffPairs(t *testing.T) {
@@ -14,9 +14,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// f1 will be identical in both
 	f1 := &spdx.File{
 		FileName:           "/project/file1.txt",
-		FileSPDXIdentifier: common2.ElementID("File561"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File561"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -30,9 +30,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// f2 will only appear in the first Package
 	f2 := &spdx.File{
 		FileName:           "/project/file2.txt",
-		FileSPDXIdentifier: common2.ElementID("File562"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File562"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -46,9 +46,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// f3 will only appear in the second Package
 	f3 := &spdx.File{
 		FileName:           "/project/file3.txt",
-		FileSPDXIdentifier: common2.ElementID("File563"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File563"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -63,9 +63,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// with same name, same hash and different license
 	f4_1 := &spdx.File{
 		FileName:           "/project/file4.txt",
-		FileSPDXIdentifier: common2.ElementID("File564"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File564"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -77,9 +77,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	}
 	f4_2 := &spdx.File{
 		FileName:           "/project/file4.txt",
-		FileSPDXIdentifier: common2.ElementID("File564"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File564"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -94,9 +94,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// with same name, different hash and same license
 	f5_1 := &spdx.File{
 		FileName:           "/project/file5.txt",
-		FileSPDXIdentifier: common2.ElementID("File565"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File565"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -108,9 +108,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	}
 	f5_2 := &spdx.File{
 		FileName:           "/project/file5.txt",
-		FileSPDXIdentifier: common2.ElementID("File565"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File565"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -125,9 +125,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// with same name, different hash and different license
 	f6_1 := &spdx.File{
 		FileName:           "/project/file6.txt",
-		FileSPDXIdentifier: common2.ElementID("File566"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File566"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -139,9 +139,9 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	}
 	f6_2 := &spdx.File{
 		FileName:           "/project/file6.txt",
-		FileSPDXIdentifier: common2.ElementID("File566"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File566"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -155,12 +155,12 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	// create Packages
 	p1 := &spdx.Package{
 		PackageName:               "p1",
-		PackageSPDXIdentifier:     common2.ElementID("p1"),
+		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "NOASSERTION",
 		FilesAnalyzed:             true,
 		IsFilesAnalyzedTagPresent: true,
 		// fake the verification code for present purposes
-		PackageVerificationCode: &common2.PackageVerificationCode{Value: "abc123abc123"},
+		PackageVerificationCode: &common.PackageVerificationCode{Value: "abc123abc123"},
 		PackageLicenseConcluded: "NOASSERTION",
 		PackageLicenseInfoFromFiles: []string{
 			"NOASSERTION",
@@ -177,12 +177,12 @@ func TestDifferCanCreateDiffPairs(t *testing.T) {
 	}
 	p2 := &spdx.Package{
 		PackageName:               "p2",
-		PackageSPDXIdentifier:     common2.ElementID("p2"),
+		PackageSPDXIdentifier:     common.ElementID("p2"),
 		PackageDownloadLocation:   "NOASSERTION",
 		FilesAnalyzed:             true,
 		IsFilesAnalyzedTagPresent: true,
 		// fake the verification code for present purposes
-		PackageVerificationCode: &common2.PackageVerificationCode{Value: "def456def456"},
+		PackageVerificationCode: &common.PackageVerificationCode{Value: "def456def456"},
 		PackageLicenseConcluded: "NOASSERTION",
 		PackageLicenseInfoFromFiles: []string{
 			"NOASSERTION",
@@ -289,9 +289,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// f1 will be identical in both
 	f1 := &spdx.File{
 		FileName:           "/project/file1.txt",
-		FileSPDXIdentifier: common2.ElementID("File561"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File561"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -305,9 +305,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// f2 will only appear in the first Package
 	f2 := &spdx.File{
 		FileName:           "/project/file2.txt",
-		FileSPDXIdentifier: common2.ElementID("File562"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File562"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -321,9 +321,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// f3 will only appear in the second Package
 	f3 := &spdx.File{
 		FileName:           "/project/file3.txt",
-		FileSPDXIdentifier: common2.ElementID("File563"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File563"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -338,9 +338,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// with same name, same hash and different license
 	f4_1 := &spdx.File{
 		FileName:           "/project/file4.txt",
-		FileSPDXIdentifier: common2.ElementID("File564"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File564"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -352,9 +352,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	}
 	f4_2 := &spdx.File{
 		FileName:           "/project/file4.txt",
-		FileSPDXIdentifier: common2.ElementID("File564"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File564"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -369,7 +369,7 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// with same name, different hash and same license
 	f5_1 := &spdx.File{
 		FileName:           "/project/file5.txt",
-		FileSPDXIdentifier: common2.ElementID("File565"),
+		FileSPDXIdentifier: common.ElementID("File565"),
 		LicenseConcluded:   "BSD-3-Clause",
 		LicenseInfoInFiles: []string{
 			"NOASSERTION",
@@ -378,9 +378,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	}
 	f5_2 := &spdx.File{
 		FileName:           "/project/file5.txt",
-		FileSPDXIdentifier: common2.ElementID("File565"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File565"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -396,9 +396,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// with same name, different hash and different license
 	f6_1 := &spdx.File{
 		FileName:           "/project/file6.txt",
-		FileSPDXIdentifier: common2.ElementID("File566"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File566"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -410,9 +410,9 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	}
 	f6_2 := &spdx.File{
 		FileName:           "/project/file6.txt",
-		FileSPDXIdentifier: common2.ElementID("File566"),
-		Checksums: []common2.Checksum{{
-			Algorithm: common2.SHA1,
+		FileSPDXIdentifier: common.ElementID("File566"),
+		Checksums: []common.Checksum{{
+			Algorithm: common.SHA1,
 			Value:     "6c92dc8bc462b6889d9b1c0bc16c54d19a2cbdd3",
 		},
 		},
@@ -426,12 +426,12 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	// create Packages
 	p1 := &spdx.Package{
 		PackageName:               "p1",
-		PackageSPDXIdentifier:     common2.ElementID("p1"),
+		PackageSPDXIdentifier:     common.ElementID("p1"),
 		PackageDownloadLocation:   "NOASSERTION",
 		FilesAnalyzed:             true,
 		IsFilesAnalyzedTagPresent: true,
 		// fake the verification code for present purposes
-		PackageVerificationCode: &common2.PackageVerificationCode{Value: "abc123abc123"},
+		PackageVerificationCode: &common.PackageVerificationCode{Value: "abc123abc123"},
 		PackageLicenseConcluded: "NOASSERTION",
 		PackageLicenseInfoFromFiles: []string{
 			"NOASSERTION",
@@ -448,12 +448,12 @@ func TestDifferCanCreateDiffStructuredResults(t *testing.T) {
 	}
 	p2 := &spdx.Package{
 		PackageName:               "p2",
-		PackageSPDXIdentifier:     common2.ElementID("p2"),
+		PackageSPDXIdentifier:     common.ElementID("p2"),
 		PackageDownloadLocation:   "NOASSERTION",
 		FilesAnalyzed:             true,
 		IsFilesAnalyzedTagPresent: true,
 		// fake the verification code for present purposes
-		PackageVerificationCode: &common2.PackageVerificationCode{Value: "def456def456"},
+		PackageVerificationCode: &common.PackageVerificationCode{Value: "def456def456"},
 		PackageLicenseConcluded: "NOASSERTION",
 		PackageLicenseInfoFromFiles: []string{
 			"NOASSERTION",

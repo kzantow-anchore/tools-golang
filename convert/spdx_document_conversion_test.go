@@ -2,7 +2,6 @@ package convert
 
 import (
 	"encoding/json"
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"reflect"
 	"testing"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_1"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 )
@@ -34,7 +34,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName: "File 2",
 							},
 						},
-						PackageVerificationCode: common2.PackageVerificationCode{
+						PackageVerificationCode: common.PackageVerificationCode{
 							Value: "verification code value",
 							ExcludedFiles: []string{
 								"a",
@@ -56,7 +56,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName: "File 2",
 							},
 						},
-						PackageVerificationCode: &common2.PackageVerificationCode{
+						PackageVerificationCode: &common.PackageVerificationCode{
 							Value: "verification code value",
 							ExcludedFiles: []string{
 								"a",
@@ -79,7 +79,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 1",
 						URI:           "uri 1",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 1",
 							Value:     "value 1",
 						},
@@ -87,7 +87,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 2",
 						URI:           "uri 2",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 2",
 							Value:     "value 2",
 						},
@@ -96,7 +96,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				DocumentComment: "doc comment",
 				CreationInfo: &v2_1.CreationInfo{
 					LicenseListVersion: "license list version",
-					Creators: []common2.Creator{
+					Creators: []common.Creator{
 						{
 							Creator:     "creator 1",
 							CreatorType: "type 1",
@@ -120,11 +120,11 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						PackageDownloadLocation:   "",
 						FilesAnalyzed:             true,
 						IsFilesAnalyzedTagPresent: true,
-						PackageVerificationCode: common2.PackageVerificationCode{
+						PackageVerificationCode: common.PackageVerificationCode{
 							Value:         "value 1",
 							ExcludedFiles: []string{"a", "b"},
 						},
-						PackageChecksums: []common2.Checksum{
+						PackageChecksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -163,7 +163,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName:           "file 1",
 								FileSPDXIdentifier: "id 1",
 								FileTypes:          []string{"a", "b"},
-								Checksums: []common2.Checksum{
+								Checksums: []common.Checksum{
 									{
 										Algorithm: "alg 1",
 										Value:     "val 1",
@@ -193,30 +193,30 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileNotice:       "notice 1",
 								FileContributors: []string{"c1", "c2"},
 								FileDependencies: []string{"dep1", "dep2", "dep3"},
-								Snippets: map[common2.ElementID]*v2_1.Snippet{
-									common2.ElementID("e1"): {
+								Snippets: map[common.ElementID]*v2_1.Snippet{
+									common.ElementID("e1"): {
 										SnippetSPDXIdentifier:         "id1",
 										SnippetFromFileSPDXIdentifier: "file1",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             1,
 													LineNumber:         2,
 													FileSPDXIdentifier: "f1",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             3,
 													LineNumber:         4,
 													FileSPDXIdentifier: "f2",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
@@ -230,29 +230,29 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										SnippetComment:          "comment 1",
 										SnippetName:             "name 1",
 									},
-									common2.ElementID("e2"): {
+									common.ElementID("e2"): {
 										SnippetSPDXIdentifier:         "id2",
 										SnippetFromFileSPDXIdentifier: "file2",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             9,
 													LineNumber:         10,
 													FileSPDXIdentifier: "f13",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             11,
 													LineNumber:         12,
 													FileSPDXIdentifier: "f14",
@@ -269,13 +269,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								},
 								Annotations: []v2_1.Annotation{
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 1",
 											AnnotatorType: "typ 1",
 										},
 										AnnotationDate: "date 1",
 										AnnotationType: "type 1",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 1",
 											ElementRefID:  "elem 1",
 											SpecialID:     "spec 1",
@@ -283,13 +283,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										AnnotationComment: "comment 1",
 									},
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 2",
 											AnnotatorType: "typ 2",
 										},
 										AnnotationDate: "date 2",
 										AnnotationType: "type 2",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 2",
 											ElementRefID:  "elem 2",
 											SpecialID:     "spec 2",
@@ -301,13 +301,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						},
 						Annotations: []v2_1.Annotation{
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 1",
 									AnnotatorType: "typ 1",
 								},
 								AnnotationDate: "date 1",
 								AnnotationType: "type 1",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 1",
 									ElementRefID:  "elem 1",
 									SpecialID:     "spec 1",
@@ -315,13 +315,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								AnnotationComment: "comment 1",
 							},
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 2",
 									AnnotatorType: "typ 2",
 								},
 								AnnotationDate: "date 2",
 								AnnotationType: "type 2",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 2",
 									ElementRefID:  "elem 2",
 									SpecialID:     "spec 2",
@@ -336,7 +336,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 1",
 						FileSPDXIdentifier: "id 1",
 						FileTypes:          []string{"t1", "t2"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -373,7 +373,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 2",
 						FileSPDXIdentifier: "id 2",
 						FileTypes:          []string{"t3", "t4"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 2",
 								Value:     "val 2",
@@ -425,12 +425,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Relationships: []*v2_1.Relationship{
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -439,12 +439,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						RelationshipComment: "comment 1",
 					},
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 3",
 							ElementRefID:  "elem 3",
 							SpecialID:     "spec 3",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 4",
 							ElementRefID:  "elem 4",
 							SpecialID:     "spec 4",
@@ -455,13 +455,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Annotations: []*v2_1.Annotation{
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 1",
 							AnnotatorType: "annotator type 1",
 						},
 						AnnotationDate: "date 1",
 						AnnotationType: "type 1",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
@@ -469,13 +469,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						AnnotationComment: "comment 1",
 					},
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 2",
 							AnnotatorType: "annotator type 2",
 						},
 						AnnotationDate: "date 2",
 						AnnotationType: "type 2",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -487,26 +487,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id1",
 						SnippetFromFileSPDXIdentifier: "file1",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             1,
 									LineNumber:         2,
 									FileSPDXIdentifier: "f1",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             3,
 									LineNumber:         4,
 									FileSPDXIdentifier: "f2",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
@@ -523,26 +523,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id2",
 						SnippetFromFileSPDXIdentifier: "file2",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             9,
 									LineNumber:         10,
 									FileSPDXIdentifier: "f13",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             11,
 									LineNumber:         12,
 									FileSPDXIdentifier: "f14",
@@ -582,7 +582,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 1",
 						URI:           "uri 1",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 1",
 							Value:     "value 1",
 						},
@@ -590,7 +590,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 2",
 						URI:           "uri 2",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 2",
 							Value:     "value 2",
 						},
@@ -599,7 +599,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				DocumentComment: "doc comment",
 				CreationInfo: &spdx.CreationInfo{
 					LicenseListVersion: "license list version",
-					Creators: []common2.Creator{
+					Creators: []common.Creator{
 						{
 							Creator:     "creator 1",
 							CreatorType: "type 1",
@@ -624,11 +624,11 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						PackageDownloadLocation:   "",
 						FilesAnalyzed:             true,
 						IsFilesAnalyzedTagPresent: true,
-						PackageVerificationCode: &common2.PackageVerificationCode{
+						PackageVerificationCode: &common.PackageVerificationCode{
 							Value:         "value 1",
 							ExcludedFiles: []string{"a", "b"},
 						},
-						PackageChecksums: []common2.Checksum{
+						PackageChecksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -667,7 +667,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName:           "file 1",
 								FileSPDXIdentifier: "id 1",
 								FileTypes:          []string{"a", "b"},
-								Checksums: []common2.Checksum{
+								Checksums: []common.Checksum{
 									{
 										Algorithm: "alg 1",
 										Value:     "val 1",
@@ -697,30 +697,30 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileNotice:       "notice 1",
 								FileContributors: []string{"c1", "c2"},
 								FileDependencies: []string{"dep1", "dep2", "dep3"},
-								Snippets: map[common2.ElementID]*spdx.Snippet{
-									common2.ElementID("e1"): {
+								Snippets: map[common.ElementID]*spdx.Snippet{
+									common.ElementID("e1"): {
 										SnippetSPDXIdentifier:         "id1",
 										SnippetFromFileSPDXIdentifier: "file1",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             1,
 													LineNumber:         2,
 													FileSPDXIdentifier: "f1",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             3,
 													LineNumber:         4,
 													FileSPDXIdentifier: "f2",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
@@ -734,29 +734,29 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										SnippetComment:          "comment 1",
 										SnippetName:             "name 1",
 									},
-									common2.ElementID("e2"): {
+									common.ElementID("e2"): {
 										SnippetSPDXIdentifier:         "id2",
 										SnippetFromFileSPDXIdentifier: "file2",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             9,
 													LineNumber:         10,
 													FileSPDXIdentifier: "f13",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             11,
 													LineNumber:         12,
 													FileSPDXIdentifier: "f14",
@@ -773,13 +773,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								},
 								Annotations: []spdx.Annotation{
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 1",
 											AnnotatorType: "typ 1",
 										},
 										AnnotationDate: "date 1",
 										AnnotationType: "type 1",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 1",
 											ElementRefID:  "elem 1",
 											SpecialID:     "spec 1",
@@ -787,13 +787,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										AnnotationComment: "comment 1",
 									},
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 2",
 											AnnotatorType: "typ 2",
 										},
 										AnnotationDate: "date 2",
 										AnnotationType: "type 2",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 2",
 											ElementRefID:  "elem 2",
 											SpecialID:     "spec 2",
@@ -805,13 +805,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						},
 						Annotations: []spdx.Annotation{
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 1",
 									AnnotatorType: "typ 1",
 								},
 								AnnotationDate: "date 1",
 								AnnotationType: "type 1",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 1",
 									ElementRefID:  "elem 1",
 									SpecialID:     "spec 1",
@@ -819,13 +819,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								AnnotationComment: "comment 1",
 							},
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 2",
 									AnnotatorType: "typ 2",
 								},
 								AnnotationDate: "date 2",
 								AnnotationType: "type 2",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 2",
 									ElementRefID:  "elem 2",
 									SpecialID:     "spec 2",
@@ -840,7 +840,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 1",
 						FileSPDXIdentifier: "id 1",
 						FileTypes:          []string{"t1", "t2"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -877,7 +877,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 2",
 						FileSPDXIdentifier: "id 2",
 						FileTypes:          []string{"t3", "t4"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 2",
 								Value:     "val 2",
@@ -929,12 +929,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Relationships: []*spdx.Relationship{
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -943,12 +943,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						RelationshipComment: "comment 1",
 					},
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 3",
 							ElementRefID:  "elem 3",
 							SpecialID:     "spec 3",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 4",
 							ElementRefID:  "elem 4",
 							SpecialID:     "spec 4",
@@ -959,13 +959,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Annotations: []*spdx.Annotation{
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 1",
 							AnnotatorType: "annotator type 1",
 						},
 						AnnotationDate: "date 1",
 						AnnotationType: "type 1",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
@@ -973,13 +973,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						AnnotationComment: "comment 1",
 					},
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 2",
 							AnnotatorType: "annotator type 2",
 						},
 						AnnotationDate: "date 2",
 						AnnotationType: "type 2",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -991,26 +991,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id1",
 						SnippetFromFileSPDXIdentifier: "file1",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             1,
 									LineNumber:         2,
 									FileSPDXIdentifier: "f1",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             3,
 									LineNumber:         4,
 									FileSPDXIdentifier: "f2",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
@@ -1027,26 +1027,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id2",
 						SnippetFromFileSPDXIdentifier: "file2",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             9,
 									LineNumber:         10,
 									FileSPDXIdentifier: "f13",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             11,
 									LineNumber:         12,
 									FileSPDXIdentifier: "f14",
@@ -1089,7 +1089,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 1",
 						URI:           "uri 1",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 1",
 							Value:     "value 1",
 						},
@@ -1097,7 +1097,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 2",
 						URI:           "uri 2",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 2",
 							Value:     "value 2",
 						},
@@ -1106,7 +1106,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				DocumentComment: "doc comment",
 				CreationInfo: &v2_2.CreationInfo{
 					LicenseListVersion: "license list version",
-					Creators: []common2.Creator{
+					Creators: []common.Creator{
 						{
 							Creator:     "creator 1",
 							CreatorType: "type 1",
@@ -1131,11 +1131,11 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						PackageDownloadLocation:   "",
 						FilesAnalyzed:             true,
 						IsFilesAnalyzedTagPresent: true,
-						PackageVerificationCode: common2.PackageVerificationCode{
+						PackageVerificationCode: common.PackageVerificationCode{
 							Value:         "value 1",
 							ExcludedFiles: []string{"a", "b"},
 						},
-						PackageChecksums: []common2.Checksum{
+						PackageChecksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -1175,7 +1175,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName:           "file 1",
 								FileSPDXIdentifier: "id 1",
 								FileTypes:          []string{"a", "b"},
-								Checksums: []common2.Checksum{
+								Checksums: []common.Checksum{
 									{
 										Algorithm: "alg 1",
 										Value:     "val 1",
@@ -1206,30 +1206,30 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileContributors:     []string{"c1", "c2"},
 								FileAttributionTexts: []string{"att1", "att2"},
 								FileDependencies:     []string{"dep1", "dep2", "dep3"},
-								Snippets: map[common2.ElementID]*v2_2.Snippet{
-									common2.ElementID("e1"): {
+								Snippets: map[common.ElementID]*v2_2.Snippet{
+									common.ElementID("e1"): {
 										SnippetSPDXIdentifier:         "id1",
 										SnippetFromFileSPDXIdentifier: "file1",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             1,
 													LineNumber:         2,
 													FileSPDXIdentifier: "f1",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             3,
 													LineNumber:         4,
 													FileSPDXIdentifier: "f2",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
@@ -1244,29 +1244,29 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										SnippetName:             "name 1",
 										SnippetAttributionTexts: []string{"att1", "att2", "att3"},
 									},
-									common2.ElementID("e2"): {
+									common.ElementID("e2"): {
 										SnippetSPDXIdentifier:         "id2",
 										SnippetFromFileSPDXIdentifier: "file2",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             9,
 													LineNumber:         10,
 													FileSPDXIdentifier: "f13",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             11,
 													LineNumber:         12,
 													FileSPDXIdentifier: "f14",
@@ -1284,13 +1284,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								},
 								Annotations: []v2_2.Annotation{
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 1",
 											AnnotatorType: "typ 1",
 										},
 										AnnotationDate: "date 1",
 										AnnotationType: "type 1",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 1",
 											ElementRefID:  "elem 1",
 											SpecialID:     "spec 1",
@@ -1298,13 +1298,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										AnnotationComment: "comment 1",
 									},
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 2",
 											AnnotatorType: "typ 2",
 										},
 										AnnotationDate: "date 2",
 										AnnotationType: "type 2",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 2",
 											ElementRefID:  "elem 2",
 											SpecialID:     "spec 2",
@@ -1316,13 +1316,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						},
 						Annotations: []v2_2.Annotation{
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 1",
 									AnnotatorType: "typ 1",
 								},
 								AnnotationDate: "date 1",
 								AnnotationType: "type 1",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 1",
 									ElementRefID:  "elem 1",
 									SpecialID:     "spec 1",
@@ -1330,13 +1330,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								AnnotationComment: "comment 1",
 							},
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 2",
 									AnnotatorType: "typ 2",
 								},
 								AnnotationDate: "date 2",
 								AnnotationType: "type 2",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 2",
 									ElementRefID:  "elem 2",
 									SpecialID:     "spec 2",
@@ -1351,7 +1351,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 1",
 						FileSPDXIdentifier: "id 1",
 						FileTypes:          []string{"t1", "t2"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -1389,7 +1389,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 2",
 						FileSPDXIdentifier: "id 2",
 						FileTypes:          []string{"t3", "t4"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 2",
 								Value:     "val 2",
@@ -1442,12 +1442,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Relationships: []*v2_2.Relationship{
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -1456,12 +1456,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						RelationshipComment: "comment 1",
 					},
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 3",
 							ElementRefID:  "elem 3",
 							SpecialID:     "spec 3",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 4",
 							ElementRefID:  "elem 4",
 							SpecialID:     "spec 4",
@@ -1472,13 +1472,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Annotations: []*v2_2.Annotation{
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 1",
 							AnnotatorType: "annotator type 1",
 						},
 						AnnotationDate: "date 1",
 						AnnotationType: "type 1",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
@@ -1486,13 +1486,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						AnnotationComment: "comment 1",
 					},
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 2",
 							AnnotatorType: "annotator type 2",
 						},
 						AnnotationDate: "date 2",
 						AnnotationType: "type 2",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -1504,26 +1504,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id1",
 						SnippetFromFileSPDXIdentifier: "file1",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             1,
 									LineNumber:         2,
 									FileSPDXIdentifier: "f1",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             3,
 									LineNumber:         4,
 									FileSPDXIdentifier: "f2",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
@@ -1541,26 +1541,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id2",
 						SnippetFromFileSPDXIdentifier: "file2",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             9,
 									LineNumber:         10,
 									FileSPDXIdentifier: "f13",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             11,
 									LineNumber:         12,
 									FileSPDXIdentifier: "f14",
@@ -1601,7 +1601,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 1",
 						URI:           "uri 1",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 1",
 							Value:     "value 1",
 						},
@@ -1609,7 +1609,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						DocumentRefID: "doc ref id 2",
 						URI:           "uri 2",
-						Checksum: common2.Checksum{
+						Checksum: common.Checksum{
 							Algorithm: "algo 2",
 							Value:     "value 2",
 						},
@@ -1618,7 +1618,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				DocumentComment: "doc comment",
 				CreationInfo: &spdx.CreationInfo{
 					LicenseListVersion: "license list version",
-					Creators: []common2.Creator{
+					Creators: []common.Creator{
 						{
 							Creator:     "creator 1",
 							CreatorType: "type 1",
@@ -1643,11 +1643,11 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						PackageDownloadLocation:   "",
 						FilesAnalyzed:             true,
 						IsFilesAnalyzedTagPresent: true,
-						PackageVerificationCode: &common2.PackageVerificationCode{
+						PackageVerificationCode: &common.PackageVerificationCode{
 							Value:         "value 1",
 							ExcludedFiles: []string{"a", "b"},
 						},
-						PackageChecksums: []common2.Checksum{
+						PackageChecksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -1687,7 +1687,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileName:           "file 1",
 								FileSPDXIdentifier: "id 1",
 								FileTypes:          []string{"a", "b"},
-								Checksums: []common2.Checksum{
+								Checksums: []common.Checksum{
 									{
 										Algorithm: "alg 1",
 										Value:     "val 1",
@@ -1718,30 +1718,30 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								FileContributors:     []string{"c1", "c2"},
 								FileAttributionTexts: []string{"att1", "att2"},
 								FileDependencies:     []string{"dep1", "dep2", "dep3"},
-								Snippets: map[common2.ElementID]*spdx.Snippet{
-									common2.ElementID("e1"): {
+								Snippets: map[common.ElementID]*spdx.Snippet{
+									common.ElementID("e1"): {
 										SnippetSPDXIdentifier:         "id1",
 										SnippetFromFileSPDXIdentifier: "file1",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             1,
 													LineNumber:         2,
 													FileSPDXIdentifier: "f1",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             3,
 													LineNumber:         4,
 													FileSPDXIdentifier: "f2",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
@@ -1756,29 +1756,29 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										SnippetName:             "name 1",
 										SnippetAttributionTexts: []string{"att1", "att2", "att3"},
 									},
-									common2.ElementID("e2"): {
+									common.ElementID("e2"): {
 										SnippetSPDXIdentifier:         "id2",
 										SnippetFromFileSPDXIdentifier: "file2",
-										Ranges: []common2.SnippetRange{
+										Ranges: []common.SnippetRange{
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             5,
 													LineNumber:         6,
 													FileSPDXIdentifier: "f3",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             7,
 													LineNumber:         8,
 													FileSPDXIdentifier: "f4",
 												},
 											},
 											{
-												StartPointer: common2.SnippetRangePointer{
+												StartPointer: common.SnippetRangePointer{
 													Offset:             9,
 													LineNumber:         10,
 													FileSPDXIdentifier: "f13",
 												},
-												EndPointer: common2.SnippetRangePointer{
+												EndPointer: common.SnippetRangePointer{
 													Offset:             11,
 													LineNumber:         12,
 													FileSPDXIdentifier: "f14",
@@ -1796,13 +1796,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								},
 								Annotations: []spdx.Annotation{
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 1",
 											AnnotatorType: "typ 1",
 										},
 										AnnotationDate: "date 1",
 										AnnotationType: "type 1",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 1",
 											ElementRefID:  "elem 1",
 											SpecialID:     "spec 1",
@@ -1810,13 +1810,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 										AnnotationComment: "comment 1",
 									},
 									{
-										Annotator: common2.Annotator{
+										Annotator: common.Annotator{
 											Annotator:     "ann 2",
 											AnnotatorType: "typ 2",
 										},
 										AnnotationDate: "date 2",
 										AnnotationType: "type 2",
-										AnnotationSPDXIdentifier: common2.DocElementID{
+										AnnotationSPDXIdentifier: common.DocElementID{
 											DocumentRefID: "doc 2",
 											ElementRefID:  "elem 2",
 											SpecialID:     "spec 2",
@@ -1828,13 +1828,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						},
 						Annotations: []spdx.Annotation{
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 1",
 									AnnotatorType: "typ 1",
 								},
 								AnnotationDate: "date 1",
 								AnnotationType: "type 1",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 1",
 									ElementRefID:  "elem 1",
 									SpecialID:     "spec 1",
@@ -1842,13 +1842,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 								AnnotationComment: "comment 1",
 							},
 							{
-								Annotator: common2.Annotator{
+								Annotator: common.Annotator{
 									Annotator:     "ann 2",
 									AnnotatorType: "typ 2",
 								},
 								AnnotationDate: "date 2",
 								AnnotationType: "type 2",
-								AnnotationSPDXIdentifier: common2.DocElementID{
+								AnnotationSPDXIdentifier: common.DocElementID{
 									DocumentRefID: "doc 2",
 									ElementRefID:  "elem 2",
 									SpecialID:     "spec 2",
@@ -1863,7 +1863,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 1",
 						FileSPDXIdentifier: "id 1",
 						FileTypes:          []string{"t1", "t2"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 1",
 								Value:     "val 1",
@@ -1901,7 +1901,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						FileName:           "file 2",
 						FileSPDXIdentifier: "id 2",
 						FileTypes:          []string{"t3", "t4"},
-						Checksums: []common2.Checksum{
+						Checksums: []common.Checksum{
 							{
 								Algorithm: "alg 2",
 								Value:     "val 2",
@@ -1954,12 +1954,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Relationships: []*spdx.Relationship{
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -1968,12 +1968,12 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						RelationshipComment: "comment 1",
 					},
 					{
-						RefA: common2.DocElementID{
+						RefA: common.DocElementID{
 							DocumentRefID: "doc 3",
 							ElementRefID:  "elem 3",
 							SpecialID:     "spec 3",
 						},
-						RefB: common2.DocElementID{
+						RefB: common.DocElementID{
 							DocumentRefID: "doc 4",
 							ElementRefID:  "elem 4",
 							SpecialID:     "spec 4",
@@ -1984,13 +1984,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 				Annotations: []*spdx.Annotation{
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 1",
 							AnnotatorType: "annotator type 1",
 						},
 						AnnotationDate: "date 1",
 						AnnotationType: "type 1",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 1",
 							ElementRefID:  "elem 1",
 							SpecialID:     "spec 1",
@@ -1998,13 +1998,13 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 						AnnotationComment: "comment 1",
 					},
 					{
-						Annotator: common2.Annotator{
+						Annotator: common.Annotator{
 							Annotator:     "annotator 2",
 							AnnotatorType: "annotator type 2",
 						},
 						AnnotationDate: "date 2",
 						AnnotationType: "type 2",
-						AnnotationSPDXIdentifier: common2.DocElementID{
+						AnnotationSPDXIdentifier: common.DocElementID{
 							DocumentRefID: "doc 2",
 							ElementRefID:  "elem 2",
 							SpecialID:     "spec 2",
@@ -2016,26 +2016,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id1",
 						SnippetFromFileSPDXIdentifier: "file1",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             1,
 									LineNumber:         2,
 									FileSPDXIdentifier: "f1",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             3,
 									LineNumber:         4,
 									FileSPDXIdentifier: "f2",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
@@ -2053,26 +2053,26 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 					{
 						SnippetSPDXIdentifier:         "id2",
 						SnippetFromFileSPDXIdentifier: "file2",
-						Ranges: []common2.SnippetRange{
+						Ranges: []common.SnippetRange{
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             5,
 									LineNumber:         6,
 									FileSPDXIdentifier: "f3",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             7,
 									LineNumber:         8,
 									FileSPDXIdentifier: "f4",
 								},
 							},
 							{
-								StartPointer: common2.SnippetRangePointer{
+								StartPointer: common.SnippetRangePointer{
 									Offset:             9,
 									LineNumber:         10,
 									FileSPDXIdentifier: "f13",
 								},
-								EndPointer: common2.SnippetRangePointer{
+								EndPointer: common.SnippetRangePointer{
 									Offset:             11,
 									LineNumber:         12,
 									FileSPDXIdentifier: "f14",

@@ -3,7 +3,7 @@
 package v2_2
 
 import (
-	common2 "github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Package is a Package section of an SPDX Document for version 2.2 of the spec.
@@ -19,7 +19,7 @@ type Package struct {
 
 	// 7.2: Package SPDX Identifier: "SPDXRef-[idstring]"
 	// Cardinality: mandatory, one
-	PackageSPDXIdentifier common2.ElementID `json:"SPDXID"`
+	PackageSPDXIdentifier common.ElementID `json:"SPDXID"`
 
 	// 7.3: Package Version
 	// Cardinality: optional, one
@@ -32,12 +32,12 @@ type Package struct {
 	// 7.5: Package Supplier: may have single result for either Person or Organization,
 	//                        or NOASSERTION
 	// Cardinality: optional, one
-	PackageSupplier *common2.Supplier `json:"supplier,omitempty"`
+	PackageSupplier *common.Supplier `json:"supplier,omitempty"`
 
 	// 7.6: Package Originator: may have single result for either Person or Organization,
 	//                          or NOASSERTION
 	// Cardinality: optional, one
-	PackageOriginator *common2.Originator `json:"originator,omitempty"`
+	PackageOriginator *common.Originator `json:"originator,omitempty"`
 
 	// 7.7: Package Download Location
 	// Cardinality: mandatory, one
@@ -50,11 +50,11 @@ type Package struct {
 	IsFilesAnalyzedTagPresent bool
 
 	// 7.9: Package Verification Code
-	PackageVerificationCode common2.PackageVerificationCode `json:"packageVerificationCode"`
+	PackageVerificationCode common.PackageVerificationCode `json:"packageVerificationCode"`
 
 	// 7.10: Package Checksum: may have keys for SHA1, SHA256 and/or MD5
 	// Cardinality: optional, one or many
-	PackageChecksums []common2.Checksum `json:"checksums"`
+	PackageChecksums []common.Checksum `json:"checksums"`
 
 	// 7.11: Package Home Page
 	// Cardinality: optional, one

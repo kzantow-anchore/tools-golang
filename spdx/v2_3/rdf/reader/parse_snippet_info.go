@@ -4,12 +4,12 @@ package reader
 
 import (
 	"fmt"
-	common2 "github.com/spdx/tools-golang/spdx/common"
 	"strconv"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/gordf/rdfwriter"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Snippet Information
@@ -74,14 +74,14 @@ func (parser *rdfParser2_3) getSnippetInformationFromNode2_3(node *gordfParser.N
 }
 
 // given is the id of the file, sets the snippet to the file in parser.
-func (parser *rdfParser2_3) setSnippetToFileWithID(snippet *spdx.Snippet, fileID common2.ElementID) error {
+func (parser *rdfParser2_3) setSnippetToFileWithID(snippet *spdx.Snippet, fileID common.ElementID) error {
 	if parser.files[fileID] == nil {
 		return fmt.Errorf("snippet refers to an undefined file with ID: %s", fileID)
 	}
 
 	// initializing snippet of the files if it is not defined already
 	if parser.files[fileID].Snippets == nil {
-		parser.files[fileID].Snippets = map[common2.ElementID]*spdx.Snippet{}
+		parser.files[fileID].Snippets = map[common.ElementID]*spdx.Snippet{}
 	}
 
 	// setting the snippet to the file.
@@ -134,9 +134,9 @@ func (parser *rdfParser2_3) setSnippetRangeFromNode(node *gordfParser.Node, si *
 		return fmt.Errorf("start and end range type doesn't match")
 	}
 
-	si.Ranges = []common2.SnippetRange{{
-		StartPointer: common2.SnippetRangePointer{FileSPDXIdentifier: si.SnippetFromFileSPDXIdentifier},
-		EndPointer:   common2.SnippetRangePointer{FileSPDXIdentifier: si.SnippetFromFileSPDXIdentifier},
+	si.Ranges = []common.SnippetRange{{
+		StartPointer: common.SnippetRangePointer{FileSPDXIdentifier: si.SnippetFromFileSPDXIdentifier},
+		EndPointer:   common.SnippetRangePointer{FileSPDXIdentifier: si.SnippetFromFileSPDXIdentifier},
 	}}
 
 	if startRangeType == LINE_RANGE {

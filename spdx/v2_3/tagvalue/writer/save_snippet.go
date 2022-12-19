@@ -4,10 +4,10 @@ package writer
 
 import (
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 func renderSnippet(sn *spdx.Snippet, w io.Writer) error {

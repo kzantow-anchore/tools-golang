@@ -1,10 +1,10 @@
 package convert
 
 import (
-	"github.com/anchore/go-struct-converter"
-	"github.com/spdx/tools-golang/spdx/common"
+	converter "github.com/anchore/go-struct-converter"
 
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_1"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 	"github.com/spdx/tools-golang/spdx/v2_3"

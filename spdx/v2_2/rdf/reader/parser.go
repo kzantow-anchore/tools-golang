@@ -5,10 +5,10 @@ package reader
 import (
 	"errors"
 	"fmt"
-	"github.com/spdx/tools-golang/spdx/common"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
+	"github.com/spdx/tools-golang/spdx/common"
 	"github.com/spdx/tools-golang/spdx/v2_2"
 )
 
