@@ -4,19 +4,19 @@ package writer
 
 import (
 	"bytes"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/common"
 	spdx "github.com/spdx/tools-golang/spdx/v2_1"
 )
 
 // ===== Annotation section Saver tests =====
 func TestSaverAnnotationSavesTextForPerson(t *testing.T) {
 	ann := &spdx.Annotation{
-		Annotator:                common.Annotator{AnnotatorType: "Person", Annotator: "John Doe"},
+		Annotator:                common2.Annotator{AnnotatorType: "Person", Annotator: "John Doe"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
-		AnnotationSPDXIdentifier: common.MakeDocElementID("", "DOCUMENT"),
+		AnnotationSPDXIdentifier: common2.MakeDocElementID("", "DOCUMENT"),
 		AnnotationComment:        "This is an annotation about the SPDX document",
 	}
 
@@ -45,10 +45,10 @@ AnnotationComment: This is an annotation about the SPDX document
 
 func TestSaverAnnotationSavesTextForOrganization(t *testing.T) {
 	ann := &spdx.Annotation{
-		Annotator:                common.Annotator{AnnotatorType: "Organization", Annotator: "John Doe, Inc."},
+		Annotator:                common2.Annotator{AnnotatorType: "Organization", Annotator: "John Doe, Inc."},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
-		AnnotationSPDXIdentifier: common.MakeDocElementID("", "DOCUMENT"),
+		AnnotationSPDXIdentifier: common2.MakeDocElementID("", "DOCUMENT"),
 		AnnotationComment:        "This is an annotation about the SPDX document",
 	}
 
@@ -77,10 +77,10 @@ AnnotationComment: This is an annotation about the SPDX document
 
 func TestSaverAnnotationSavesTextForTool(t *testing.T) {
 	ann := &spdx.Annotation{
-		Annotator:                common.Annotator{AnnotatorType: "Tool", Annotator: "magictool-1.1"},
+		Annotator:                common2.Annotator{AnnotatorType: "Tool", Annotator: "magictool-1.1"},
 		AnnotationDate:           "2018-10-10T17:52:00Z",
 		AnnotationType:           "REVIEW",
-		AnnotationSPDXIdentifier: common.MakeDocElementID("", "DOCUMENT"),
+		AnnotationSPDXIdentifier: common2.MakeDocElementID("", "DOCUMENT"),
 		AnnotationComment:        "This is an annotation about the SPDX document",
 	}
 

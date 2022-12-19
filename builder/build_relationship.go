@@ -4,8 +4,8 @@ package builder
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

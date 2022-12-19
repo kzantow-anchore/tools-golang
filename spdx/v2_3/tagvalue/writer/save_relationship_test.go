@@ -4,9 +4,9 @@ package writer
 
 import (
 	"bytes"
+	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

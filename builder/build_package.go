@@ -4,11 +4,11 @@ package builder
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 	"path/filepath"
 	"regexp"
 	"runtime"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/utils"
 )

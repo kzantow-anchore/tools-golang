@@ -3,11 +3,11 @@
 package reader
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"reflect"
 	"testing"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
-	"github.com/spdx/tools-golang/common"
 )
 
 func Test_getLastPartOfURI(t *testing.T) {

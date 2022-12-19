@@ -3,7 +3,7 @@
 package v2_1
 
 import (
-	"github.com/spdx/tools-golang/common"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 )
 
 // Snippet is a Snippet section of an SPDX Document for version 2.1 of the spec.
@@ -11,14 +11,14 @@ type Snippet struct {
 
 	// 5.1: Snippet SPDX Identifier: "SPDXRef-[idstring]"
 	// Cardinality: mandatory, one
-	SnippetSPDXIdentifier common.ElementID `json:"SPDXID"`
+	SnippetSPDXIdentifier common2.ElementID `json:"SPDXID"`
 
 	// 5.2: Snippet from File SPDX Identifier
 	// Cardinality: mandatory, one
-	SnippetFromFileSPDXIdentifier common.ElementID `json:"snippetFromFile"`
+	SnippetFromFileSPDXIdentifier common2.ElementID `json:"snippetFromFile"`
 
 	// Ranges denotes the start/end byte offsets or line numbers that the snippet is relevant to
-	Ranges []common.SnippetRange `json:"ranges"`
+	Ranges []common2.SnippetRange `json:"ranges"`
 
 	// 5.5: Snippet Concluded License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: mandatory, one

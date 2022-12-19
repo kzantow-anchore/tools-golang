@@ -4,9 +4,9 @@ package builder
 
 import (
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"path/filepath"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/utils"
 )
@@ -32,18 +32,18 @@ func BuildFileSection(filePath string, prefix string, fileNumber int) (*spdx.Fil
 	// now build the File section
 	f := &spdx.File{
 		FileName:           filePath,
-		FileSPDXIdentifier: common.ElementID(i),
-		Checksums: []common.Checksum{
+		FileSPDXIdentifier: common2.ElementID(i),
+		Checksums: []common2.Checksum{
 			{
-				Algorithm: common.SHA1,
+				Algorithm: common2.SHA1,
 				Value:     ssha1,
 			},
 			{
-				Algorithm: common.SHA256,
+				Algorithm: common2.SHA256,
 				Value:     ssha256,
 			},
 			{
-				Algorithm: common.MD5,
+				Algorithm: common2.MD5,
 				Value:     smd5,
 			},
 		},

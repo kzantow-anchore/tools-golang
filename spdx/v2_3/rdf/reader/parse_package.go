@@ -4,10 +4,10 @@ package reader
 
 import (
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"strings"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -232,7 +232,7 @@ func getPrimaryPackagePurpose(purpose string) string {
 
 func (parser *rdfParser2_3) setPackageVerificationCode(pkg *spdx.Package, node *gordfParser.Node) error {
 	if pkg.PackageVerificationCode == nil {
-		pkg.PackageVerificationCode = &common.PackageVerificationCode{}
+		pkg.PackageVerificationCode = &common2.PackageVerificationCode{}
 	}
 	for _, subTriple := range parser.nodeToTriples(node) {
 		switch subTriple.Predicate.ID {
@@ -267,7 +267,7 @@ func (parser *rdfParser2_3) setFileToPackage(pkg *spdx.Package, file *spdx.File)
 //    value: [NOASSERTION | [Person | Organization]: string]
 func setPackageSupplier(pkg *spdx.Package, value string) error {
 	value = strings.TrimSpace(value)
-	supplier := &common.Supplier{}
+	supplier := &common2.Supplier{}
 	if strings.ToUpper(value) == "NOASSERTION" {
 		supplier.Supplier = "NOASSERTION"
 		pkg.PackageSupplier = supplier
@@ -296,7 +296,7 @@ func setPackageSupplier(pkg *spdx.Package, value string) error {
 //    value: [NOASSERTION | [Person | Organization]: string]
 func setPackageOriginator(pkg *spdx.Package, value string) error {
 	value = strings.TrimSpace(value)
-	originator := &common.Originator{}
+	originator := &common2.Originator{}
 	if strings.ToUpper(value) == "NOASSERTION" {
 		originator.Originator = "NOASSERTION"
 		pkg.PackageOriginator = originator
@@ -350,11 +350,11 @@ func (parser *rdfParser2_3) setPackageChecksum(pkg *spdx.Package, node *gordfPar
 		return fmt.Errorf("error getting checksum algorithm and value from %v", node)
 	}
 	if pkg.PackageChecksums == nil {
-		pkg.PackageChecksums = make([]common.Checksum, 0, 1)
+		pkg.PackageChecksums = make([]common2.Checksum, 0, 1)
 	}
 	switch checksumAlgorithm {
-	case common.MD5, common.SHA1, common.SHA256:
-		pkg.PackageChecksums = append(pkg.PackageChecksums, common.Checksum{Algorithm: checksumAlgorithm, Value: checksumValue})
+	case common2.MD5, common2.SHA1, common2.SHA256:
+		pkg.PackageChecksums = append(pkg.PackageChecksums, common2.Checksum{Algorithm: checksumAlgorithm, Value: checksumValue})
 	default:
 		return fmt.Errorf("unknown checksumAlgorithm %s while parsing a package", checksumAlgorithm)
 	}

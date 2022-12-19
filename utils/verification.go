@@ -6,27 +6,27 @@ package utils
 import (
 	"crypto/sha1"
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 	"sort"
 	"strings"
 
-	common2 "github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
 // GetVerificationCode takes a slice of files and an optional filename
 // for an "excludes" file, and returns a Package Verification Code calculated
 // according to SPDX spec version 2.3, section 3.9.4.
-func GetVerificationCode(files []*spdx.File, excludeFile string) (common2.PackageVerificationCode, error) {
+func GetVerificationCode(files []*spdx.File, excludeFile string) (common.PackageVerificationCode, error) {
 	// create slice of strings - unsorted SHA1s for all files
 	shas := []string{}
 	for i, f := range files {
 		if f == nil {
-			return common2.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
+			return common.PackageVerificationCode{}, fmt.Errorf("got nil file for identifier %v", i)
 		}
 		if f.FileName != excludeFile {
 			// find the SHA1 hash, if present
 			for _, checksum := range f.Checksums {
-				if checksum.Algorithm == common2.SHA1 {
+				if checksum.Algorithm == common.SHA1 {
 					shas = append(shas, checksum.Value)
 				}
 			}
@@ -44,7 +44,7 @@ func GetVerificationCode(files []*spdx.File, excludeFile string) (common2.Packag
 	hsha1.Write([]byte(shasConcat))
 	bs := hsha1.Sum(nil)
 
-	code := common2.PackageVerificationCode{
+	code := common.PackageVerificationCode{
 		Value:         fmt.Sprintf("%x", bs),
 		ExcludedFiles: []string{excludeFile},
 	}

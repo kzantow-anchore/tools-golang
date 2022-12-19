@@ -4,13 +4,13 @@ package reader
 
 import (
 	"bufio"
+	"github.com/spdx/tools-golang/spdx/common"
 	"strings"
 	"testing"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	rdfloader2 "github.com/spdx/gordf/rdfloader/xmlreader"
 	gordfWriter "github.com/spdx/gordf/rdfwriter"
-	common2 "github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -144,9 +144,9 @@ func Test_rdfParser2_3_setUnpackagedFiles(t *testing.T) {
 	// unpackaged files are the files which are not associated with any package
 	// file associated with a package sets parser.assocWithPackage[fileID] to true.
 	rdfParser, _ := parserFromBodyContent(``)
-	file1 := &spdx.File{FileSPDXIdentifier: common2.ElementID("file1")}
-	file2 := &spdx.File{FileSPDXIdentifier: common2.ElementID("file2")}
-	file3 := &spdx.File{FileSPDXIdentifier: common2.ElementID("file3")}
+	file1 := &spdx.File{FileSPDXIdentifier: common.ElementID("file1")}
+	file2 := &spdx.File{FileSPDXIdentifier: common.ElementID("file2")}
+	file3 := &spdx.File{FileSPDXIdentifier: common.ElementID("file3")}
 
 	// setting files to the document as if it were to be set when it was parsed using triples.
 	rdfParser.files[file1.FileSPDXIdentifier] = file1
@@ -210,15 +210,15 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 	checksumValue := "d2356e0fe1c0b85285d83c6b2ad51b5f"
 	for _, checksum := range file.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != "" {
 				t.Errorf("incorrectly set sha1, should've been empty")
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != "" {
 				t.Errorf("incorrectly set sha256, should've been empty")
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != checksumValue {
 				t.Errorf("wrong checksum value for md5. Expected: %s, found: %s", checksumValue, checksum.Value)
 			}
@@ -240,15 +240,15 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 	}
 	for _, checksum := range file.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != checksumValue {
 				t.Errorf("wrong checksum value for sha1. Expected: %s, found: %s", checksumValue, checksum.Value)
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != "" {
 				t.Errorf("incorrectly set sha256, should've been empty")
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != checksumValue {
 				t.Errorf("incorrectly set md5, should've been empty")
 			}
@@ -270,15 +270,15 @@ func Test_rdfParser2_3_setFileChecksumFromNode(t *testing.T) {
 	}
 	for _, checksum := range file.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != checksumValue {
 				t.Errorf("incorrectly set sha1, should've been empty")
 			}
-		case common2.SHA256:
+		case common.SHA256:
 			if checksum.Value != checksumValue {
 				t.Errorf("wrong checksum value for sha256. Expected: %s, found: %s", checksumValue, checksum.Value)
 			}
-		case common2.MD5:
+		case common.MD5:
 			if checksum.Value != checksumValue {
 				t.Errorf("incorrectly set md5, should've been empty")
 			}
@@ -603,7 +603,7 @@ func Test_rdfParser2_3_getFileFromNode(t *testing.T) {
 
 	for _, checksum := range file.Checksums {
 		switch checksum.Algorithm {
-		case common2.SHA1:
+		case common.SHA1:
 			if checksum.Value != expectedChecksum {
 				t.Errorf("expected %s, found %s", expectedChecksum, checksum.Value)
 			}

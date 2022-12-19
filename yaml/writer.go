@@ -3,11 +3,10 @@
 package yaml
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 
 	"sigs.k8s.io/yaml"
-
-	"github.com/spdx/tools-golang/common"
 )
 
 // Write takes an SPDX Document and an io.Writer, and writes the document to the writer in YAML format.

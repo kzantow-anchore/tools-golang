@@ -4,25 +4,25 @@ package writer
 
 import (
 	"bytes"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
 // ===== Snippet section Saver tests =====
 func TestSaverSnippetSavesText(t *testing.T) {
 	sn := &spdx.Snippet{
-		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
-		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
-		Ranges: []common.SnippetRange{
+		SnippetSPDXIdentifier:         common2.ElementID("Snippet17"),
+		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "File292").ElementRefID,
+		Ranges: []common2.SnippetRange{
 			{
-				StartPointer: common.SnippetRangePointer{LineNumber: 3},
-				EndPointer:   common.SnippetRangePointer{LineNumber: 8},
+				StartPointer: common2.SnippetRangePointer{LineNumber: 3},
+				EndPointer:   common2.SnippetRangePointer{LineNumber: 8},
 			},
 			{
-				StartPointer: common.SnippetRangePointer{Offset: 17},
-				EndPointer:   common.SnippetRangePointer{Offset: 209},
+				StartPointer: common2.SnippetRangePointer{Offset: 17},
+				EndPointer:   common2.SnippetRangePointer{Offset: 209},
 			},
 		},
 		SnippetLicenseConcluded: "GPL-2.0-or-later",
@@ -69,12 +69,12 @@ SnippetAttributionText: some attributions
 
 func TestSaverSnippetOmitsOptionalFieldsIfEmpty(t *testing.T) {
 	sn := &spdx.Snippet{
-		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
-		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
-		Ranges: []common.SnippetRange{
+		SnippetSPDXIdentifier:         common2.ElementID("Snippet17"),
+		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "File292").ElementRefID,
+		Ranges: []common2.SnippetRange{
 			{
-				StartPointer: common.SnippetRangePointer{Offset: 17},
-				EndPointer:   common.SnippetRangePointer{Offset: 209},
+				StartPointer: common2.SnippetRangePointer{Offset: 17},
+				EndPointer:   common2.SnippetRangePointer{Offset: 209},
 			},
 		},
 		SnippetLicenseConcluded: "GPL-2.0-or-later",
@@ -106,12 +106,12 @@ SnippetCopyrightText: Copyright (c) John Doe 20x6
 
 func TestSaverSnippetWrapsCopyrightMultiline(t *testing.T) {
 	sn := &spdx.Snippet{
-		SnippetSPDXIdentifier:         common.ElementID("Snippet17"),
-		SnippetFromFileSPDXIdentifier: common.MakeDocElementID("", "File292").ElementRefID,
-		Ranges: []common.SnippetRange{
+		SnippetSPDXIdentifier:         common2.ElementID("Snippet17"),
+		SnippetFromFileSPDXIdentifier: common2.MakeDocElementID("", "File292").ElementRefID,
+		Ranges: []common2.SnippetRange{
 			{
-				StartPointer: common.SnippetRangePointer{Offset: 17},
-				EndPointer:   common.SnippetRangePointer{Offset: 209},
+				StartPointer: common2.SnippetRangePointer{Offset: 17},
+				EndPointer:   common2.SnippetRangePointer{Offset: 209},
 			},
 		},
 		SnippetLicenseConcluded: "GPL-2.0-or-later",

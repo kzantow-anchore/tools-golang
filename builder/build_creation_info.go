@@ -3,9 +3,9 @@
 package builder
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"time"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

@@ -4,9 +4,9 @@ package writer
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 
-	"github.com/spdx/tools-golang/common"
 	spdx "github.com/spdx/tools-golang/spdx/v2_2"
 )
 

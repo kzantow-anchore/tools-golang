@@ -6,12 +6,12 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"os"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
 )
@@ -84,7 +84,7 @@ var want = spdx.Document{
 	DocumentNamespace: "http://spdx.org/spdxdocs/spdx-example-444504E0-4F89-41D3-9A0C-0305E82C3301",
 	CreationInfo: &spdx.CreationInfo{
 		LicenseListVersion: "3.9",
-		Creators: []common.Creator{
+		Creators: []common2.Creator{
 			{CreatorType: "Tool", Creator: "LicenseFind-1.0"},
 			{CreatorType: "Organization", Creator: "ExampleCodeInspect ()"},
 			{CreatorType: "Person", Creator: "Jane Doe ()"},
@@ -97,8 +97,8 @@ var want = spdx.Document{
 		{
 			DocumentRefID: "DocumentRef-spdx-tool-1.2",
 			URI:           "http://spdx.org/spdxdocs/spdx-tools-v1.2-3F2504E0-4F89-41D3-9A0C-0305E82C3301",
-			Checksum: common.Checksum{
-				Algorithm: common.SHA1,
+			Checksum: common2.Checksum{
+				Algorithm: common2.SHA1,
 				Value:     "d6a770ba38583ed4bb4525bd96e50461655d2759",
 			},
 		},
@@ -136,7 +136,7 @@ var want = spdx.Document{
 	},
 	Annotations: []*spdx.Annotation{
 		{
-			Annotator: common.Annotator{
+			Annotator: common2.Annotator{
 				Annotator:     "Jane Doe ()",
 				AnnotatorType: "Person",
 			},
@@ -145,7 +145,7 @@ var want = spdx.Document{
 			AnnotationComment: "Document level annotation",
 		},
 		{
-			Annotator: common.Annotator{
+			Annotator: common2.Annotator{
 				Annotator:     "Joe Reviewer",
 				AnnotatorType: "Person",
 			},
@@ -154,7 +154,7 @@ var want = spdx.Document{
 			AnnotationComment: "This is just an example.  Some of the non-standard licenses look like they are actually BSD 3 clause licenses",
 		},
 		{
-			Annotator: common.Annotator{
+			Annotator: common2.Annotator{
 				Annotator:     "Suzanne Reviewer",
 				AnnotatorType: "Person",
 			},
@@ -169,21 +169,21 @@ var want = spdx.Document{
 			PackageSPDXIdentifier: "SPDXRef-Package",
 			PackageVersion:        "2.11.1",
 			PackageFileName:       "glibc-2.11.1.tar.gz",
-			PackageSupplier: &common.Supplier{
+			PackageSupplier: &common2.Supplier{
 				Supplier:     "Jane Doe (jane.doe@example.com)",
 				SupplierType: "Person",
 			},
-			PackageOriginator: &common.Originator{
+			PackageOriginator: &common2.Originator{
 				Originator:     "ExampleCodeInspect (contact@example.com)",
 				OriginatorType: "Organization",
 			},
 			PackageDownloadLocation: "http://ftp.gnu.org/gnu/glibc/glibc-ports-2.15.tar.gz",
 			FilesAnalyzed:           true,
-			PackageVerificationCode: &common.PackageVerificationCode{
+			PackageVerificationCode: &common2.PackageVerificationCode{
 				Value:         "d6a770ba38583ed4bb4525bd96e50461655d2758",
 				ExcludedFiles: []string{"./package.spdx"},
 			},
-			PackageChecksums: []common.Checksum{
+			PackageChecksums: []common2.Checksum{
 				{
 					Algorithm: "MD5",
 					Value:     "624c1abb3664f4b35547e7c73864ad24",
@@ -230,7 +230,7 @@ var want = spdx.Document{
 			Files: nil,
 			Annotations: []spdx.Annotation{
 				{
-					Annotator: common.Annotator{
+					Annotator: common2.Annotator{
 						Annotator:     "Package Commenter",
 						AnnotatorType: "Person",
 					},
@@ -269,7 +269,7 @@ var want = spdx.Document{
 		},
 		{
 			PackageSPDXIdentifier: "SPDXRef-Saxon",
-			PackageChecksums: []common.Checksum{
+			PackageChecksums: []common2.Checksum{
 				{
 					Algorithm: "SHA1",
 					Value:     "85ed0817af83a24ad8da68c2b5094de69833983c",
@@ -310,7 +310,7 @@ var want = spdx.Document{
 			FileTypes: []string{
 				"SOURCE",
 			},
-			Checksums: []common.Checksum{
+			Checksums: []common2.Checksum{
 				{
 					Algorithm: "SHA1",
 					Value:     "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
@@ -331,7 +331,7 @@ var want = spdx.Document{
 		},
 		{
 			FileSPDXIdentifier: "SPDXRef-CommonsLangSrc",
-			Checksums: []common.Checksum{
+			Checksums: []common2.Checksum{
 				{
 					Algorithm: "SHA1",
 					Value:     "c2b4e1c67a2d28fced849ee1bb76e7391b93f125",
@@ -348,7 +348,7 @@ var want = spdx.Document{
 		},
 		{
 			FileSPDXIdentifier: "SPDXRef-JenaLib",
-			Checksums: []common.Checksum{
+			Checksums: []common2.Checksum{
 				{
 					Algorithm: "SHA1",
 					Value:     "3ab4e1c67a2d28fced849ee1bb76e7391b93f125",
@@ -367,7 +367,7 @@ var want = spdx.Document{
 			FileSPDXIdentifier: "SPDXRef-File",
 			Annotations: []spdx.Annotation{
 				{
-					Annotator: common.Annotator{
+					Annotator: common2.Annotator{
 						Annotator:     "File Commenter",
 						AnnotatorType: "Person",
 					},
@@ -376,7 +376,7 @@ var want = spdx.Document{
 					AnnotationComment: "File level annotation",
 				},
 			},
-			Checksums: []common.Checksum{
+			Checksums: []common2.Checksum{
 				{
 					Algorithm: "SHA1",
 					Value:     "d6a770ba38583ed4bb4525bd96e50461655d2758",
@@ -401,23 +401,23 @@ var want = spdx.Document{
 		{
 			SnippetSPDXIdentifier:         "SPDXRef-Snippet",
 			SnippetFromFileSPDXIdentifier: "SPDXRef-DoapSource",
-			Ranges: []common.SnippetRange{
+			Ranges: []common2.SnippetRange{
 				{
-					StartPointer: common.SnippetRangePointer{
+					StartPointer: common2.SnippetRangePointer{
 						Offset:             310,
 						FileSPDXIdentifier: "SPDXRef-DoapSource",
 					},
-					EndPointer: common.SnippetRangePointer{
+					EndPointer: common2.SnippetRangePointer{
 						Offset:             420,
 						FileSPDXIdentifier: "SPDXRef-DoapSource",
 					},
 				},
 				{
-					StartPointer: common.SnippetRangePointer{
+					StartPointer: common2.SnippetRangePointer{
 						LineNumber:         5,
 						FileSPDXIdentifier: "SPDXRef-DoapSource",
 					},
-					EndPointer: common.SnippetRangePointer{
+					EndPointer: common2.SnippetRangePointer{
 						LineNumber:         23,
 						FileSPDXIdentifier: "SPDXRef-DoapSource",
 					},
@@ -433,48 +433,48 @@ var want = spdx.Document{
 	},
 	Relationships: []*spdx.Relationship{
 		{
-			RefA:         common.MakeDocElementID("", "DOCUMENT"),
-			RefB:         common.MakeDocElementID("", "Package"),
+			RefA:         common2.MakeDocElementID("", "DOCUMENT"),
+			RefB:         common2.MakeDocElementID("", "Package"),
 			Relationship: "CONTAINS",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "DOCUMENT"),
-			RefB:         common.MakeDocElementID("spdx-tool-1.2", "ToolsElement"),
+			RefA:         common2.MakeDocElementID("", "DOCUMENT"),
+			RefB:         common2.MakeDocElementID("spdx-tool-1.2", "ToolsElement"),
 			Relationship: "COPY_OF",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "DOCUMENT"),
-			RefB:         common.MakeDocElementID("", "File"),
+			RefA:         common2.MakeDocElementID("", "DOCUMENT"),
+			RefB:         common2.MakeDocElementID("", "File"),
 			Relationship: "DESCRIBES",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "DOCUMENT"),
-			RefB:         common.MakeDocElementID("", "Package"),
+			RefA:         common2.MakeDocElementID("", "DOCUMENT"),
+			RefB:         common2.MakeDocElementID("", "Package"),
 			Relationship: "DESCRIBES",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "Package"),
-			RefB:         common.MakeDocElementID("", "JenaLib"),
+			RefA:         common2.MakeDocElementID("", "Package"),
+			RefB:         common2.MakeDocElementID("", "JenaLib"),
 			Relationship: "CONTAINS",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "Package"),
-			RefB:         common.MakeDocElementID("", "Saxon"),
+			RefA:         common2.MakeDocElementID("", "Package"),
+			RefB:         common2.MakeDocElementID("", "Saxon"),
 			Relationship: "DYNAMIC_LINK",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "CommonsLangSrc"),
-			RefB:         common.MakeDocElementSpecial("NOASSERTION"),
+			RefA:         common2.MakeDocElementID("", "CommonsLangSrc"),
+			RefB:         common2.MakeDocElementSpecial("NOASSERTION"),
 			Relationship: "GENERATED_FROM",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "JenaLib"),
-			RefB:         common.MakeDocElementID("", "Package"),
+			RefA:         common2.MakeDocElementID("", "JenaLib"),
+			RefB:         common2.MakeDocElementID("", "Package"),
 			Relationship: "CONTAINS",
 		},
 		{
-			RefA:         common.MakeDocElementID("", "File"),
-			RefB:         common.MakeDocElementID("", "fromDoap-0"),
+			RefA:         common2.MakeDocElementID("", "File"),
+			RefB:         common2.MakeDocElementID("", "fromDoap-0"),
 			Relationship: "GENERATED_FROM",
 		},
 	},

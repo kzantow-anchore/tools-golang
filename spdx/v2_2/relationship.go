@@ -3,7 +3,7 @@
 package v2_2
 
 import (
-	"github.com/spdx/tools-golang/common"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 // Relationship is a Relationship section of an SPDX Document for

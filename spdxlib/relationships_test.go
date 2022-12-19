@@ -3,9 +3,9 @@
 package spdxlib
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

@@ -4,9 +4,9 @@ package reader
 
 import (
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"strconv"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -26,7 +26,7 @@ func (parser *tvParser) parsePairFromSnippet(tag string, value string) error {
 		// FIXME: how should we handle where not associated with current file?
 		if parser.file != nil {
 			if parser.file.Snippets == nil {
-				parser.file.Snippets = map[common.ElementID]*spdx.Snippet{}
+				parser.file.Snippets = map[common2.ElementID]*spdx.Snippet{}
 			}
 			parser.file.Snippets[eID] = parser.snippet
 		}
@@ -68,9 +68,9 @@ func (parser *tvParser) parsePairFromSnippet(tag string, value string) error {
 		}
 
 		if parser.snippet.Ranges == nil {
-			parser.snippet.Ranges = []common.SnippetRange{}
+			parser.snippet.Ranges = []common2.SnippetRange{}
 		}
-		byteRange := common.SnippetRange{StartPointer: common.SnippetRangePointer{Offset: bIntStart}, EndPointer: common.SnippetRangePointer{Offset: bIntEnd}}
+		byteRange := common2.SnippetRange{StartPointer: common2.SnippetRangePointer{Offset: bIntStart}, EndPointer: common2.SnippetRangePointer{Offset: bIntEnd}}
 		parser.snippet.Ranges = append(parser.snippet.Ranges, byteRange)
 	case "SnippetLineRange":
 		lineStart, lineEnd, err := extractSubs(value)
@@ -87,9 +87,9 @@ func (parser *tvParser) parsePairFromSnippet(tag string, value string) error {
 		}
 
 		if parser.snippet.Ranges == nil {
-			parser.snippet.Ranges = []common.SnippetRange{}
+			parser.snippet.Ranges = []common2.SnippetRange{}
 		}
-		lineRange := common.SnippetRange{StartPointer: common.SnippetRangePointer{LineNumber: lInttStart}, EndPointer: common.SnippetRangePointer{LineNumber: lInttEnd}}
+		lineRange := common2.SnippetRange{StartPointer: common2.SnippetRangePointer{LineNumber: lInttStart}, EndPointer: common2.SnippetRangePointer{LineNumber: lInttEnd}}
 		parser.snippet.Ranges = append(parser.snippet.Ranges, lineRange)
 	case "SnippetLicenseConcluded":
 		parser.snippet.SnippetLicenseConcluded = value

@@ -3,9 +3,8 @@
 package builder
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
-
-	"github.com/spdx/tools-golang/common"
 )
 
 // ===== Relationship section builder tests =====

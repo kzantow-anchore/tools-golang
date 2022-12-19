@@ -6,8 +6,8 @@ package builder
 
 import (
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -64,7 +64,7 @@ func Build(packageName string, dirRoot string, config *Config) (*spdx.Document, 
 		return nil, err
 	}
 
-	var packageVerificationCode common.PackageVerificationCode
+	var packageVerificationCode common2.PackageVerificationCode
 
 	if pkg.PackageVerificationCode != nil {
 		packageVerificationCode = *pkg.PackageVerificationCode
@@ -73,7 +73,7 @@ func Build(packageName string, dirRoot string, config *Config) (*spdx.Document, 
 	doc := &spdx.Document{
 		SPDXVersion:       spdx.Version,
 		DataLicense:       spdx.DataLicense,
-		SPDXIdentifier:    common.ElementID("DOCUMENT"),
+		SPDXIdentifier:    common2.ElementID("DOCUMENT"),
 		DocumentName:      packageName,
 		DocumentNamespace: fmt.Sprintf("%s%s-%s", config.NamespacePrefix, packageName, packageVerificationCode),
 		CreationInfo:      ci,

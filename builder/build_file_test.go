@@ -3,9 +3,8 @@
 package builder
 
 import (
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
-
-	"github.com/spdx/tools-golang/common"
 )
 
 // ===== File section builder tests =====
@@ -25,21 +24,21 @@ func TestBuilderCanBuildFileSection(t *testing.T) {
 	if file1.FileName != "/file1.testdata.txt" {
 		t.Errorf("expected %v, got %v", "/file1.testdata.txt", file1.FileName)
 	}
-	if file1.FileSPDXIdentifier != common.ElementID("File17") {
+	if file1.FileSPDXIdentifier != common2.ElementID("File17") {
 		t.Errorf("expected %v, got %v", "File17", file1.FileSPDXIdentifier)
 	}
 
 	for _, checksum := range file1.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "024f870eb6323f532515f7a09d5646a97083b819" {
 				t.Errorf("expected %v, got %v", "024f870eb6323f532515f7a09d5646a97083b819", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "b14e44284ca477b4c0db34b15ca4c454b2947cce7883e22321cf2984050e15bf" {
 				t.Errorf("expected %v, got %v", "b14e44284ca477b4c0db34b15ca4c454b2947cce7883e22321cf2984050e15bf", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "37c8208479dfe42d2bb29debd6e32d4a" {
 				t.Errorf("expected %v, got %v", "37c8208479dfe42d2bb29debd6e32d4a", checksum.Value)
 			}

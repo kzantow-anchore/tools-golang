@@ -4,9 +4,9 @@ package reader
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

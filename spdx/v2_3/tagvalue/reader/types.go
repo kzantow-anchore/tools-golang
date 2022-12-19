@@ -3,8 +3,8 @@
 package reader
 
 import (
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
+	"github.com/spdx/tools-golang/spdx/common"
 )
 
 type tvParser struct {

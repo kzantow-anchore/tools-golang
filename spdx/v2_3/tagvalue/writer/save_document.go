@@ -5,10 +5,10 @@ package writer
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/common"
 	"io"
 	"sort"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 

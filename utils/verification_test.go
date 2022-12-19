@@ -3,9 +3,9 @@
 package utils
 
 import (
+	"github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	common2 "github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -14,9 +14,9 @@ func TestPackageCanGetVerificationCode(t *testing.T) {
 		{
 			FileName:           "file2.txt",
 			FileSPDXIdentifier: "File0",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -24,9 +24,9 @@ func TestPackageCanGetVerificationCode(t *testing.T) {
 		{
 			FileName:           "file1.txt",
 			FileSPDXIdentifier: "File1",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "3333333333bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -34,9 +34,9 @@ func TestPackageCanGetVerificationCode(t *testing.T) {
 		{
 			FileName:           "file3.txt",
 			FileSPDXIdentifier: "File2",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "8888888888bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -44,9 +44,9 @@ func TestPackageCanGetVerificationCode(t *testing.T) {
 		{
 			FileName:           "file5.txt",
 			FileSPDXIdentifier: "File3",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "2222222222bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -54,16 +54,16 @@ func TestPackageCanGetVerificationCode(t *testing.T) {
 		{
 			FileName:           "file4.txt",
 			FileSPDXIdentifier: "File4",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "bbbbbbbbbbccccccccccddddddddddaaaaaaaaaa",
 				},
 			},
 		},
 	}
 
-	wantCode := common2.PackageVerificationCode{Value: "ac924b375119c81c1f08c3e2722044bfbbdcd3dc"}
+	wantCode := common.PackageVerificationCode{Value: "ac924b375119c81c1f08c3e2722044bfbbdcd3dc"}
 
 	gotCode, err := GetVerificationCode(files, "")
 	if err != nil {
@@ -80,9 +80,9 @@ func TestPackageCanGetVerificationCodeIgnoringExcludesFile(t *testing.T) {
 		{
 			FileName:           "file1.txt",
 			FileSPDXIdentifier: "File0",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -90,9 +90,9 @@ func TestPackageCanGetVerificationCodeIgnoringExcludesFile(t *testing.T) {
 		{
 			FileName:           "file2.txt",
 			FileSPDXIdentifier: "File1",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "3333333333bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -100,9 +100,9 @@ func TestPackageCanGetVerificationCodeIgnoringExcludesFile(t *testing.T) {
 		{
 			FileName:           "thisfile.spdx",
 			FileSPDXIdentifier: "File2",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "bbbbbbbbbbccccccccccddddddddddaaaaaaaaaa",
 				},
 			},
@@ -110,9 +110,9 @@ func TestPackageCanGetVerificationCodeIgnoringExcludesFile(t *testing.T) {
 		{
 			FileName:           "file3.txt",
 			FileSPDXIdentifier: "File3",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "8888888888bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -120,16 +120,16 @@ func TestPackageCanGetVerificationCodeIgnoringExcludesFile(t *testing.T) {
 		{
 			FileName:           "file4.txt",
 			FileSPDXIdentifier: "File4",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "2222222222bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
 		},
 	}
 
-	wantCode := common2.PackageVerificationCode{Value: "17fab1bd18fe5c13b5d3983f1c17e5f88b8ff266"}
+	wantCode := common.PackageVerificationCode{Value: "17fab1bd18fe5c13b5d3983f1c17e5f88b8ff266"}
 
 	gotCode, err := GetVerificationCode(files, "thisfile.spdx")
 	if err != nil {
@@ -145,9 +145,9 @@ func TestPackageGetVerificationCodeFailsIfNilFileInSlice(t *testing.T) {
 		{
 			FileName:           "file2.txt",
 			FileSPDXIdentifier: "File0",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
 				},
 			},
@@ -156,9 +156,9 @@ func TestPackageGetVerificationCodeFailsIfNilFileInSlice(t *testing.T) {
 		{
 			FileName:           "file3.txt",
 			FileSPDXIdentifier: "File2",
-			Checksums: []common2.Checksum{
+			Checksums: []common.Checksum{
 				{
-					Algorithm: common2.SHA1,
+					Algorithm: common.SHA1,
 					Value:     "8888888888bbbbbbbbbbccccccccccdddddddddd",
 				},
 			},

@@ -4,9 +4,9 @@ package builder
 
 import (
 	"fmt"
+	common2 "github.com/spdx/tools-golang/spdx/common"
 	"testing"
 
-	"github.com/spdx/tools-golang/common"
 	"github.com/spdx/tools-golang/spdx"
 )
 
@@ -21,7 +21,7 @@ func TestBuildCreatesDocument(t *testing.T) {
 	}
 	config.TestValues["Created"] = "2018-10-19T04:38:00Z"
 
-	wantVerificationCode := common.PackageVerificationCode{Value: "fc9ac4a370af0a471c2e52af66d6b4cf4e2ba12b"}
+	wantVerificationCode := common2.PackageVerificationCode{Value: "fc9ac4a370af0a471c2e52af66d6b4cf4e2ba12b"}
 
 	doc, err := Build("project1", dirRoot, config)
 	if err != nil {
@@ -41,7 +41,7 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if doc.DataLicense != spdx.DataLicense {
 		t.Errorf("expected %s, got %s", spdx.DataLicense, doc.DataLicense)
 	}
-	if doc.SPDXIdentifier != common.ElementID("DOCUMENT") {
+	if doc.SPDXIdentifier != common2.ElementID("DOCUMENT") {
 		t.Errorf("expected %s, got %v", "DOCUMENT", doc.SPDXIdentifier)
 	}
 	if doc.DocumentName != "project1" {
@@ -78,7 +78,7 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if pkg.PackageName != "project1" {
 		t.Errorf("expected %v, got %v", "project1", pkg.PackageName)
 	}
-	if pkg.PackageSPDXIdentifier != common.ElementID("Package-project1") {
+	if pkg.PackageSPDXIdentifier != common2.ElementID("Package-project1") {
 		t.Errorf("expected %v, got %v", "Package-project1", pkg.PackageSPDXIdentifier)
 	}
 	if pkg.PackageDownloadLocation != "NOASSERTION" {
@@ -123,20 +123,20 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if fileEmpty.FileName != "./emptyfile.testdata.txt" {
 		t.Errorf("expected %v, got %v", "./emptyfile.testdata.txt", fileEmpty.FileName)
 	}
-	if fileEmpty.FileSPDXIdentifier != common.ElementID("File0") {
+	if fileEmpty.FileSPDXIdentifier != common2.ElementID("File0") {
 		t.Errorf("expected %v, got %v", "File0", fileEmpty.FileSPDXIdentifier)
 	}
 	for _, checksum := range fileEmpty.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "da39a3ee5e6b4b0d3255bfef95601890afd80709" {
 				t.Errorf("expected %v, got %v", "da39a3ee5e6b4b0d3255bfef95601890afd80709", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" {
 				t.Errorf("expected %v, got %v", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "d41d8cd98f00b204e9800998ecf8427e" {
 				t.Errorf("expected %v, got %v", "d41d8cd98f00b204e9800998ecf8427e", checksum.Value)
 			}
@@ -164,20 +164,20 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if file1.FileName != "./file1.testdata.txt" {
 		t.Errorf("expected %v, got %v", "./file1.testdata.txt", file1.FileName)
 	}
-	if file1.FileSPDXIdentifier != common.ElementID("File1") {
+	if file1.FileSPDXIdentifier != common2.ElementID("File1") {
 		t.Errorf("expected %v, got %v", "File1", file1.FileSPDXIdentifier)
 	}
 	for _, checksum := range file1.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "024f870eb6323f532515f7a09d5646a97083b819" {
 				t.Errorf("expected %v, got %v", "024f870eb6323f532515f7a09d5646a97083b819", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "b14e44284ca477b4c0db34b15ca4c454b2947cce7883e22321cf2984050e15bf" {
 				t.Errorf("expected %v, got %v", "b14e44284ca477b4c0db34b15ca4c454b2947cce7883e22321cf2984050e15bf", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "37c8208479dfe42d2bb29debd6e32d4a" {
 				t.Errorf("expected %v, got %v", "37c8208479dfe42d2bb29debd6e32d4a", checksum.Value)
 			}
@@ -205,20 +205,20 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if file3.FileName != "./file3.testdata.txt" {
 		t.Errorf("expected %v, got %v", "./file3.testdata.txt", file3.FileName)
 	}
-	if file3.FileSPDXIdentifier != common.ElementID("File2") {
+	if file3.FileSPDXIdentifier != common2.ElementID("File2") {
 		t.Errorf("expected %v, got %v", "File2", file3.FileSPDXIdentifier)
 	}
 	for _, checksum := range file3.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "a46114b70e163614f01c64adf44cdd438f158fce" {
 				t.Errorf("expected %v, got %v", "a46114b70e163614f01c64adf44cdd438f158fce", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "9fc181b9892720a15df1a1e561860318db40621bd4040ccdf18e110eb01d04b4" {
 				t.Errorf("expected %v, got %v", "9fc181b9892720a15df1a1e561860318db40621bd4040ccdf18e110eb01d04b4", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "3e02d3ab9c58eec6911dbba37570934f" {
 				t.Errorf("expected %v, got %v", "3e02d3ab9c58eec6911dbba37570934f", checksum.Value)
 			}
@@ -246,20 +246,20 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if file4.FileName != "./folder1/file4.testdata.txt" {
 		t.Errorf("expected %v, got %v", "./folder1/file4.testdata.txt", file4.FileName)
 	}
-	if file4.FileSPDXIdentifier != common.ElementID("File3") {
+	if file4.FileSPDXIdentifier != common2.ElementID("File3") {
 		t.Errorf("expected %v, got %v", "File3", file4.FileSPDXIdentifier)
 	}
 	for _, checksum := range file4.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "e623d7d7d782a7c8323c4d436acee4afab34320f" {
 				t.Errorf("expected %v, got %v", "e623d7d7d782a7c8323c4d436acee4afab34320f", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "574fa42c5e0806c0f8906a44884166540206f021527729407cd5326838629c59" {
 				t.Errorf("expected %v, got %v", "574fa42c5e0806c0f8906a44884166540206f021527729407cd5326838629c59", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "96e6a25d35df5b1c477710ef4d0c7210" {
 				t.Errorf("expected %v, got %v", "96e6a25d35df5b1c477710ef4d0c7210", checksum.Value)
 			}
@@ -287,20 +287,20 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if lastfile.FileName != "./lastfile.testdata.txt" {
 		t.Errorf("expected %v, got %v", "/lastfile.testdata.txt", lastfile.FileName)
 	}
-	if lastfile.FileSPDXIdentifier != common.ElementID("File4") {
+	if lastfile.FileSPDXIdentifier != common2.ElementID("File4") {
 		t.Errorf("expected %v, got %v", "File4", lastfile.FileSPDXIdentifier)
 	}
 	for _, checksum := range lastfile.Checksums {
 		switch checksum.Algorithm {
-		case common.SHA1:
+		case common2.SHA1:
 			if checksum.Value != "26d6221d682d9ba59116f9753a701f34271c8ce1" {
 				t.Errorf("expected %v, got %v", "26d6221d682d9ba59116f9753a701f34271c8ce1", checksum.Value)
 			}
-		case common.SHA256:
+		case common2.SHA256:
 			if checksum.Value != "0a4bdaf990e9b330ff72022dd78110ae98b60e08337cf2105b89856373416805" {
 				t.Errorf("expected %v, got %v", "0a4bdaf990e9b330ff72022dd78110ae98b60e08337cf2105b89856373416805", checksum.Value)
 			}
-		case common.MD5:
+		case common2.MD5:
 			if checksum.Value != "f60baa793870d9085461ad6bbab50b7f" {
 				t.Errorf("expected %v, got %v", "f60baa793870d9085461ad6bbab50b7f", checksum.Value)
 			}
@@ -331,10 +331,10 @@ func TestBuildCreatesDocument(t *testing.T) {
 	if rln == nil {
 		t.Fatalf("expected non-nil Relationship, got nil")
 	}
-	if rln.RefA != common.MakeDocElementID("", "DOCUMENT") {
+	if rln.RefA != common2.MakeDocElementID("", "DOCUMENT") {
 		t.Errorf("expected %v, got %v", "DOCUMENT", rln.RefA)
 	}
-	if rln.RefB != common.MakeDocElementID("", "Package-project1") {
+	if rln.RefB != common2.MakeDocElementID("", "Package-project1") {
 		t.Errorf("expected %v, got %v", "Package-project1", rln.RefB)
 	}
 	if rln.Relationship != "DESCRIBES" {
