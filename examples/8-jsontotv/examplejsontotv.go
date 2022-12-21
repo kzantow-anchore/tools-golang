@@ -12,7 +12,7 @@ import (
 	"os"
 
 	spdx_json "github.com/spdx/tools-golang/json"
-	"github.com/spdx/tools-golang/tvsaver"
+	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -57,7 +57,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as an SPDX tag-value file, version 2.2
-	err = tvsaver.Save2_3(doc, w)
+	err = spdx_tagvalue.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

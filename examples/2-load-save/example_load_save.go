@@ -12,8 +12,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spdx/tools-golang/tvloader"
-	"github.com/spdx/tools-golang/tvsaver"
+	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -37,7 +36,7 @@ func main() {
 	defer r.Close()
 
 	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := tvloader.Load2_2(r)
+	doc, err := spdx_tagvalue.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", fileIn, err)
 		return
@@ -58,7 +57,7 @@ func main() {
 	defer w.Close()
 
 	// try to save the document to disk as an SPDX tag-value file, version 2.2
-	err = tvsaver.Save2_2(doc, w)
+	err = spdx_tagvalue.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return
