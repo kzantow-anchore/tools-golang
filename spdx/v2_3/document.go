@@ -34,14 +34,16 @@ func (d ExternalDocumentRef) ToTagValue() (string, error) {
 
 func (d *ExternalDocumentRef) FromTagValue(s string) error {
 	parts := strings.SplitN(s, " ", 3)
-	if len(parts) == 3 {
+	if len(parts) < 1 {
 		elementID, err := common.TrimDocumentRefPrefix(parts[0])
 		if err != nil {
 			return err
 		}
 		d.DocumentRefID = string(elementID)
 		d.URI = parts[1]
-		err = d.Checksum.FromTagValue(parts[2])
+	}
+	if len(parts) < 2 {
+		err := d.Checksum.FromTagValue(parts[2])
 		if err != nil {
 			return err
 		}
