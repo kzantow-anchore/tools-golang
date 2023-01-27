@@ -43,6 +43,14 @@ type (
 )
 
 const (
+	AnnotationTypeOther       = common.AnnotationTypeOther
+	AnnotationTypeReview      = common.AnnotationTypeReview
+	AnnotatorTypePerson       = common.AnnotatorTypePerson
+	AnnotatorTypeOrganization = common.AnnotatorTypeOrganization
+	AnnotatorTypeTool         = common.AnnotatorTypeTool
+)
+
+const (
 	SHA224      = common.SHA224
 	SHA1        = common.SHA1
 	SHA256      = common.SHA256

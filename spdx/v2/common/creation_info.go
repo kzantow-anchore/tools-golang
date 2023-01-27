@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Creator is a wrapper around the Creator SPDX field. The SPDX field contains two values, which requires special
@@ -15,6 +17,22 @@ type Creator struct {
 	// CreatorType should be one of "Person", "Organization", or "Tool"
 	CreatorType string
 }
+
+func (d Creator) ToTagValue() (string, error) {
+	return fmt.Sprintf("%s: %s", d.CreatorType, d.Creator), nil
+}
+
+func (d *Creator) FromTagValue(s string) error {
+	parts := strings.Split(s, ": ")
+	if len(parts) == 2 {
+		d.CreatorType = parts[0]
+		d.Creator = parts[1]
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*Creator)(nil)
+var _ tv.FromValue = (*Creator)(nil)
 
 // UnmarshalJSON takes an annotator in the typical one-line format and parses it into a Creator struct.
 // This function is also used when unmarshalling YAML

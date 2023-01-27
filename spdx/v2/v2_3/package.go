@@ -3,7 +3,11 @@
 package v2_3
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/spdx/tools-golang/spdx/v2/common"
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
 // Package is a Package section of an SPDX Document
@@ -11,7 +15,7 @@ type Package struct {
 	// NOT PART OF SPEC
 	// flag: does this "package" contain files that were in fact "unpackaged",
 	// e.g. included directly in the Document without being in a Package?
-	IsUnpackaged bool `json:"-" yaml:"-"`
+	IsUnpackaged bool `json:"-" yaml:"-" tv:"-"`
 
 	// 7.1: Package Name
 	// Cardinality: mandatory, one
@@ -19,7 +23,7 @@ type Package struct {
 
 	// 7.2: Package SPDX Identifier: "SPDXRef-[idstring]"
 	// Cardinality: mandatory, one
-	PackageSPDXIdentifier common.ElementID `json:"SPDXID"`
+	PackageSPDXIdentifier common.ElementID `json:"SPDXID" tv:"SPDXID"`
 
 	// 7.3: Package Version
 	// Cardinality: optional, one
@@ -47,7 +51,7 @@ type Package struct {
 	// Cardinality: optional, one; default value is "true" if omitted
 	FilesAnalyzed bool `json:"filesAnalyzed,omitempty"`
 	// NOT PART OF SPEC: did FilesAnalyzed tag appear?
-	IsFilesAnalyzedTagPresent bool `json:"-" yaml:"-"`
+	IsFilesAnalyzedTagPresent bool `json:"-" yaml:"-" tv:"-"`
 
 	// 7.9: Package Verification Code
 	// Cardinality: if FilesAnalyzed == true must be present, if FilesAnalyzed == false must be omitted
@@ -55,7 +59,7 @@ type Package struct {
 
 	// 7.10: Package Checksum: may have keys for SHA1, SHA256, SHA512, MD5, SHA3-256, SHA3-384, SHA3-512, BLAKE2b-256, BLAKE2b-384, BLAKE2b-512, BLAKE3, ADLER32
 	// Cardinality: optional, one or many
-	PackageChecksums []common.Checksum `json:"checksums,omitempty"`
+	PackageChecksums []common.Checksum `json:"checksums,omitempty" tv:"PackageChecksum"`
 
 	// 7.11: Package Home Page
 	// Cardinality: optional, one
@@ -67,7 +71,7 @@ type Package struct {
 
 	// 7.13: Concluded License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one
-	PackageLicenseConcluded string `json:"licenseConcluded,omitempty"`
+	PackageLicenseConcluded common.LicenseID `json:"licenseConcluded,omitempty"`
 
 	// 7.14: All Licenses Info from Files: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one or many if filesAnalyzed is true / omitted;
@@ -76,7 +80,7 @@ type Package struct {
 
 	// 7.15: Declared License: SPDX License Expression, "NONE" or "NOASSERTION"
 	// Cardinality: optional, one
-	PackageLicenseDeclared string `json:"licenseDeclared,omitempty"`
+	PackageLicenseDeclared common.LicenseID `json:"licenseDeclared,omitempty"`
 
 	// 7.16: Comments on License
 	// Cardinality: optional, one
@@ -133,6 +137,12 @@ type Package struct {
 	Annotations []Annotation `json:"annotations,omitempty"`
 }
 
+func (p Package) TagValuePrefix() string {
+	return fmt.Sprintf("\n# ----- Package: %s -----", p.PackageName)
+}
+
+var _ tv.TagValuePrefix = (*Package)(nil)
+
 // PackageExternalReference is an External Reference to additional info
 // about a Package, as defined in section 7.21
 type PackageExternalReference struct {
@@ -151,3 +161,50 @@ type PackageExternalReference struct {
 	// Cardinality: conditional (optional, one) for each External Reference
 	ExternalRefComment string `json:"comment,omitempty"`
 }
+
+func (d PackageExternalReference) GetTagValue() (interface{}, error) {
+	return packageExternalReferenceTagValueHandler{
+		ExternalRef:        categoryReftype{d},
+		ExternalRefComment: d.ExternalRefComment,
+	}, nil
+}
+
+func (d PackageExternalReference) FromTagValue(i interface{}) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+var _ tv.TagValueHandler = (*PackageExternalReference)(nil)
+
+type categoryReftype struct {
+	PackageExternalReference
+}
+
+type packageExternalReferenceTagValueHandler struct {
+	ExternalRef        categoryReftype
+	ExternalRefComment string
+}
+
+func (d categoryReftype) ToTagValue() (string, error) {
+	if d.RefType != "" {
+		return fmt.Sprintf("%s %s %s", d.Category, d.RefType, d.Locator), nil
+	}
+	return fmt.Sprintf("%s %s", d.Category, d.Locator), nil
+}
+
+func (d *categoryReftype) FromTagValue(s string) error {
+	parts := strings.Split(s, " ")
+	if len(parts) == 2 {
+		d.Category = parts[0]
+		d.Locator = parts[1]
+	}
+	if len(parts) == 3 {
+		d.Category = parts[0]
+		d.RefType = parts[1]
+		d.Locator = parts[2]
+	}
+	return nil
+}
+
+var _ tv.ToValue = (*categoryReftype)(nil)
+var _ tv.FromValue = (*categoryReftype)(nil)

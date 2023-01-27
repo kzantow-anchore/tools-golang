@@ -4,6 +4,7 @@ package reader
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 
 	spdx "github.com/spdx/tools-golang/spdx/v2/v2_3"
 )
@@ -14,7 +15,7 @@ func (parser *tvParser) parsePairFromOtherLicense(tag string, value string) erro
 	case "LicenseID":
 		parser.otherLic = &spdx.OtherLicense{}
 		parser.doc.OtherLicenses = append(parser.doc.OtherLicenses, parser.otherLic)
-		parser.otherLic.LicenseIdentifier = value
+		parser.otherLic.LicenseIdentifier = common.LicenseID(value)
 	case "ExtractedText":
 		parser.otherLic.ExtractedText = value
 	case "LicenseName":

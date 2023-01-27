@@ -2,6 +2,12 @@
 
 package v2_3
 
+import (
+	"fmt"
+
+	tv "github.com/spdx/tools-golang/tagvalue/lib"
+)
+
 // Review is a Review section of an SPDX Document.
 // DEPRECATED in version 2.0 of spec; retained here for compatibility.
 type Review struct {
@@ -23,3 +29,24 @@ type Review struct {
 	// Cardinality: optional, one
 	ReviewComment string
 }
+
+type reviewTagValue struct {
+	Reviewer      string
+	ReviewDate    string
+	ReviewComment string
+}
+
+func (d Review) GetTagValue() (interface{}, error) {
+	return reviewTagValue{
+		Reviewer:      fmt.Sprintf("%s: %s", d.ReviewerType, d.Reviewer),
+		ReviewDate:    d.ReviewDate,
+		ReviewComment: d.ReviewComment,
+	}, nil
+}
+
+func (d Review) FromTagValue(i interface{}) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+var _ tv.TagValueHandler = (*Review)(nil)

@@ -11,11 +11,11 @@ type Snippet struct {
 
 	// 9.1: Snippet SPDX Identifier: "SPDXRef-[idstring]"
 	// Cardinality: mandatory, one
-	SnippetSPDXIdentifier common.ElementID `json:"SPDXID"`
+	SnippetSPDXIdentifier common.ElementID `json:"SPDXID" tv:"SnippetSPDXID"`
 
 	// 9.2: Snippet from File SPDX Identifier
 	// Cardinality: mandatory, one
-	SnippetFromFileSPDXIdentifier common.ElementID `json:"snippetFromFile"`
+	SnippetFromFileSPDXIdentifier common.ElementID `json:"snippetFromFile" tv:"SnippetFromFileSPDXID"`
 
 	// Ranges denotes the start/end byte offsets or line numbers that the snippet is relevant to
 	Ranges []common.SnippetRange `json:"ranges"`

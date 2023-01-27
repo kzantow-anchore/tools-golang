@@ -15,7 +15,7 @@ type CreationInfo struct {
 	// 6.8: Creators: may have multiple keys for Person, Organization
 	//      and/or Tool
 	// Cardinality: mandatory, one or many
-	Creators []common.Creator `json:"creators"`
+	Creators []common.Creator `json:"creators" tv:"Creator"`
 
 	// 6.9: Created: data format YYYY-MM-DDThh:mm:ssZ
 	// Cardinality: mandatory, one

@@ -2,6 +2,7 @@
 package reader
 
 import (
+	"github.com/spdx/tools-golang/spdx/v2/common"
 	"testing"
 
 	spdx "github.com/spdx/tools-golang/spdx/v2/v2_3"
@@ -19,7 +20,7 @@ func TestParserOLStartsNewOtherLicenseAfterParsingLicenseIDTag(t *testing.T) {
 		pkg:  &spdx.Package{PackageName: "test", PackageSPDXIdentifier: "test", Files: []*spdx.File{}},
 		file: &spdx.File{FileName: "f1.txt", FileSPDXIdentifier: "f1"},
 		otherLic: &spdx.OtherLicense{
-			LicenseIdentifier: olid1,
+			LicenseIdentifier: common.LicenseID(olid1),
 			LicenseName:       olname1,
 		},
 	}
@@ -71,7 +72,7 @@ func TestParserOLStartsNewOtherLicenseAfterParsingLicenseIDTag(t *testing.T) {
 	if parser.doc.OtherLicenses[0] != olic1 {
 		t.Errorf("Expected other license %v in OtherLicenses[0], got %v", olic1, parser.doc.OtherLicenses[0])
 	}
-	if parser.doc.OtherLicenses[0].LicenseIdentifier != olid1 {
+	if parser.doc.OtherLicenses[0].LicenseIdentifier != common.LicenseID(olid1) {
 		t.Errorf("expected other license ID %s in OtherLicenses[0], got %s", olid1, parser.doc.OtherLicenses[0].LicenseIdentifier)
 	}
 	if parser.doc.OtherLicenses[0].LicenseName != olname1 {
@@ -80,7 +81,7 @@ func TestParserOLStartsNewOtherLicenseAfterParsingLicenseIDTag(t *testing.T) {
 	if parser.doc.OtherLicenses[1] != parser.otherLic {
 		t.Errorf("Expected other license %v in OtherLicenses[1], got %v", parser.otherLic, parser.doc.OtherLicenses[1])
 	}
-	if parser.doc.OtherLicenses[1].LicenseIdentifier != olid2 {
+	if parser.doc.OtherLicenses[1].LicenseIdentifier != common.LicenseID(olid2) {
 		t.Errorf("expected other license ID %s in OtherLicenses[1], got %s", olid2, parser.doc.OtherLicenses[1].LicenseIdentifier)
 	}
 	if parser.doc.OtherLicenses[1].LicenseName != olname2 {

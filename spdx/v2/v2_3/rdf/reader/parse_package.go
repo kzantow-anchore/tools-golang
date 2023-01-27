@@ -100,7 +100,7 @@ func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (p
 			if err != nil {
 				return nil, err
 			}
-			pkg.PackageLicenseConcluded = anyLicenseInfo.ToLicenseString()
+			pkg.PackageLicenseConcluded = common.LicenseID(anyLicenseInfo.ToLicenseString())
 		case SPDX_LICENSE_INFO_FROM_FILES: // 7.14
 			// cardinality: min 0
 			pkg.PackageLicenseInfoFromFiles = append(pkg.PackageLicenseInfoFromFiles, getLicenseStringFromURI(subTriple.Object.ID))
@@ -110,7 +110,7 @@ func (parser *rdfParser2_3) getPackageFromNode(packageNode *gordfParser.Node) (p
 			if err != nil {
 				return nil, err
 			}
-			pkg.PackageLicenseDeclared = anyLicenseInfo.ToLicenseString()
+			pkg.PackageLicenseDeclared = common.LicenseID(anyLicenseInfo.ToLicenseString())
 		case SPDX_LICENSE_COMMENTS: // 7.16
 			// cardinality: max 1
 			pkg.PackageLicenseComments = subTriple.Object.ID

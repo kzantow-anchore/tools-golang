@@ -4,6 +4,7 @@ package reader
 
 import (
 	"fmt"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 
 	gordfParser "github.com/spdx/gordf/rdfloader/parser"
 	"github.com/spdx/gordf/rdfwriter"
@@ -29,7 +30,7 @@ func (parser *rdfParser2_3) getExtractedLicensingInfoFromNode(node *gordfParser.
 }
 
 func (parser *rdfParser2_3) extractedLicenseToOtherLicense(extLicense ExtractedLicensingInfo) (othLic spdx.OtherLicense) {
-	othLic.LicenseIdentifier = extLicense.licenseID
+	othLic.LicenseIdentifier = common.LicenseID(extLicense.licenseID)
 	othLic.ExtractedText = extLicense.extractedText
 	othLic.LicenseComment = extLicense.comment
 	othLic.LicenseCrossReferences = extLicense.seeAlso

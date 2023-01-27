@@ -138,11 +138,11 @@ func (parser *tvParser) parsePairFromPackage(tag string, value string) error {
 	case "PackageSourceInfo":
 		parser.pkg.PackageSourceInfo = value
 	case "PackageLicenseConcluded":
-		parser.pkg.PackageLicenseConcluded = value
+		parser.pkg.PackageLicenseConcluded = common.LicenseID(value)
 	case "PackageLicenseInfoFromFiles":
 		parser.pkg.PackageLicenseInfoFromFiles = append(parser.pkg.PackageLicenseInfoFromFiles, value)
 	case "PackageLicenseDeclared":
-		parser.pkg.PackageLicenseDeclared = value
+		parser.pkg.PackageLicenseDeclared = common.LicenseID(value)
 	case "PackageLicenseComments":
 		parser.pkg.PackageLicenseComments = value
 	case "PackageCopyrightText":

@@ -40,7 +40,7 @@ type Document struct {
 	// 6.3: SPDX Identifier; should be "DOCUMENT" to represent
 	//      mandatory identifier of SPDXRef-DOCUMENT
 	// Cardinality: mandatory, one
-	SPDXIdentifier common.ElementID `json:"SPDXID"`
+	SPDXIdentifier common.ElementID `json:"SPDXID" tv:"SPDXID"`
 
 	// 6.4: Document Name
 	// Cardinality: mandatory, one

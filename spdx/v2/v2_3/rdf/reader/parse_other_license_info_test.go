@@ -3,6 +3,7 @@
 package reader
 
 import (
+	"github.com/spdx/tools-golang/spdx/v2/common"
 	"reflect"
 	"testing"
 
@@ -56,7 +57,7 @@ func Test_rdfParser2_3_extractedLicenseToOtherLicense(t *testing.T) {
 	extLicense, _ := parser.getExtractedLicensingInfoFromNode(node)
 	othLic := parser.extractedLicenseToOtherLicense(extLicense)
 
-	if othLic.LicenseIdentifier != extLicense.licenseID {
+	if othLic.LicenseIdentifier != common.LicenseID(extLicense.licenseID) {
 		t.Errorf("expected %v, got %v", othLic.LicenseIdentifier, extLicense.licenseID)
 	}
 	if othLic.ExtractedText != extLicense.extractedText {
