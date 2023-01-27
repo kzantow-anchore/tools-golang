@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-// Example for: *reporter*, *tvloader*
+// Example for: *reporter*, *tagvalue*
 
 // This example demonstrates loading an SPDX tag-value file from disk into memory,
 // generating a basic report listing counts of the concluded licenses for its
@@ -14,7 +14,7 @@ import (
 
 	"github.com/spdx/tools-golang/reporter"
 	"github.com/spdx/tools-golang/spdxlib"
-	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
+	"github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	args := os.Args
 	if len(args) != 2 {
 		fmt.Printf("Usage: %v <spdx-file-in>\n", args[0])
-		fmt.Printf("  Load SPDX 2.2 tag-value file <spdx-file-in>, and\n")
+		fmt.Printf("  Load SPDX tag-value file <spdx-file-in>, and\n")
 		fmt.Printf("  generate and print a report of its concluded licenses.\n")
 		return
 	}
@@ -37,8 +37,8 @@ func main() {
 	}
 	defer r.Close()
 
-	// try to load the SPDX file's contents as a tag-value file, version 2.2
-	doc, err := spdx_tagvalue.Read(r)
+	// try to load the SPDX file's contents as a tag-value file
+	doc, err := tagvalue.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filename, err)
 		return

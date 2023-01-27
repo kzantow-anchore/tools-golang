@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+
 package convert
 
 import (
@@ -8,12 +10,20 @@ import (
 )
 
 // FromPtr accepts a document or a document pointer and returns the direct struct reference
-func FromPtr(doc common.Document) common.Document {
+func FromPtr(doc common.AnyDocument) common.AnyDocument {
 	value := reflect.ValueOf(doc)
 	for value.Type().Kind() == reflect.Ptr {
 		value = value.Elem()
 	}
 	return value.Interface()
+}
+
+func IsPtr(obj common.AnyDocument) bool {
+	t := reflect.TypeOf(obj)
+	if t.Kind() == reflect.Interface {
+		t = t.Elem()
+	}
+	return t.Kind() == reflect.Ptr
 }
 
 func Describe(o interface{}) string {

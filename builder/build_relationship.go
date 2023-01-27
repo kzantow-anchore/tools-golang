@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 )
 
 // BuildRelationshipSection creates an SPDX Relationship

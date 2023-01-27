@@ -7,6 +7,6 @@ import (
 	tv "github.com/spdx/tools-golang/tagvalue/lib"
 )
 
-func Write(doc common.Document, writer io.Writer) error {
+func Write(doc common.AnyDocument, writer io.Writer) error {
 	return tv.Write(doc, writer)
 }

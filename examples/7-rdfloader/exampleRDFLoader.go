@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	spdx_rdf "github.com/spdx/tools-golang/rdf"
+	"github.com/spdx/tools-golang/rdf"
 )
 
 func getFilePathFromUser() (string, error) {
@@ -32,7 +32,7 @@ func main() {
 	}
 
 	// loading the spdx-document
-	doc, err := spdx_rdf.Read(file)
+	doc, err := rdf.Read(file)
 	if err != nil {
 		fmt.Println(fmt.Errorf("error parsing given spdx document: %s", err))
 		os.Exit(1)

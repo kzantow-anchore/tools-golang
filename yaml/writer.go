@@ -11,7 +11,7 @@ import (
 )
 
 // Write takes an SPDX Document and an io.Writer, and writes the document to the writer in YAML format.
-func Write(doc common.Document, w io.Writer) error {
+func Write(doc common.AnyDocument, w io.Writer) error {
 	buf, err := yaml.Marshal(doc)
 	if err != nil {
 		return err

@@ -8,7 +8,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 )
 
 // Config is a collection of configuration settings for builder.
@@ -37,7 +37,7 @@ type Config struct {
 
 	// TestValues is used to pass fixed values for testing purposes
 	// only, and should be set to nil for production use. It is only
-	// exported so that it will be accessible within builder2v3.
+	// exported so that it will be accessible within builder.
 	TestValues map[string]string
 }
 

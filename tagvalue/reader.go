@@ -10,25 +10,37 @@ import (
 	"github.com/spdx/tools-golang/convert"
 	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	v2_1_reader "github.com/spdx/tools-golang/spdx/v2_1/tagvalue/reader"
-	"github.com/spdx/tools-golang/spdx/v2_2"
-	v2_2_reader "github.com/spdx/tools-golang/spdx/v2_2/tagvalue/reader"
-	"github.com/spdx/tools-golang/spdx/v2_3"
-	v2_3_reader "github.com/spdx/tools-golang/spdx/v2_3/tagvalue/reader"
+	"github.com/spdx/tools-golang/spdx/v2/v2_1"
+	v2_1_reader "github.com/spdx/tools-golang/spdx/v2/v2_1/tagvalue/reader"
+	"github.com/spdx/tools-golang/spdx/v2/v2_2"
+	v2_2_reader "github.com/spdx/tools-golang/spdx/v2/v2_2/tagvalue/reader"
+	"github.com/spdx/tools-golang/spdx/v2/v2_3"
+	v2_3_reader "github.com/spdx/tools-golang/spdx/v2/v2_3/tagvalue/reader"
 	"github.com/spdx/tools-golang/tagvalue/reader"
 )
 
-// Read takes an io.Reader and returns a fully-parsed SPDX Document
-// if parseable, or error if any error is encountered.
+// Read takes an io.Reader and returns a fully-parsed current model SPDX Document
+// or an error if any error is encountered.
 func Read(content io.Reader) (*spdx.Document, error) {
+	doc := spdx.Document{}
+	err := ReadInto(content, &doc)
+	return &doc, err
+}
+
+// ReadInto takes an io.Reader, reads in the SPDX document at the version provided
+// and converts to the doc version
+func ReadInto(content io.Reader, doc common.AnyDocument) error {
+	if !convert.IsPtr(doc) {
+		return fmt.Errorf("doc to read into must be a pointer")
+	}
+
 	tvPairs, err := reader.ReadTagValues(content)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if len(tvPairs) == 0 {
-		return nil, fmt.Errorf("no tag values found")
+		return fmt.Errorf("no tag values found")
 	}
 
 	version := ""
@@ -48,13 +60,12 @@ func Read(content io.Reader) (*spdx.Document, error) {
 	case v2_3.Version:
 		data, err = v2_3_reader.ParseTagValues(tvPairs)
 	default:
-		return nil, fmt.Errorf("unsupported SPDX version: '%v'", version)
+		return fmt.Errorf("unsupported SPDX version: '%v'", version)
 	}
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	out, err := convert.Document(data.(common.Document))
-	return &out, err
+	return convert.Document(data.(common.AnyDocument), doc)
 }

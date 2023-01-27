@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-// Example for: *licensediff*, *tvloader*
+// Example for: *licensediff*, *tagvalue*
 
 // This example demonstrates loading two SPDX tag-value files from disk into
 // memory, and generating a diff of the concluded licenses for Files in
@@ -18,7 +18,7 @@ import (
 	"github.com/spdx/tools-golang/licensediff"
 	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdxlib"
-	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
+	"github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 	args := os.Args
 	if len(args) != 3 {
 		fmt.Printf("Usage: %v <spdx-file-first> <spdx-file-second>\n", args[0])
-		fmt.Printf("  Load SPDX 2.2 tag-value files <spdx-file-first> and <spdx-file-second>,\n")
+		fmt.Printf("  Load SPDX tag-value files <spdx-file-first> and <spdx-file-second>,\n")
 		fmt.Printf("  run a diff between their concluded licenses, and print basic results.\n")
 		return
 	}
@@ -41,8 +41,8 @@ func main() {
 	}
 	defer r.Close()
 
-	// try to load the first SPDX file's contents as a tag-value file, version 2.2
-	docFirst, err := spdx_tagvalue.Read(r)
+	// try to load the first SPDX file's contents as a tag-value file
+	docFirst, err := tagvalue.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filenameFirst, err)
 		return
@@ -66,8 +66,8 @@ func main() {
 	}
 	defer r.Close()
 
-	// try to load the second SPDX file's contents as a tag-value file, version 2.2
-	docSecond, err := spdx_tagvalue.Read(r)
+	// try to load the second SPDX file's contents as a tag-value file
+	docSecond, err := tagvalue.Read(r)
 	if err != nil {
 		fmt.Printf("Error while parsing %v: %v", filenameSecond, err)
 		return

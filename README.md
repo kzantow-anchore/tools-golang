@@ -6,14 +6,14 @@
 
 # SPDX tools-golang
 
-tools-golang is a collection of Go packages intended to make it easier for
+`tools-golang` is a collection of Go packages intended to make it easier for
 Go programs to work with [SPDX®](https://spdx.dev/) files.
 
 ## Recent news
 
-2022-04-03: **v0.3.0**: added support for saving SPDX JSON files as well as
-other improvements and bugfixes. See [RELEASE-NOTES.md](./RELEASE-NOTES.md)
-for full details.
+2022-01-11: **v0.4.0**: added support for SPDX v2.3 and YAML, as well as other
+improvements and bugfixes. See [RELEASE-NOTES.md](./RELEASE-NOTES.md) for full
+details.  
 
 ## What it does
 
@@ -23,15 +23,14 @@ of the SPDX specification, available at: https://spdx.dev/specifications
 tools-golang provides the following packages:
 
 * *spdx* - in-memory data model for the sections of an SPDX document
-* *tvloader* - tag-value document loader
-* *tvsaver* - tag-value document saver
-* *rdfloader* - RDF document loader
-* *json* - JSON document parser and writer
-* *yaml* - YAML document parser and writer
+* *tagvalue* - tag-value document reader and writer
+* *rdf* - RDF document reader
+* *json* - JSON document reader and writer
+* *yaml* - YAML document reader and writer
 * *builder* - builds "empty" SPDX document (with hashes) for directory contents
-* *idsearcher* - searches for [SPDX short-form IDs](https://spdx.org/ids/) and builds SPDX document
+* *idsearcher* - searches for [SPDX short-form IDs](https://spdx.org/ids/) and builds an SPDX document
 * *licensediff* - compares concluded licenses between files in two packages
-* *reporter* - generates basic license count report from SPDX document
+* *reporter* - generates basic license count report from an SPDX document
 * *spdxlib* - various utility functions for manipulating SPDX documents in memory
 * *utils* - various utility functions that support the other tools-golang packages
 
@@ -40,22 +39,7 @@ directory.
 
 ## What it doesn't do
 
-tools-golang doesn't currently do any of the following:
-
-* work with files under any version of the SPDX spec prior to v2.1
-* convert between different versions of SPDX documents (e.g., from 2.1 to 2.2)
-* enable applications to interact with SPDX files without needing to care
-  (too much) about the particular SPDX file version
-
-We are working towards adding functionality for all of these. Code contributions
-are welcome!
-
-## Requirements
-
-tools-golang uses https://github.com/spdx/gordf to manage RDF input and output.
-
-Other than that, tools-golang does not require anything outside the Go standard
-library.
+`tools-golang` doesn't currently support files under any version of the SPDX spec prior to v2.1
 
 ## Documentation
 

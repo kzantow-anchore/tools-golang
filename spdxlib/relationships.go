@@ -4,7 +4,7 @@ package spdxlib
 
 import (
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 )
 
 // FilterRelationships returns a slice of Element IDs returned by the given filter closure. The closure is passed

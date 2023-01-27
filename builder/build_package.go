@@ -9,7 +9,7 @@ import (
 	"runtime"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 	"github.com/spdx/tools-golang/utils"
 )
 

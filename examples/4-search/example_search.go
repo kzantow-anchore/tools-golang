@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-// Example for: *idsearcher*, *tvsaver*
+// Example for: *idsearcher*, *tagvalue*
 
 // This example demonstrates building an SPDX document for a directory's
 // contents (implicitly using *builder*); searching through that directory for
@@ -16,7 +16,7 @@ import (
 	"os"
 
 	"github.com/spdx/tools-golang/idsearcher"
-	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
+	"github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	args := os.Args
 	if len(args) != 4 {
 		fmt.Printf("Usage: %v <package-name> <package-root-dir> <spdx-file-out>\n", args[0])
-		fmt.Printf("  Build a SPDX 2.2 document with one package called <package-name>;\n")
+		fmt.Printf("  Build a SPDX document with one package called <package-name>;\n")
 		fmt.Printf("  create files with hashes corresponding to the files in <package-root-dir>;\n")
 		fmt.Printf("  search for SPDX short-form IDs, and use them to fill in license data\n")
 		fmt.Printf("  where possible; and save it out as a tag-value file to <spdx-file-out>.\n")
@@ -128,7 +128,7 @@ func main() {
 	// identifiers, to confirm that they are e.g. on the SPDX License List
 	// or in other appropriate format (e.g., LicenseRef-...)
 
-	// we can now save it to disk, using tvsaver.
+	// we can now save it to disk, using tagvalue.
 
 	// create a new file for writing
 	w, err := os.Create(fileOut)
@@ -138,7 +138,7 @@ func main() {
 	}
 	defer w.Close()
 
-	err = spdx_tagvalue.Write(doc, w)
+	err = tagvalue.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

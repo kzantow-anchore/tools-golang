@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
 
-// Example for: *builder*, *tvsaver*
+// Example for: *builder*, *tagvalue*
 
 // This example demonstrates building an 'empty' SPDX document in memory that
 // corresponds to a given directory's contents, including all files with their
@@ -14,7 +14,7 @@ import (
 	"os"
 
 	"github.com/spdx/tools-golang/builder"
-	spdx_tagvalue "github.com/spdx/tools-golang/tagvalue"
+	"github.com/spdx/tools-golang/tagvalue"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	args := os.Args
 	if len(args) != 4 {
 		fmt.Printf("Usage: %v <package-name> <package-root-dir> <spdx-file-out>\n", args[0])
-		fmt.Printf("  Build a SPDX 2.2 document with one package called <package-name>;\n")
+		fmt.Printf("  Build a SPDX document with one package called <package-name>;\n")
 		fmt.Printf("  create files with hashes corresponding to the files in <package-root-dir>;\n")
 		fmt.Printf("  and save it out as a tag-value file to <spdx-file-out>.\n")
 		return
@@ -98,7 +98,7 @@ func main() {
 	// the package verification code have been filled in appropriately.
 	fmt.Printf("Successfully created document for package %s\n", packageName)
 
-	// we can now save it to disk, using tvsaver.
+	// we can now save it to disk, using tagvalue.
 
 	// create a new file for writing
 	w, err := os.Create(fileOut)
@@ -108,7 +108,7 @@ func main() {
 	}
 	defer w.Close()
 
-	err = spdx_tagvalue.Write(doc, w)
+	err = tagvalue.Write(doc, w)
 	if err != nil {
 		fmt.Printf("Error while saving %v: %v", fileOut, err)
 		return

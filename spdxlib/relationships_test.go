@@ -6,13 +6,13 @@ import (
 	"testing"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 )
 
 func TestFindsDependsOnRelationships(t *testing.T) {
 	// set up document and some packages and relationships
 	doc := &spdx.Document{
-		SPDXVersion:    "SPDX-2.2",
+		SPDXVersion:    spdx.Version,
 		DataLicense:    spdx.DataLicense,
 		SPDXIdentifier: common.ElementID("DOCUMENT"),
 		CreationInfo:   &spdx.CreationInfo{},

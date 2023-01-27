@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+
 package convert
 
 import (
@@ -5,13 +7,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/anchore/go-struct-converter"
 	"github.com/stretchr/testify/require"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
+	"github.com/spdx/tools-golang/spdx/v2/common"
+	"github.com/spdx/tools-golang/spdx/v2/v2_1"
+	"github.com/spdx/tools-golang/spdx/v2/v2_2"
 )
 
 func Test_ConvertSPDXDocuments(t *testing.T) {
@@ -23,6 +24,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 		{
 			name: "basic v2_2 to v2_3",
 			source: v2_2.Document{
+				SPDXVersion: v2_2.Version,
 				Packages: []*v2_2.Package{
 					{
 						PackageName: "Pkg 1",
@@ -45,6 +47,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 			},
 			expected: spdx.Document{
+				SPDXVersion: spdx.Version,
 				Packages: []*spdx.Package{
 					{
 						PackageName: "Pkg 1",
@@ -573,7 +576,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 			},
 			expected: spdx.Document{
-				SPDXVersion:       "SPDX-2.2", // TODO implement ConvertFrom to update this value
+				SPDXVersion:       "SPDX-2.3", // ConvertFrom updates this value
 				DataLicense:       "data license",
 				SPDXIdentifier:    "spdx id",
 				DocumentName:      "doc name",
@@ -1592,7 +1595,7 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 				},
 			},
 			expected: spdx.Document{
-				SPDXVersion:       "SPDX-2.2", // TODO implement ConvertFrom to update this value
+				SPDXVersion:       "SPDX-2.3", // ConvertFrom updates this value
 				DataLicense:       "data license",
 				SPDXIdentifier:    "spdx id",
 				DocumentName:      "doc name",
@@ -2110,7 +2113,9 @@ func Test_ConvertSPDXDocuments(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			outType := reflect.TypeOf(test.expected)
 			outInstance := reflect.New(outType).Interface()
-			err := converter.Convert(test.source, outInstance)
+
+			// convert the start document to the target document using the conversion chain
+			err := Document(test.source, outInstance)
 			if err != nil {
 				t.Fatalf("error converting: %v", err)
 			}

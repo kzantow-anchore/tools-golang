@@ -1,13 +1,17 @@
+// SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+
 package convert
 
 import (
+	"fmt"
+	"reflect"
+
 	converter "github.com/anchore/go-struct-converter"
 
-	"github.com/spdx/tools-golang/spdx"
 	"github.com/spdx/tools-golang/spdx/common"
-	"github.com/spdx/tools-golang/spdx/v2_1"
-	"github.com/spdx/tools-golang/spdx/v2_2"
-	"github.com/spdx/tools-golang/spdx/v2_3"
+	"github.com/spdx/tools-golang/spdx/v2/v2_1"
+	"github.com/spdx/tools-golang/spdx/v2/v2_2"
+	"github.com/spdx/tools-golang/spdx/v2/v2_3"
 )
 
 var DocumentChain = converter.NewChain(
@@ -16,16 +20,20 @@ var DocumentChain = converter.NewChain(
 	v2_3.Document{},
 )
 
-// Document converts the provided SPDX document to the latest version
-func Document(doc common.Document) (spdx.Document, error) {
-	doc = FromPtr(doc)
-	if doc, ok := doc.(spdx.Document); ok {
-		return doc, nil
+// Document converts from one document to another document
+// For example, converting a document to the latest version could be done like:
+//
+// sourceDoc := // e.g. a v2_2.Document from somewhere
+// var targetDoc spdx.Document // this can be any document version
+// err := convert.Document(sourceDoc, &targetDoc) // the target must be passed as a pointer
+func Document(from common.AnyDocument, to common.AnyDocument) error {
+	if !IsPtr(to) {
+		return fmt.Errorf("struct to convert to must be a pointer")
 	}
-	latest := spdx.Document{}
-	err := DocumentChain.Convert(doc, &latest)
-	if err != nil {
-		return spdx.Document{}, err
+	from = FromPtr(from)
+	if reflect.TypeOf(from) == reflect.TypeOf(FromPtr(to)) {
+		reflect.ValueOf(to).Elem().Set(reflect.ValueOf(from))
+		return nil
 	}
-	return latest, nil
+	return DocumentChain.Convert(from, to)
 }

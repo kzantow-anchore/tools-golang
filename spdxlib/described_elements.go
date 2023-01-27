@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/spdx/tools-golang/spdx"
-	"github.com/spdx/tools-golang/spdx/common"
+	"github.com/spdx/tools-golang/spdx/v2/common"
 )
 
 // GetDescribedPackageIDs returns a slice of ElementIDs for all Packages
