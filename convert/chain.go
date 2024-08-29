@@ -12,12 +12,14 @@ import (
 	"github.com/spdx/tools-golang/spdx/v2/v2_1"
 	"github.com/spdx/tools-golang/spdx/v2/v2_2"
 	"github.com/spdx/tools-golang/spdx/v2/v2_3"
+	"github.com/spdx/tools-golang/spdx/v3/v3_0"
 )
 
 var DocumentChain = converter.NewChain(
 	v2_1.Document{},
 	v2_2.Document{},
 	v2_3.Document{},
+	v3_0.SpdxDocument{},
 )
 
 // Document converts from one document to another document
@@ -27,6 +29,9 @@ var DocumentChain = converter.NewChain(
 // var targetDoc spdx.Document // this can be any document version
 // err := convert.Document(sourceDoc, &targetDoc) // the target must be passed as a pointer
 func Document(from common.AnyDocument, to common.AnyDocument) error {
+	if spdx3doc, ok := to.(*v3_0.Document); ok {
+		to = spdx3doc.Document()
+	}
 	if !IsPtr(to) {
 		return fmt.Errorf("struct to convert to must be a pointer")
 	}

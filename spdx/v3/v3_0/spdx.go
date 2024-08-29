@@ -24,6 +24,10 @@ type Document struct {
 	ldc          ldContext
 }
 
+func (d *Document) Write(w io.Writer) error {
+	return d.ToJSON(w)
+}
+
 func NewDocument(creator IAgent) *Document {
 	ci := &CreationInfo{
 		Created: time.Now().Format(time.RFC3339),

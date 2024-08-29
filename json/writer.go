@@ -25,6 +25,9 @@ func EscapeHTML(escape bool) WriteOption {
 
 // Write takes an SPDX Document and an io.Writer, and writes the document to the writer in JSON format.
 func Write(doc common.AnyDocument, w io.Writer, opts ...WriteOption) error {
+	if writable, ok := doc.(interface{ Write(io.Writer) error }); ok {
+		return writable.Write(w)
+	}
 	e := json.NewEncoder(w)
 	for _, opt := range opts {
 		opt(e)
